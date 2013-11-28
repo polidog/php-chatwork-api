@@ -1,12 +1,4 @@
 <?php
-/**
- * Created by JetBrains PhpStorm.
- * User: polidog
- * Date: 2013/11/28
- * Time: 22:48
- * To change this template use File | Settings | File Templates.
- */
-
 require './vendor/autoload.php';
 
 $client = new \Chatwork\Client();
