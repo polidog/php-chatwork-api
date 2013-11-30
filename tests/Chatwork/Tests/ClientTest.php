@@ -91,7 +91,19 @@ class ClientTest extends \PHPUnit_Framework_TestCase
     {
         $client = new Client();
         $client->setOption('hoge','fuga');
-        $client->setOption('hoge','fuga');
+    }
+
+    /**
+     * @test
+     */
+    public function 定義されているオプションを設定する()
+    {
+        $client = new Client();
+        $actual = $client->setOption('base_url','fuga');
+        $actual = $client->setOption('user_argent','ssss');
+        $actual = $client->setOption('timeout','ssss');
+        $actual = $client->setOption('api_limit',500);
+        $this->assertNotEmpty($actual);
     }
 
     /**
