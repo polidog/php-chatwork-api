@@ -12,11 +12,11 @@ namespace Chatwork\Api;
 
 class Contacts extends ApiAbstract
 {
-    public function __call($method, $args)
-    {
-        return $this->show();
-    }
 
+    /**
+     * 自分のコンタクト一覧を取得
+     * @return mixed
+     */
     public function show()
     {
         return $this->get('contacts');
