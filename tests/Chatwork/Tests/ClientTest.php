@@ -20,6 +20,16 @@ class ClientTest extends \PHPUnit_Framework_TestCase
 
     /**
      * @test
+     * @expectedException \Chatwork\Exception\InvalidArgumentException
+     */
+    public function 存在しないAPIを呼び出した場合はExceptionが発行される()
+    {
+        $client = new Client();
+        $actual = $client->api('hoge');
+    }
+
+    /**
+     * @test
      */
     public function 認証処理を行う()
     {

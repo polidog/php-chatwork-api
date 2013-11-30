@@ -57,7 +57,7 @@ class Client
                 $api = new Api\Rooms($this);
                 break;
             default:
-                throw new \InvalidArgumentException(sprintf('Undefined api instance called: "%s"', $name));
+                throw new InvalidArgumentException(sprintf('Undefined api instance called: "%s"', $name));
         }
 
         return $api;
