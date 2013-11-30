@@ -35,7 +35,7 @@ class Messages extends ApiAbstract
 
     /**
      * チャットに新しいメッセージを追加
-     * @param $body
+     * @param string $body
      *
      * @return mixed
      */
