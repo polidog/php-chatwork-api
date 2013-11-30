@@ -16,6 +16,47 @@ class ClientTest extends \PHPUnit_Framework_TestCase
         $this->assertInstanceOf($className, $actual);
     }
 
+    /**
+     * @test
+     */
+    public function 認証処理を行う()
+    {
+        $apiKey = "hogehoge";
+        $httpClientMock = $this->getHttpClientMock();
+        $httpClientMock->expects($this->once())
+            ->method('authenticate')
+            ->with($this->equalTo($apiKey));
+
+        $client = new Client($httpClientMock);
+        $client->authenticate($apiKey);
+    }
+
+    /**
+     * @return \PHPUnit_Framework_MockObject_MockObject
+     */
+    private function getHttpClientMock()
+    {
+        return $this->getMockBuilder('\Chatwork\HttpClient\HttpClient')
+            ->setMethods([
+                'authenticate',
+                'get',
+                'post',
+                'put',
+                'delete',
+                'request',
+                'setOption',
+                'setHeaders'
+            ])
+            ->disableOriginalConstructor()
+            ->getMock();
+    }
+
+
+
+    /**
+     * data provider
+     * @return array
+     */
     public function apiProvider()
     {
         return [
@@ -25,4 +66,4 @@ class ClientTest extends \PHPUnit_Framework_TestCase
             ["rooms","Chatwork\Api\Rooms"],
         ];
     }
-} 
+}

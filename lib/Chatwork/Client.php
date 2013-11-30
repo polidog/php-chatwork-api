@@ -30,6 +30,12 @@ class Client
         }
     }
 
+    /**
+     * APIオブジェクトを取得する
+     * @param $name 呼び出す機能名
+     * @return Api\Contacts|Api\Me|Api\My|Api\Rooms
+     * @throws \InvalidArgumentException
+     */
     public function api($name) {
         switch (strtolower($name)) {
             case 'me':
@@ -51,6 +57,12 @@ class Client
         return $api;
     }
 
+    /**
+     * 認証処理を行う
+     * @param $apiKey
+     * @return $this
+     * @throws \InvalidArgumentException
+     */
     public function authenticate($apiKey) {
         if (is_null($apiKey)) {
             throw new \InvalidArgumentException('You need to specify authentication method!');
