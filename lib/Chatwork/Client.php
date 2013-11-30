@@ -90,6 +90,10 @@ class Client
         $this->httpClient = $httpClient;
     }
 
+    /**
+     * HTTPヘッダーをクリアする
+     * @return $this
+     */
     public function clearHeaders() {
         $this->getHttpClient()->clearHeaders();
         return $this;

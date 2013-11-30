@@ -53,6 +53,20 @@ class ClientTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
+     * @test
+     */
+    public function HTTPヘッダーをクリアする()
+    {
+        $httpClientMock = $this->getHttpClientMock();
+        $httpClientMock->expects($this->once())
+            ->method('clearHeaders')
+            ->will($this->returnValue(null));
+
+        $client = new Client($httpClientMock);
+        $client->clearHeaders();
+    }
+
+    /**
      * @return \PHPUnit_Framework_MockObject_MockObject
      */
     private function getHttpClientMock()
@@ -66,7 +80,8 @@ class ClientTest extends \PHPUnit_Framework_TestCase
                 'delete',
                 'request',
                 'setOption',
-                'setHeaders'
+                'setHeaders',
+                'clearHeaders'
             ])
             ->disableOriginalConstructor()
             ->getMock();
