@@ -21,9 +21,6 @@ class MeTest extends ApiTestCase
         $httpClientMock = $this->getHttpClientMock();
         $responseMock = $this->getResponseMock();
 
-        $client = new Client($httpClientMock);
-        $me = new Me($client);
-
         $httpClientMock->expects($this->once())
             ->method('get')
             ->with($this->equalTo('me'))
@@ -33,6 +30,8 @@ class MeTest extends ApiTestCase
             ->method('getContent')
             ->will($this->returnValue(null));
 
+        $client = new Client($httpClientMock);
+        $me = new Me($client);
         $me->show();
     }
 

@@ -20,7 +20,7 @@ class My extends ApiAbstract
     }
 
     /**
-     * 自分のタスク一覧を取得する。
+     * 自分のタスク一覧を取得する
      * @param $options
      *
      * @return mixed
