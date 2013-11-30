@@ -63,6 +63,14 @@ class ClientTest extends \PHPUnit_Framework_TestCase
         $this->assertEquals($httpClient, $client->getHttpClient());
     }
 
+    public function オプションを取得する()
+    {
+        $client = new Client();
+        $actual = $client->getOption('user_argent');
+        $this->assertEquals('php-chatwork-api', $actual);
+
+    }
+
     /**
      * @test
      * @expectedException InvalidArgumentException
