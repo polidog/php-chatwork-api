@@ -9,11 +9,8 @@ namespace Chatwork\Api;
 class Me extends ApiAbstract
 {
 
-    public function __call($method,$args) {
-        return $this->show();
-    }
-
     /**
+     * 自分自身の情報を取得
      * @return mixed
      */
     public function show() {
