@@ -32,6 +32,15 @@ class ClientTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
+     * @test
+     */
+    public function HTTPクライアントを取得する()
+    {
+        $client = new Client();
+        $this->assertInstanceOf('\Chatwork\HttpClient\HttpClient', $client->getHttpClient());
+    }
+
+    /**
      * @return \PHPUnit_Framework_MockObject_MockObject
      */
     private function getHttpClientMock()
