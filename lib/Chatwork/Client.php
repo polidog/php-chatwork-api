@@ -72,7 +72,7 @@ class Client
     }
 
     /**
-     * get http client method
+     * HTTPクライアントを取得する
      * @return HttpClient\HttpClient
      */
     public function getHttpClient() {
@@ -82,6 +82,10 @@ class Client
         return $this->httpClient;
     }
 
+    /**
+     * HTTPクライアントオブジェクトをセットする
+     * @param HttpClientInterface $httpClient
+     */
     public function setHttpClient(HttpClientInterface $httpClient) {
         $this->httpClient = $httpClient;
     }

@@ -2,6 +2,7 @@
 namespace Chatwork\Tests;
 
 use Chatwork\Client;
+use Chatwork\HttpClient\HttpClient;
 
 class ClientTest extends \PHPUnit_Framework_TestCase
 {
@@ -38,6 +39,17 @@ class ClientTest extends \PHPUnit_Framework_TestCase
     {
         $client = new Client();
         $this->assertInstanceOf('\Chatwork\HttpClient\HttpClient', $client->getHttpClient());
+    }
+
+    /**
+     * @test
+     */
+    public function HTTPクライアントオブジェクトをセットする()
+    {
+        $httpClient = new HttpClient();
+        $client = new Client();
+        $client->setHttpClient($httpClient);
+        $this->assertEquals($httpClient, $client->getHttpClient());
     }
 
     /**
