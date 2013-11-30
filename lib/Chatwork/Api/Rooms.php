@@ -55,8 +55,8 @@ class Rooms extends ApiAbstract
 
     /**
      * グループチャットを退席/削除する
-     * @param $id room id
-     * @param array $action_type
+     * @param int $id room id
+     * @param string $action_type
      */
     public function remove($id, $action_type)
     {
@@ -75,18 +75,17 @@ class Rooms extends ApiAbstract
 
     /**
      * メッセージオブジェクトを取得する
-     * @param $id room id
-     *
+     * @param int $id room id
      * @return Message
      */
     public function messages($id)
     {
-        return new Rooms\Message($this->client, $id);
+        return new Rooms\Messages($this->client, $id);
     }
 
     /**
      * ファイルオブジェクトを取得する
-     * @param $id room id
+     * @param int $id room id
      *
      * @return Files
      */
