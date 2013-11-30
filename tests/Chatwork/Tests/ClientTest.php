@@ -1,6 +1,7 @@
 <?php
 namespace Chatwork\Tests;
 
+use Buzz\Exception\InvalidArgumentException;
 use Chatwork\Client;
 use Chatwork\HttpClient\HttpClient;
 
@@ -50,6 +51,37 @@ class ClientTest extends \PHPUnit_Framework_TestCase
         $client = new Client();
         $client->setHttpClient($httpClient);
         $this->assertEquals($httpClient, $client->getHttpClient());
+    }
+
+    /**
+     * @test
+     * @expectedException InvalidArgumentException
+     */
+    public function オプションを取得する際にキーを設定してなかった()
+    {
+        $client = new Client();
+        $client->getOption(null);
+    }
+
+    /**
+     * @test
+     * @expectedException InvalidArgumentException
+     */
+    public function オプションを取得する際に存在しないキーを設定した()
+    {
+        $client = new Client();
+        $client->getOption('hoge');
+    }
+
+    /**
+     * @test
+     * @expectedException InvalidArgumentException
+     */
+    public function オプションをセットするが重複している()
+    {
+        $client = new Client();
+        $client->setOption('hoge','fuga');
+        $client->setOption('hoge','fuga');
     }
 
     /**

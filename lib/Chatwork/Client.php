@@ -7,6 +7,8 @@ use Buzz\Client\ClientInterface;
 use Chatwork\HttpClient\HttpClientInterface;
 use Chatwork\HttpClient\HttpClient;
 
+use Chatwork\Exception\InvalidArgumentException;
+
 /**
  * Class Client
  *
