@@ -1,2 +1,4 @@
-service_name: travis-pro
-repo_token: WMLeIXzeZhOIzNFo7UKPHNB31aZNJgA53
+# for php-coveralls
+src_dir: lib
+coverage_clover: build/logs/clover.xml
+json_path: build/logs/coveralls-upload.json
