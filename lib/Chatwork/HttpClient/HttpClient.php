@@ -164,28 +164,50 @@ class HttpClient implements HttpClientInterface
         return $response;
     }
 
+    /**
+     * オプションをセットする
+     * @param $name
+     * @param $value
+     *
+     * @return $this
+     */
     public function setOption($name, $value)
     {
         $this->options[$name] = $value;
         return $this;
     }
 
+    /**
+     * 認証用のリスナーをセットする
+     * @param $apiKey
+     */
     public function authenticate($apiKey)
     {
         $this->addListener(new TokenAuthListener($apiKey));
     }
 
-
+    /**
+     * リスナーをセットする
+     * @param ListenerInterface $listener
+     */
     public function addListener(ListenerInterface $listener)
     {
         $this->listeners[get_class($listener)] = $listener;
     }
 
+    /**
+     * 最後のリクエスト情報を取得する
+     * @return mixed
+     */
     public function getLastRequest()
     {
         return $this->lastRequest;
     }
 
+    /**
+     * 最後のレスポンス情報を取得する
+     * @return mixed
+     */
     public function getLastResponse()
     {
         return $this->lastResponse;

@@ -136,6 +136,38 @@ class HttpClientTest extends ApiTestCase
         $httpClient->request($path, $parametars, "GET",$headers);
     }
 
+    /**
+     * @test
+     */
+    public function 認証用のリスナーをセットする()
+    {
+        $path       = '/some/path';
+        $parametars = ['a' => 'b'];
+        $headers    = ['c' => 'd'];
+
+        $client = $this->getBrowserMock();
+
+        $httpClient = new HttpClient([], $client);
+        $httpClient->authenticate('test key');
+    }
+
+    /**
+     * @test
+     */
+    public function 最後のレスポンス情報を取得する()
+    {
+        $path       = '/some/path';
+        $parametars = ['a' => 'b'];
+        $headers    = ['c' => 'd'];
+
+        $client = $this->getBrowserMock();
+
+        $httpClient = new HttpClient(['base_url' => 'http://www.example.com'], $client);
+        $response = $httpClient->request($path, $parametars, "GET",$headers);
+        $this->assertEquals($httpClient->getLastResponse(), $response);
+        $this->assertInstanceOf('Chatwork\HttpClient\Message\Request', $httpClient->getLastRequest());
+    }
+
 
 
     /**
