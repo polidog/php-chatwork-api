@@ -147,8 +147,10 @@ class HttpClientTest extends ApiTestCase
 
         $client = $this->getBrowserMock();
 
-        $httpClient = new HttpClient([], $client);
+        $httpClient = new HttpClient(['base_url' => 'http://www.example.com'], $client);
         $httpClient->authenticate('test key');
+
+        $response = $httpClient->request($path, $parametars, "GET",$headers);
     }
 
     /**
