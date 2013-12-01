@@ -15,23 +15,30 @@ use Chatwork\HttpClient\Message\Response;
 
 use Chatwork\HttpClient\Listener\TokenAuthListener;
 
+use Chatwork\Exception\OutOfBoundsException;
+
 /**
  * Chatwork HTTP Request
  */
 class HttpClient implements HttpClientInterface
 {
 
-    protected $options = array(
+    protected $options = [
         'timeout' => 10,
-    );
+    ];
 
     protected $client;
     protected $listeners;
     protected $lastResponse;
     protected $lastRequest;
-    protected $headers = array();
+    protected $headers = [];
 
-    public function __construct($options = array(), ClientInterface $client = null)
+    /**
+     * コンストラクタ
+     * @param array $options
+     * @param ClientInterface $client
+     */
+    public function __construct(array $options = [], ClientInterface $client = null)
     {
 
         $this->options = array_merge($this->options, $options);
@@ -43,18 +50,37 @@ class HttpClient implements HttpClientInterface
         $this->client = $client;
     }
 
+    /**
+     * ヘッダーをセットする
+     * @param $headers
+     *
+     * @return $this
+     */
     public function setHeaders($headers)
     {
         $this->headers = array_merge($this->headers, $headers);
         return $this;
     }
 
+    /**
+     * ヘッダーをクリアする
+     * @return $this
+     */
     public function clearHeaders()
     {
-        $this->headers = array();
+        $this->headers = [];
+        return $this;
     }
 
-    public function get($path, array $parameters = array(), array $headers = array())
+    /**
+     * GETリクエストを送る
+     * @param $path
+     * @param array $parameters
+     * @param array $headers
+     *
+     * @return \Chatwork\HttpClient\Message\Response
+     */
+    public function get($path, array $parameters = [], array $headers = [])
     {
         if (!empty($parameters)) {
             $path .= (false === strpos($path, '?') ? '?' : '&').http_build_query($parameters, '', '&');
@@ -62,23 +88,63 @@ class HttpClient implements HttpClientInterface
         return $this->request($path, $parameters, 'GET', $headers);
     }
 
-    public function post($path, array $parameters = array(), array $headers = array())
+    /**
+     * POSTリクエストを送る
+     * @param $path
+     * @param array $parameters
+     * @param array $headers
+     *
+     * @return Response
+     */
+    public function post($path, array $parameters = [], array $headers = [])
     {
         return $this->request($path, $parameters, 'POST', $headers);
     }
 
-    public function put($path, array $parameters = array(), array $headers = array())
+    /**
+     * PUTリクエストを送る
+     * @param $path
+     * @param array $parameters
+     * @param array $headers
+     *
+     * @return Response
+     */
+    public function put($path, array $parameters = [], array $headers = [])
     {
         return $this->request($path, $parameters, 'PUT', $headers);
     }
 
-    public function delete($path, array $parameters = array(), array $headers = array())
+    /**
+     * DELETEリクエストを送る
+     * @param $path
+     * @param array $parameters
+     * @param array $headers
+     *
+     * @return Response
+     */
+    public function delete($path, array $parameters = [], array $headers = [])
     {
         return $this->request($path, $parameters, 'DELETE', $headers);
     }
 
-    public function request($path, array $parameters = array(), $httpMethod = 'GET', array $headers = array())
+    /**
+     * HTTPリクエストを送る
+     * @param $path
+     * @param array $parameters
+     * @param string $httpMethod
+     * @param array $headers
+     *
+     * @return Response
+     * @throws \Exception
+     * @throws \Chatwork\Exception\OutOfBoundsException
+     */
+    public function request($path, array $parameters = [], $httpMethod = 'GET', array $headers = [])
     {
+
+        if (empty($this->options['base_url'])) {
+            throw new OutOfBoundsException('option parameter base_url not found');
+        }
+
         $path = trim($this->options['base_url'] . $path, '/');
         $request = $this->createRequest($httpMethod, $path);
         $request->addHeaders($headers);
@@ -89,13 +155,7 @@ class HttpClient implements HttpClientInterface
         $this->executeListeners('preSend', $request);
 
         $response = $this->createResponse();
-        try {
-            $this->client->send($request, $response);
-        } catch (\LogicException $e) {
-            throw $e;
-        } catch (\RuntimeException $e) {
-            throw $e;
-        }
+        $this->client->send($request, $response);
 
         $this->lastRequest  = $request;
         $this->lastResponse = $response;
@@ -135,7 +195,7 @@ class HttpClient implements HttpClientInterface
     /**
      * @param string $httpMethod
      * @param string $url
-     * @return \Bitbucket\HttpClient\Message\Request
+     * @return \Chatwork\HttpClient\Message\Request
      */
     protected function createRequest($httpMethod, $url)
     {
@@ -146,7 +206,7 @@ class HttpClient implements HttpClientInterface
     }
 
     /**
-     * @return \Bitbucket\HttpClient\Message\Response
+     * @return \Chatwork\HttpClient\Message\Response
      */
     protected function createResponse()
     {
