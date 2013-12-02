@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<phpunit backupGlobals="false" colors="true" bootstrap="tests/bootstrap.php">
+<phpunit backupGlobals="false" colors="true" bootstrap="test/bootstrap.php">
     <testsuites>
         <testsuite name="PHP ChatWork API Test Suite">
-            <directory>./tests/Chatwork/</directory>
+            <directory>./test/Chatwork/</directory>
         </testsuite>
     </testsuites>
 

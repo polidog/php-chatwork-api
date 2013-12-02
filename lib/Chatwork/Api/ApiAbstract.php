@@ -2,13 +2,14 @@
 
 namespace Chatwork\Api;
 use Chatwork\Client;
+use Chatwork\Exception\NoSupportApiException;
 
 /**
  * Class ApiAbstract
  *
  * @package Chatwork\Api
  */
-class ApiAbstract implements ApiInterface
+abstract class ApiAbstract implements ApiInterface
 {
 
     protected $client;
@@ -18,8 +19,16 @@ class ApiAbstract implements ApiInterface
         $this->client = $client;
     }
 
-    public function configure()
+    /**
+     * 存在しないメソッドをコールする
+     * @param $name
+     * @param $args
+     *
+     * @throws \Chatwork\Exception\NoSupportApiException
+     */
+    public function __call($name, $args)
     {
+        throw new NoSupportApiException('no support api name:'. $name);
     }
 
     public function get($path, array $parameters = array(), $requestHeaders = array())
