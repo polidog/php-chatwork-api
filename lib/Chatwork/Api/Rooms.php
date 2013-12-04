@@ -1,18 +1,15 @@
 <?php
-/**
- * Created by JetBrains PhpStorm.
- * User: polidog
- * Date: 2013/11/29
- * Time: 0:32
- * To change this template use File | Settings | File Templates.
- */
 
 namespace Chatwork\Api;
-
 
 use Buzz\Test\Message\Message;
 use Chatwork\Api\Rooms\Members;
 
+/**
+ * Class Rooms
+ * @package Chatwork\Api
+ * @see http://developer.chatwork.com/ja/endpoint_rooms.html
+ */
 class Rooms extends ApiAbstract
 {
     /**
@@ -58,8 +55,8 @@ class Rooms extends ApiAbstract
 
     /**
      * グループチャットを退席/削除する
-     * @param $id room id
-     * @param array $action_type
+     * @param int $id room id
+     * @param string $action_type
      */
     public function remove($id, $action_type)
     {
@@ -78,18 +75,17 @@ class Rooms extends ApiAbstract
 
     /**
      * メッセージオブジェクトを取得する
-     * @param $id room id
-     *
+     * @param int $id room id
      * @return Message
      */
     public function messages($id)
     {
-        return new Rooms\Message($this->client, $id);
+        return new Rooms\Messages($this->client, $id);
     }
 
     /**
      * ファイルオブジェクトを取得する
-     * @param $id room id
+     * @param int $id room id
      *
      * @return Files
      */

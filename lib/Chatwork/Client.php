@@ -7,10 +7,14 @@ use Buzz\Client\ClientInterface;
 use Chatwork\HttpClient\HttpClientInterface;
 use Chatwork\HttpClient\HttpClient;
 
+use Chatwork\Exception\InvalidArgumentException;
+
 /**
  * Class Client
  *
  * @package Chatwork
+ *
+ * @property HttpClientInterface $httpClient
  */
 class Client
 {
@@ -24,13 +28,21 @@ class Client
 
     private $httpClient;
 
-    public function __construct(HttpClientInterface $httpClient = null) {
+    public function __construct(HttpClientInterface $httpClient = null)
+    {
         if (!is_null($httpClient)) {
             $this->httpClient = $httpClient;
         }
     }
 
-    public function api($name) {
+    /**
+     * APIオブジェクトを取得する
+     * @param $name 呼び出す機能名
+     * @return Api\Contacts|Api\Me|Api\My|Api\Rooms
+     * @throws \InvalidArgumentException
+     */
+    public function api($name)
+    {
         switch (strtolower($name)) {
             case 'me':
                 $api = new Api\Me($this);
@@ -45,13 +57,20 @@ class Client
                 $api = new Api\Rooms($this);
                 break;
             default:
-                throw new \InvalidArgumentException(sprintf('Undefined api instance called: "%s"', $name));
+                throw new InvalidArgumentException(sprintf('Undefined api instance called: "%s"', $name));
         }
 
         return $api;
     }
 
-    public function authenticate($apiKey) {
+    /**
+     * 認証処理を行う
+     * @param $apiKey
+     * @return $this
+     * @throws \InvalidArgumentException
+     */
+    public function authenticate($apiKey)
+    {
         if (is_null($apiKey)) {
             throw new \InvalidArgumentException('You need to specify authentication method!');
         }
@@ -60,31 +79,34 @@ class Client
     }
 
     /**
-     * get http client method
+     * HTTPクライアントを取得する
      * @return HttpClient\HttpClient
      */
-    public function getHttpClient() {
+    public function getHttpClient()
+    {
         if (is_null($this->httpClient)) {
             $this->httpClient = new HttpClient($this->options);
         }
         return $this->httpClient;
     }
 
-    public function setHttpClient(HttpClientInterface $httpClient) {
+    /**
+     * HTTPクライアントオブジェクトをセットする
+     * @param HttpClientInterface $httpClient
+     */
+    public function setHttpClient(HttpClientInterface $httpClient)
+    {
         $this->httpClient = $httpClient;
     }
 
-    public function clearHeaders() {
-        $this->getHttpClient()->clearHeaders();
-        return $this;
-    }
-
-    public function setHttpHeaders(array $headers) {
-        $this->getHttpClient()->setHeaders($headers);
-        return $this;
-    }
-
-    public function getOption($key) {
+    /**
+     * オプションを取得する
+     * @param $key
+     * @return mixed
+     * @throws InvalidArgumentException
+     */
+    public function getOption($key)
+    {
         if (is_null($key)) {
             throw new InvalidArgumentException('Undefined option called: null');
         }
@@ -95,7 +117,15 @@ class Client
         return $this->options[$key];
     }
 
-    public function setOption($key, $value) {
+    /**
+     * オプションをセットする
+     * @param $key
+     * @param $value
+     * @return $this
+     * @throws InvalidArgumentException
+     */
+    public function setOption($key, $value)
+    {
         if (!isset($this->options[$key])) {
             throw new InvalidArgumentException(sprintf('Undefined option called: "%s"', $key));
         }

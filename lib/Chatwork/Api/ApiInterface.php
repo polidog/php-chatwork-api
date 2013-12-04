@@ -12,7 +12,6 @@ namespace Chatwork\Api;
 
 interface ApiInterface
 {
-    public function configure();
 
     public function get($path, array $parameters = array(), $requestHeaders = array());
 

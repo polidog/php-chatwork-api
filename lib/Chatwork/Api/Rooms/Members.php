@@ -19,10 +19,12 @@ class Members extends ApiAbstract
      * @param Client $client
      * @param $roomId
      */
-    public function __construct(Client $client, $roomId) {
+    public function __construct(Client $client, $roomId)
+    {
         $this->client = $client;
         $this->roomId = $roomId;
     }
+
 
     /**
      * チャットのメンバー一覧を取得
@@ -30,19 +32,21 @@ class Members extends ApiAbstract
      *
      * @return mixed
      */
-    public function show() {
+    public function show()
+    {
         return $this->get('rooms/'.$this->roomId.'/members');
     }
 
     /**
      * チャットのメンバーを一括変更
      * @param $id
-     * @param $members_admin_ids
-     * @param $options
+     * @param string $members_admin_ids
+     * @param array $options
      *
      * @return mixed
      */
-    public function update($members_admin_ids, $options) {
+    public function update($members_admin_ids, array $options = [])
+    {
         $options['members_admin_ids'] = $members_admin_ids;
         return $this->put('rooms/'.$this->roomId.'/members',$options);
     }

@@ -24,14 +24,24 @@ class Tasks extends ApiAbstract
     }
 
     /**
-     * チャットのタスク一覧を取得
+     * 指定したチャットワークのタスクを取得する
      * @param $options
      *
      * @return mixed
      */
-    public function show($options) {
+    public function show($task_id) {
+        return $this->get('rooms/'.$this->roomId.'/tasks/'.$task_id);
+    }
+
+    /**
+     * 指定したタスクの一覧を取得する
+     * @return mixed
+     */
+    public function collection()
+    {
         return $this->get('rooms/'.$this->roomId.'/tasks');
     }
+
 
     /**
      * チャットに新しいタスクを追加
