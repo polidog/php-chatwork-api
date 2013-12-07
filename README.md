@@ -32,3 +32,16 @@ $ curl -sS https://getcomposer.org/installer | php
 ```
 php composer.phar install
 ```
+
+4\. 実際につかってみる
+```
+<?php
+require './vendor/autoload.php';
+
+$client = new \Chatwork\Client();
+$client->authenticate('your api key');
+//var_dump($client->api('me')->show());
+//var_dump($client->api('my')->status());
+var_dump($client->api('my')->tasks());
+
+
