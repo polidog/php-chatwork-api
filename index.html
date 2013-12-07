@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html>
+
+  <head>
+    <meta charset='utf-8' />
+    <meta http-equiv="X-UA-Compatible" content="chrome=1" />
+    <meta name="description" content="Php-chatwork-api : " />
+
+    <link rel="stylesheet" type="text/css" media="screen" href="stylesheets/stylesheet.css">
+
+    <title>Php-chatwork-api</title>
+  </head>
+
+  <body>
+
+    <!-- HEADER -->
+    <div id="header_wrap" class="outer">
+        <header class="inner">
+          <a id="forkme_banner" href="https://github.com/polidog/php-chatwork-api">View on GitHub</a>
+
+          <h1 id="project_title">Php-chatwork-api</h1>
+          <h2 id="project_tagline"></h2>
+
+            <section id="downloads">
+              <a class="zip_download_link" href="https://github.com/polidog/php-chatwork-api/zipball/master">Download this project as a .zip file</a>
+              <a class="tar_download_link" href="https://github.com/polidog/php-chatwork-api/tarball/master">Download this project as a tar.gz file</a>
+            </section>
+        </header>
+    </div>
+
+    <!-- MAIN CONTENT -->
+    <div id="main_content_wrap" class="outer">
+      <section id="main_content" class="inner">
+        <h1>
+<a name="php-chatwork-api" class="anchor" href="#php-chatwork-api"><span class="octicon octicon-link"></span></a>php-chatwork-api</h1>
+
+<p><a href="https://travis-ci.org/polidog/php-chatwork-api"><img src="https://travis-ci.org/polidog/php-chatwork-api.png?branch=develop" alt="Build Status"></a>
+<a href="https://coveralls.io/r/polidog/php-chatwork-api"><img src="https://coveralls.io/repos/polidog/php-chatwork-api/badge.png" alt="Coverage Status"></a>  </p>
+
+<p>みんな大好きChatWorkのAPIの限定プレビューが始まるということで、早速先走ってAPIラッパークラスをPHPで実装してみました。
+まだAPIの使えない僕は、妄想しながら実装したので、動くかどうかは責任とれませんw</p>
+
+<h2>
+<a name="%E3%82%A4%E3%83%B3%E3%82%B9%E3%83%88%E3%83%BC%E3%83%AB%E6%96%B9%E6%B3%95" class="anchor" href="#%E3%82%A4%E3%83%B3%E3%82%B9%E3%83%88%E3%83%BC%E3%83%AB%E6%96%B9%E6%B3%95"><span class="octicon octicon-link"></span></a>インストール方法</h2>
+
+<p>1. composer.pharを用意します。  </p>
+
+<pre><code>$ curl -sS https://getcomposer.org/installer | php
+</code></pre>
+
+<p>2. comoposer.jsonを用意しましょう</p>
+
+<pre><code>{
+    "require": {
+        "polidog/php-chatwork-api": "dev-develop",
+        "kriswallsmith/buzz": "v0.10"
+    }
+}
+
+</code></pre>
+
+<p>3. インストール</p>
+
+<pre><code>php composer.phar install
+</code></pre>
+
+<p>4. 実際につかってみる</p>
+
+<pre><code>&lt;?php
+require './vendor/autoload.php';
+
+$client = new \Chatwork\Client();
+$client-&gt;authenticate('your api key');
+//var_dump($client-&gt;api('me')-&gt;show());
+//var_dump($client-&gt;api('my')-&gt;status());
+var_dump($client-&gt;api('my')-&gt;tasks());
+</code></pre>
+      </section>
+    </div>
+
+    <!-- FOOTER  -->
+    <div id="footer_wrap" class="outer">
+      <footer class="inner">
+        <p class="copyright">Php-chatwork-api maintained by <a href="https://github.com/polidog">polidog</a></p>
+        <p>Published with <a href="http://pages.github.com">GitHub Pages</a></p>
+      </footer>
+    </div>
+
+    
+
+  </body>
+</html>
