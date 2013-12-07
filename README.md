@@ -12,10 +12,23 @@ php-chatwork-api
 ## インストール方法
 
 
-1. composer.pharを用意します。
-
+1\. composer.pharを用意します。  
 ```
 $ curl -sS https://getcomposer.org/installer | php
 ```
+2\. comoposer.jsonを用意しましょう
 
-1. comoposer.jsonを用意しましょう
+```
+{
+    "require": {
+        "polidog/php-chatwork-api": "dev-develop",
+        "kriswallsmith/buzz": "v0.10"
+    }
+}
+
+```
+3. インストール
+
+```
+php composer.phar install
+```
