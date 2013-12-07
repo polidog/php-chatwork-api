@@ -27,7 +27,7 @@ $ curl -sS https://getcomposer.org/installer | php
 }
 
 ```
-3. インストール
+3\. インストール
 
 ```
 php composer.phar install
