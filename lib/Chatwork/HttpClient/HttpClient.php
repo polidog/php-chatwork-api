@@ -10,6 +10,7 @@ use Buzz\Listener\BasicAuthListener;
 
 use Buzz\Client\Curl;
 
+use Chatwork\HttpClient\Listener\ResponseFilterException;
 use Chatwork\HttpClient\Message\Request;
 use Chatwork\HttpClient\Message\Response;
 
@@ -47,6 +48,7 @@ class HttpClient implements HttpClientInterface
         $client->setTimeout($this->options['timeout']);
         $client->setVerifyPeer(false);
 
+        $this->addListener(new ResponseFilterException());
         $this->client = $client;
     }
 
