@@ -24,7 +24,13 @@ class ResponseFilterException implements ListenerInterface
     {
         $content = $response->getContent();
         if (isset($content["errors"])) {
-            throw new InvalidApiException();
+            $message = "";
+            if (is_array($content["errors"])) {
+                $message = implode("\n", $content["errors"]);
+            } else if (is_string($content["errors"])) {
+                $message = $content["errors"];
+            }
+            throw new InvalidApiException($message);
         }
     }
 } 
