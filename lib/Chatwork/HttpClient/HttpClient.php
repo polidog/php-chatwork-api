@@ -10,6 +10,7 @@ use Buzz\Listener\BasicAuthListener;
 
 use Buzz\Client\Curl;
 
+use Chatwork\HttpClient\Listener\ResponseFilterException;
 use Chatwork\HttpClient\Message\Request;
 use Chatwork\HttpClient\Message\Response;
 
@@ -47,6 +48,7 @@ class HttpClient implements HttpClientInterface
         $client->setTimeout($this->options['timeout']);
         $client->setVerifyPeer(false);
 
+        $this->addListener(new ResponseFilterException());
         $this->client = $client;
     }
 
@@ -149,7 +151,7 @@ class HttpClient implements HttpClientInterface
         $request = $this->createRequest($httpMethod, $path);
         $request->addHeaders($headers);
         if (count($parameters) > 0) {
-            $request->setContent(json_encode($parameters, JSON_FORCE_OBJECT));
+            $request->setContent(http_build_query($parameters));
         }
 
         $this->executeListeners('preSend', $request);
