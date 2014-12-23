@@ -80,6 +80,9 @@ final class Client implements ClientInterface
             case 'my':
                 $api = new Api\My($this->httpClient);
                 break;
+            case 'contacts':
+                $api = new Api\Contacts($this->httpClient);
+                break;
             default:
                 throw new NoSupportApiException(sprintf('Undefined api instance called: "%s"', $name));
         }
