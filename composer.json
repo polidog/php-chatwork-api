@@ -1,5 +1,6 @@
 {
   "name": "polidog/php-chatwork-api",
+  "version": "0.2.0",
   "description": "Chatwork api class",
   "keywords": ["chatwork","api"],
   "homepage": "https://github.com/polidog/php-chatwork-api",
@@ -12,6 +13,7 @@
     }
   ],
   "require": {
+    "php": ">=5.5.0",
     "guzzlehttp/guzzle": "5.1.0"
   },
   "require-dev": {
