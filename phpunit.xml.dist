@@ -1,14 +1,14 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<phpunit backupGlobals="false" colors="true" bootstrap="test/bootstrap.php">
+<phpunit backupGlobals="false" colors="true" bootstrap="tests/bootstrap.php">
     <testsuites>
         <testsuite name="PHP ChatWork API Test Suite">
-            <directory>./test/Chatwork/</directory>
+            <directory>./tests/</directory>
         </testsuite>
     </testsuites>
 
     <filter>
         <whitelist addUncoveredFilesFromWhitelist="true">
-            <directory suffix=".php">./lib/</directory>
+            <directory suffix=".php">./src/</directory>
         </whitelist>
     </filter>
 
