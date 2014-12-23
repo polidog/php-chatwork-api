@@ -68,7 +68,7 @@ final class Client implements ClientInterface
     /**
      * @param string $name
      * 
-     * @return Api\Me
+     * @return Api\Me|Api\My
      * @throws NoSupportApiException
      */
     public function api($name)
@@ -76,6 +76,9 @@ final class Client implements ClientInterface
         switch (strtolower($name)) {
             case 'me':
                 $api = new Api\Me($this->httpClient);
+                break;
+            case 'my':
+                $api = new Api\My($this->httpClient);
                 break;
             default:
                 throw new NoSupportApiException(sprintf('Undefined api instance called: "%s"', $name));
