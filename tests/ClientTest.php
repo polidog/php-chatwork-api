@@ -36,6 +36,16 @@ class ClientTest extends \PHPUnit_Framework_TestCase
         $actual = $client->api($apiName);
         $this->assertInstanceOf($apiObjectName, $actual);
     }
+
+    /**
+     * @test
+     * @expectedException Polidog\Chatwork\Exception\NoSupportApiException
+     */
+    public function noApiObject()
+    {
+        $client = new Client('apikeytoken', []);
+        $client->api('hoge');
+    }
     
     
     public function dp_apiNames()
