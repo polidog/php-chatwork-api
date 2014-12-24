@@ -16,7 +16,7 @@ class TaskFactory extends AbstractFactory
 {
     /**
      * @param array $data
-     * @return EntityInterface
+     * @return Task
      */
     public function entity(array $data = [])
     {
@@ -29,14 +29,15 @@ class TaskFactory extends AbstractFactory
         foreach ($data as $key => $value) {
             $property = Inflector::variable($key);
             if ($property == 'room') {
-                $task->$property = $roomFactory->create($value); 
+                $task->$property = $roomFactory->entity($value); 
             } else if ($property == 'assignedByAccount') {
-                $task->$property = $userFactory->create($value);
+                $task->$property = $userFactory->entity($value);
             } else {
                 $task->$property = $value;
             }
         }
-         
+        
+        return $task;
     }
 
 }
