@@ -6,7 +6,7 @@
  * Time: 4:40
  */
 
-namespace Api;
+namespace Polidog\Chatwork\Api;
 
 
 use Polidog\Chatwork\Api\Me;
