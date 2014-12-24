@@ -44,12 +44,12 @@ class MyTest extends \PHPUnit_Framework_TestCase
      */
     public function callTasksApi()
     {
-        Phake::when($this->httpClient)->get('my/tasks')->thenReturn($this->response);
+        Phake::when($this->httpClient)->get('my/tasks',['query' => []])->thenReturn($this->response);
 
         $my = new My($this->httpClient);
         $my->tasks();
 
-        Phake::verify($this->httpClient, Phake::times(1))->get('my/tasks');
+        Phake::verify($this->httpClient, Phake::times(1))->get('my/tasks',['query' => []]);
         Phake::verify($this->response, Phake::times(1))->json();
         
     }
