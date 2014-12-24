@@ -2,6 +2,7 @@
 namespace Polidog\Chatwork\Api;
 
 
+use Polidog\Chatwork\Entity\Factory\MemberFactory;
 use Polidog\Chatwork\Entity\Room;
 
 class Rooms extends AbstractApi
@@ -75,6 +76,15 @@ class Rooms extends AbstractApi
                 ]
             ]
         );
+    }
+
+    /**
+     * @param $id
+     * @return Rooms\Members
+     */
+    public function members($id)
+    {
+        return new Rooms\Members($id, $this->client, new MemberFactory());
     }
   
 }
