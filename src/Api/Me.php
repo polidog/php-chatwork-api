@@ -14,7 +14,7 @@ class Me extends AbstractApi
      */
     public function show()
     {
-        return $this->factory->create(
+        return $this->factory->entity(
             $this->client->get('me')->json()
         );
     }

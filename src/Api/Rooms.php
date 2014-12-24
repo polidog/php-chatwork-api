@@ -2,6 +2,8 @@
 namespace Polidog\Chatwork\Api;
 
 
+use Polidog\Chatwork\Entity\Room;
+
 class Rooms extends AbstractApi
 {
     const ACTION_TYPE_LEAVE = 'leave';
@@ -17,26 +19,28 @@ class Rooms extends AbstractApi
     public function show($id = null)
     {
         if (is_null($id)) {
-            return $this->client->get('rooms')->json();
+            return $this->factory->collection(
+                $this->client->get('rooms')->json()
+            );
         }
-        return $this->client->get(['rooms/{id}',['id' => $id]])->json();
+        return $this->factory->entity(
+            $this->client->get(['rooms/{id}',['id' => $id]])->json()
+        );
     }
-
+    
     /**
      * グループチャットを新規作成
-     * @param $name
-     * @param $members_admin_ids
-     * @param array $options
-     *
-     * @return mixed
+     * 
+     * @param Room $room
+     * @return Room
      */
-    public function create($name, $members_admin_ids, $options = array())
+    public function create(Room $room)
     {
-        $options['name'] = $name;
-        $options['members_admin_ids'] = $members_admin_ids;
-        return $this->client->post('rooms',[
-            'body' => $options
+        $result = $this->client->post('rooms',[
+            'body' => $room->toArray()
         ])->json();
+        $room->roomId = $result['room_id'];
+        return $room;
     }
 
     /**
@@ -44,18 +48,14 @@ class Rooms extends AbstractApi
      * @param $id room id
      * @param array $options
      *
-     * @return array
+     * @return void
      */
-    public function update($id, $options = array())
+    public function update(Room $room)
     {
-        return $this->client->put(
-            [
-                'rooms/{id}',['id' => $id]
-            ],
-            [
-                'body' => $options
-            ]
-        )->json();
+        $this->client->put(
+            ['rooms/{id}',['id' => $room->roomId]],
+            ['body' => $room->toArray()]
+        );
     }
 
     /**
@@ -63,19 +63,18 @@ class Rooms extends AbstractApi
      * @param int $id room id
      * @param string $actionType
      * 
-     * @return array
+     * @return void
      */
-    public function remove($id, $actionType)
+    public function remove(Room $room, $actionType)
     {
-        return $this->client->delete(
-            [
-                'rooms/{id}',['id' => $id]
-            ],
+        $this->client->delete(
+            ['rooms/{id}',['id' => $room->roomId]],
             [
                 'query' => [
                     'action_type' => $actionType
                 ]
-            ]);
+            ]
+        );
     }
   
 }

@@ -31,7 +31,7 @@ abstract class AbstractApi
      * @param ClientInterface $client
      * @param FactoryInterface $factory
      */
-    public function __construct(ClientInterface $client, FactoryInterface $factory)
+    public function __construct(ClientInterface $client, FactoryInterface $factory = null)
     {
         $this->client = $client;
         $this->factory = $factory;

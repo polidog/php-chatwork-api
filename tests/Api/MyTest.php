@@ -1,56 +1,25 @@
 <?php
 namespace Polidog\Chatwork\Api;
 
+use Polidog\Chatwork\Api\My\Status;
+use Polidog\Chatwork\Api\My\Tasks;
+
 use GuzzleHttp\ClientInterface;
-use GuzzleHttp\Message\ResponseInterface;
 use Phake;
 
 class MyTest extends \PHPUnit_Framework_TestCase 
 {
-    /**
-     * @var
-     */
-    private $httpClient;
-
-    /**
-     * @var
-     */
-    private $response;
-    
-    public function setUp()
-    {
-        $this->httpClient = Phake::mock(ClientInterface::class);
-        $this->response = Phake::mock(ResponseInterface::class);
-
-        Phake::when($this->response)->json()->thenReturn([]);        
-    }
     
     /**
      * @test
      */
-    public function callStatusApi()
+    public function getApiObject()
     {
-        Phake::when($this->httpClient)->get('my/status')->thenReturn($this->response);
+        $httpClient = Phake::mock(ClientInterface::class);     
+        $my = new My($httpClient);
         
-        $my = new My($this->httpClient);
-        $my->status();
-        
-        Phake::verify($this->httpClient, Phake::times(1))->get('my/status');
-        Phake::verify($this->response, Phake::times(1))->json();
+        $this->assertInstanceOf(Status::class, $my->status());
+        $this->assertInstanceOf(Tasks::class, $my->tasks());
     }
 
-    /**
-     * @test
-     */
-    public function callTasksApi()
-    {
-        Phake::when($this->httpClient)->get('my/tasks',['query' => []])->thenReturn($this->response);
-
-        $my = new My($this->httpClient);
-        $my->tasks();
-
-        Phake::verify($this->httpClient, Phake::times(1))->get('my/tasks',['query' => []]);
-        Phake::verify($this->response, Phake::times(1))->json();
-        
-    }
 }

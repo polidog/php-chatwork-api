@@ -1,23 +1,25 @@
 <?php
-
 namespace Polidog\Chatwork\Entity\Factory;
 
-use Cake\Utility\Inflector;
-use Polidog\Chatwork\Entity\User;
 
-class UserFactory extends AbstractFactory
+use Cake\Utility\Inflector;
+use Polidog\Chatwork\Entity\EntityInterface;
+use Polidog\Chatwork\Entity\Room;
+
+class RoomFactory extends AbstractFactory
 {
     /**
      * @param array $data
-     * @return User
+     * @return EntityInterface
      */
     public function entity(array $data = [])
     {
-        $user = new User();
+        $room = new Room();
         foreach ($data as $key => $value) {
             $property = Inflector::variable($key);
-            $user->$property = $value;
+            $room->$property = $value;
         }
-        return $user;
+        return $room;
     }
+
 }

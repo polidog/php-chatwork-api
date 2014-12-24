@@ -1,6 +1,9 @@
 <?php
 namespace Polidog\Chatwork\Api;
 
+use Polidog\Chatwork\Entity\Factory\StatusFactory;
+use Polidog\Chatwork\Entity\Factory\TaskFactory;
+
 /**
  * Api /my
  * @package Chatwork\Api
@@ -8,15 +11,13 @@ namespace Polidog\Chatwork\Api;
 class My extends AbstractApi 
 {
     
-    
     /**
      * ステータスを取得する
-     * 
-     * @return array
+     * @return My\Status
      */
     public function status()
     {
-        return $this->client->get('my/status')->json();
+        return new My\Status($this->client, new StatusFactory());
     }
 
     /**
@@ -27,7 +28,7 @@ class My extends AbstractApi
      */
     public function tasks(array $options = [])
     {
-        return $this->client->get('my/tasks',['query' => $options])->json();
+        return new My\Tasks($this->client, new TaskFactory());
     }
     
 }

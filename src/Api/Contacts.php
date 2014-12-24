@@ -8,12 +8,12 @@ namespace Polidog\Chatwork\Api;
 class Contacts extends AbstractApi 
 {
     /**
-     * コンタクト一覧を取得する
-     * 
-     * @return array
+     * @return \Polidog\Chatwork\Collection\CollectionInterface
      */
     public function show()
     {
-        return $this->client->get('contacts')->json();
+        return $this->factory->collection(
+            $this->client->get('contacts')->json()
+        );
     }
 }
