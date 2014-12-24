@@ -6,7 +6,7 @@
  * Time: 5:50
  */
 
-namespace Api;
+namespace Polidog\Chatwork\Api;
 
 use GuzzleHttp\ClientInterface;
 use GuzzleHttp\Message\ResponseInterface;
