@@ -34,7 +34,9 @@ class Rooms extends AbstractApi
     {
         $options['name'] = $name;
         $options['members_admin_ids'] = $members_admin_ids;
-        return $this->client->post('rooms',$options)->json();
+        return $this->client->post('rooms',[
+            'body' => $options
+        ])->json();
     }
 
     /**
@@ -46,7 +48,14 @@ class Rooms extends AbstractApi
      */
     public function update($id, $options = array())
     {
-        return $this->client->put(['rooms/{id}',['id' => $id]],$options)->json();
+        return $this->client->put(
+            [
+                'rooms/{id}',['id' => $id]
+            ],
+            [
+                'body' => $options
+            ]
+        )->json();
     }
 
     /**
