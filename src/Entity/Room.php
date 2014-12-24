@@ -69,7 +69,7 @@ class Room implements EntityInterface
     /**
      * @var int
      */
-    public $lastUploadTime;
+    public $lastUpdateTime;
 
     /**
      * @var string

@@ -10,7 +10,7 @@ class RoomFactory extends AbstractFactory
 {
     /**
      * @param array $data
-     * @return EntityInterface
+     * @return Room
      */
     public function entity(array $data = [])
     {
