@@ -30,7 +30,7 @@ class RoomsTest extends \PHPUnit_Framework_TestCase
     /**
      * @test
      */
-    public function callApiShowChatRoom()
+    public function チャットルームの一覧を取得する()
     {
         Phake::when($this->httpClient)->get('rooms')->thenReturn($this->response);
         Phake::when($this->factory)->collection($this->isType('array'))->thenReturn([]);
@@ -40,6 +40,23 @@ class RoomsTest extends \PHPUnit_Framework_TestCase
         Phake::verify($this->httpClient,Phake::times(1))->get('rooms');
         Phake::verify($this->response,Phake::times(1))->json();
         Phake::verify($this->factory, Phake::times(1))->collection($this->isType('array'));
+    }
+
+    /**
+     * @test
+     */
+    public function 指定したIDのチャットルームを取得することができる()
+    {
+        Phake::when($this->httpClient)->get(['rooms/{id}',['id' => 1]])
+            ->thenReturn($this->response);
+       
+        Phake::when($this->factory)->entity($this->isType('array'));
+        
+        $rooms = new Rooms($this->httpClient, $this->factory);
+        $rooms->show(1);
+        
+        Phake::verify($this->httpClient,Phake::times(1))->get(['rooms/{id}',['id' => 1]]);
+        Phake::verify($this->factory,Phake::times(1))->entity($this->isType('array'));
         
     }
     
@@ -47,7 +64,7 @@ class RoomsTest extends \PHPUnit_Framework_TestCase
     /**
      * @test
      */
-    public function callApiCreateChatRoom()
+    public function 新しくチャットルームを作成することができる()
     {
         $room = Phake::mock(Room::class);
         $roomFactory = Phake::mock(RoomFactory::class);
@@ -76,7 +93,7 @@ class RoomsTest extends \PHPUnit_Framework_TestCase
     /**
      * @test
      */
-    public function callApiUpdateRoom()
+    public function チャットルームを更新することができる()
     {
         $room = Phake::mock(Room::class);
         $room->roomId = 1;
@@ -100,7 +117,7 @@ class RoomsTest extends \PHPUnit_Framework_TestCase
     /**
      * @test
      */
-    public function callApiRemove()
+    public function チャットルームを削除することができる()
     {
         $room = new Room();
         $room->roomId = 1;

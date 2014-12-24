@@ -7,7 +7,7 @@ use Polidog\Chatwork\Entity\EntityInterface;
  * Class EntityCollection
  * @package Polidog\Chatwork\Collection
  */
-class EntityCollection implements \IteratorAggregate, CollectionInterface 
+class EntityCollection implements \IteratorAggregate, \Countable, CollectionInterface 
 {
     protected $entities = array();
 
@@ -35,5 +35,10 @@ class EntityCollection implements \IteratorAggregate, CollectionInterface
     public function getIterator()
     {
         return new \ArrayIterator($this->entities);
+    }
+    
+    public function count()
+    {
+        return count($this->entities);
     }
 }
