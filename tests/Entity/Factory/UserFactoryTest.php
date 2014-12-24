@@ -1,15 +1,5 @@
 <?php
-/**
- * Created by PhpStorm.
- * User: polidog
- * Date: 14/12/25
- * Time: 3:42
- */
-
-namespace Entity\Factory;
-
-
-use Polidog\Chatwork\Entity\Factory\UserFactory;
+namespace Polidog\Chatwork\Entity\Factory;
 
 class UserFactoryTest extends \PHPUnit_Framework_TestCase 
 {
