@@ -2,3 +2,4 @@
 src_dir: lib
 coverage_clover: build/logs/clover.xml
 json_path: build/logs/coveralls-upload.json
+repo_token: n3gS5OszqlV0NisDYhCaL8gDR8RqKRjXB
