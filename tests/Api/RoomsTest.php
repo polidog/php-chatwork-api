@@ -1,6 +1,8 @@
 <?php
 namespace Polidog\Chatwork\Api;
 
+use GuzzleHttp\ClientInterface;
+use GuzzleHttp\Message\ResponseInterface;
 use Phake;
 
 /**
