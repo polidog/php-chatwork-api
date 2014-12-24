@@ -9,6 +9,7 @@
 namespace Polidog\Chatwork;
 
 use GuzzleHttp\ClientInterface as HttpClientInterface;
+use Polidog\Chatwork\Entity\Factory\UserFactory;
 use Polidog\Chatwork\Exception\NoSupportApiException;
 use Polidog\Chatwork\Http\Event\AuthHeaderSubscriber;
 
@@ -75,17 +76,17 @@ final class Client implements ClientInterface
     {
         switch (strtolower($name)) {
             case 'me':
-                $api = new Api\Me($this->httpClient);
+                $api = new Api\Me($this->httpClient, new UserFactory());
                 break;
-            case 'my':
-                $api = new Api\My($this->httpClient);
-                break;
-            case 'contacts':
-                $api = new Api\Contacts($this->httpClient);
-                break;
-            case 'rooms':
-                $api = new Api\Rooms($this->httpClient);
-                break;
+//            case 'my':
+//                $api = new Api\My($this->httpClient);
+//                break;
+//            case 'contacts':
+//                $api = new Api\Contacts($this->httpClient);
+//                break;
+//            case 'rooms':
+//                $api = new Api\Rooms($this->httpClient);
+//                break;
             default:
                 throw new NoSupportApiException(sprintf('Undefined api instance called: "%s"', $name));
         }

@@ -9,7 +9,12 @@
 namespace Polidog\Chatwork\Api;
 
 use GuzzleHttp\ClientInterface;
+use Polidog\Chatwork\Entity\Factory\FactoryInterface;
 
+/**
+ * Class AbstractApi
+ * @package Polidog\Chatwork\Api
+ */
 abstract class AbstractApi
 {
     /**
@@ -17,9 +22,18 @@ abstract class AbstractApi
      */
     protected $client;
 
-    
-    public function __construct(ClientInterface $client)
+    /**
+     * @var FactoryInterface
+     */
+    protected $factory;
+
+    /**
+     * @param ClientInterface $client
+     * @param FactoryInterface $factory
+     */
+    public function __construct(ClientInterface $client, FactoryInterface $factory)
     {
         $this->client = $client;
+        $this->factory = $factory;
     }
 }

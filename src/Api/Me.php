@@ -1,6 +1,8 @@
 <?php
 namespace Polidog\Chatwork\Api;
 
+use Polidog\Chatwork\Entity\User;
+
 /**
  * Api /me 
  * @package Polidog\Chatwork\Api
@@ -8,10 +10,12 @@ namespace Polidog\Chatwork\Api;
 class Me extends AbstractApi 
 {
     /**
-     * @return array
+     * @return User
      */
     public function show()
     {
-        return $this->client->get('me')->json();
+        return $this->factory->create(
+            $this->client->get('me')->json()
+        );
     }
 }

@@ -33,7 +33,8 @@
   }], 
   "require": {
     "php": ">=5.5.0",
-    "guzzlehttp/guzzle": "5.1.0"
+    "guzzlehttp/guzzle": "5.1.0",
+    "cakephp/utility": "3.0.0-beta3"
   },
   "require-dev": {
     "phpunit/phpunit": "4.4.0",
