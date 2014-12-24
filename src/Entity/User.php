@@ -5,7 +5,7 @@ namespace Polidog\Chatwork\Entity;
  * Class User
  * @package Polidog\Chatwork\Entity
  */
-class User 
+class User implements EntityInterface
 {
     /**
      * account id
