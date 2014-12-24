@@ -4,7 +4,12 @@ namespace Polidog\Chatwork;
 use GuzzleHttp\ClientInterface as HttpClientInterface;
 use GuzzleHttp\Event\Emitter;
 use Phake;
+use Polidog\Chatwork\Api\Contacts;
 use Polidog\Chatwork\Api\Me;
+use Polidog\Chatwork\Api\My;
+use Polidog\Chatwork\Api\Rooms;
+use Polidog\Chatwork\Entity\Factory\RoomFactory;
+use Polidog\Chatwork\Entity\Factory\UserFactory;
 use Polidog\Chatwork\Http\Event\AuthHeaderSubscriber;
 
 class ClientTest extends \PHPUnit_Framework_TestCase
@@ -29,8 +34,9 @@ class ClientTest extends \PHPUnit_Framework_TestCase
      * 
      * @param string $apiName
      * @param string $apiObjectName
+     * @param string $factoryObjectName
      */
-    public function selectApiObjects($apiName, $apiObjectName)
+    public function selectApiObjects($apiName, $apiObjectName, $factoryObjectName)
     {
         $client = new Client('apikeytoken', []);
         $actual = $client->api($apiName);
@@ -51,7 +57,10 @@ class ClientTest extends \PHPUnit_Framework_TestCase
     public function dp_apiNames()
     {
         return [
-            ['me', Me::class]
+            ['me', Me::class, UserFactory::class],
+            ['my', My::class, null],
+            ['contacts', Contacts::class, UserFactory::class],
+            ['rooms', Rooms::class, RoomFactory::class]
         ];
     }
 }
