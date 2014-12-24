@@ -7,7 +7,7 @@ use Phake;
  * Class RoomsTest
  * @package Polidog\Chatwork\Api
  */
-class RoomsTest 
+class RoomsTest extends \PHPUnit_Framework_TestCase
 {
     
     private $httpClient;
