@@ -4,6 +4,10 @@ namespace Polidog\Chatwork\Api;
 use GuzzleHttp\ClientInterface;
 use GuzzleHttp\Message\ResponseInterface;
 use Phake;
+use Polidog\Chatwork\Api\Rooms\Files;
+use Polidog\Chatwork\Api\Rooms\Members;
+use Polidog\Chatwork\Api\Rooms\Messages;
+use Polidog\Chatwork\Api\Rooms\Tasks;
 use Polidog\Chatwork\Entity\Factory\RoomFactory;
 use Polidog\Chatwork\Entity\Room;
 
@@ -132,7 +136,45 @@ class RoomsTest extends \PHPUnit_Framework_TestCase
             );
         
     }
-    
-    
+
+    /**
+     * @test
+     */
+    public function メンバーAPI用のオブジェクトを取得する()
+    {
+        $rooms = new Rooms($this->httpClient);
+        $members = $rooms->members(1);
+        $this->assertInstanceOf(Members::class, $members);
+    }
+
+    /**
+     * @test
+     */
+    public function メッセージAPI用のオブジェクトを取得する()
+    {
+        $rooms = new Rooms($this->httpClient);
+        $messages = $rooms->messages(1);
+        $this->assertInstanceOf(Messages::class, $messages);
+    }
+
+    /**
+     * @test
+     */
+    public function タスクAPI用のオブジェクトを取得する()
+    {
+        $rooms = new Rooms($this->httpClient);
+        $tasks = $rooms->tasks(1);
+        $this->assertInstanceOf(Tasks::class, $tasks);
+    }    
+
+    /**
+     * @test
+     */
+    public function ファイルAPI用のオブジェクトを取得することができる()
+    {
+        $rooms = new Rooms($this->httpClient);
+        $files = $rooms->files(1);
+        $this->assertInstanceOf(Files::class, $files);
+    }
     
 }

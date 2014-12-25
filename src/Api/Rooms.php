@@ -2,8 +2,10 @@
 namespace Polidog\Chatwork\Api;
 
 
+use Polidog\Chatwork\Entity\Factory\FileFactory;
 use Polidog\Chatwork\Entity\Factory\MemberFactory;
 use Polidog\Chatwork\Entity\Factory\MessageFactory;
+use Polidog\Chatwork\Entity\Factory\TaskFactory;
 use Polidog\Chatwork\Entity\Room;
 
 class Rooms extends AbstractApi
@@ -96,5 +98,23 @@ class Rooms extends AbstractApi
     {
         return new Rooms\Messages($roomId, $this->client, new MessageFactory());
     }
-  
+
+    /**
+     * @param $roomId
+     * @return Rooms\Tasks
+     */
+    public function tasks($roomId)
+    {
+        return new Rooms\Tasks($roomId, $this->client, new TaskFactory());
+    }
+
+    /**
+     * @param $roomId
+     * @return Rooms\Files
+     */
+    public function files($roomId)
+    {
+        return new Rooms\Files($roomId, $this->client, new FileFactory());
+    }
+    
 }
