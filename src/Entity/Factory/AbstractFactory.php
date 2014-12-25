@@ -11,9 +11,14 @@ abstract class AbstractFactory implements FactoryInterface
      * @param array $listUp
      * @return EntityCollection
      */
-    public function collection(array $listUp)
+    public function collection($listUp = null)
     {
+        
         $collection = new $this->collectionName();
+        if (!is_array($listUp)) {
+            return $collection;
+        }
+        
         foreach ($listUp as $value) {
             $collection->add($this->entity($value));
         }

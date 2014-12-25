@@ -14,9 +14,9 @@ interface FactoryInterface
     public function entity(array $data = []);
 
     /**
-     * @param array $listUp
+     * @param array|null $listUp
      * @return CollectionInterface
      */
-    public function collection(array $listUp);
+    public function collection($listUp);
         
 }
