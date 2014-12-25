@@ -48,7 +48,3 @@ tools:
                 - 'web/*'
                 - 'tests/*'
             paths: {  }
-build_failure_conditions: {  }
-_force_disabled: {  }
-application:
-    type: none
