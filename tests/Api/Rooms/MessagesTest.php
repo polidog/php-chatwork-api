@@ -84,4 +84,43 @@ class MessagesTest extends \PHPUnit_Framework_TestCase
         Phake::verify($factory,Phake::times(1))
             ->entity($this->isType('array'));        
     }
+
+    /**
+     * @test
+     */
+    public function 新しいメッセージを登録する()
+    {
+        $httpClient = Phake::mock(ClientInterface::class);
+        $response = Phake::mock(ResponseInterface::class);
+        $factory = Phake::mock(FactoryInterface::class);
+
+        Phake::when($httpClient)
+            ->post($this->isType('array'), $this->isType('array'))
+            ->thenReturn($response);
+
+        Phake::when($response)
+            ->json()
+            ->thenReturn([]);
+
+        $messages = new Messages(1, $httpClient, $factory);
+        $messages->create("hogehoge");
+
+        Phake::verify($httpClient,Phake::times(1))
+            ->post(
+                ['rooms/{roomId}/messages',['roomId' => 1]],
+                [
+                    'body' => [
+                        'body' => "hogehoge"
+                    ]
+                ]
+            );
+
+        Phake::verify($response,Phake::times(1))
+            ->json();
+
+        Phake::verify($factory,Phake::times(1))
+            ->entity($this->isType('array'));
+        
+        
+    }
 }    

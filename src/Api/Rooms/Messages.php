@@ -52,4 +52,23 @@ class Messages extends AbstractRoomApi
             )->json()
         );        
     }
+
+    /**
+     * @param string $body
+     * @return Message
+     */
+    public function create($body)
+    {
+        return $this->factory->entity(
+            $this->client->post(
+                ['rooms/{roomId}/messages',['roomId' => $this->roomId]],
+                [
+                    'body' => [
+                        'body' => $body
+                    ]
+                ]
+            )->json()
+        );
+    }
+    
 }
