@@ -21,6 +21,11 @@ class TaskFactoryTest extends \PHPUnit_Framework_TestCase
               "name": "Group Chat Name",
               "icon_path": "https://example.com/ico_group.png"
             },
+            "account": {
+              "account_id": 123,
+              "name": "Bob",
+              "avatar_image_url": "https://example.com/abc.png"
+            },            
             "assigned_by_account": {
               "account_id": 456,
               "name": "Anna",
@@ -34,6 +39,7 @@ class TaskFactoryTest extends \PHPUnit_Framework_TestCase
         
         $this->assertInstanceOf(Task::class, $entity);
         $this->assertInstanceOf(Room::class, $entity->room);
+        $this->assertInstanceOf(User::class, $entity->account);
         $this->assertInstanceOf(User::class, $entity->assignedByAccount);
         
         $this->assertEquals(3, $entity->taskId);

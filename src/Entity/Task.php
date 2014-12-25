@@ -19,6 +19,11 @@ class Task implements EntityInterface
     /**
      * @var User
      */
+    public $account;
+    
+    /**
+     * @var User
+     */
     public $assignedByAccount;
 
     /**

@@ -25,12 +25,11 @@ class TaskFactory extends AbstractFactory
         $userFactory = new UserFactory();
 
         $task = new Task();
-        
         foreach ($data as $key => $value) {
             $property = Inflector::variable($key);
             if ($property == 'room') {
                 $task->$property = $roomFactory->entity($value); 
-            } else if ($property == 'assignedByAccount') {
+            } else if ($property == 'assignedByAccount' || $property == 'account') {
                 $task->$property = $userFactory->entity($value);
             } else {
                 $task->$property = $value;
