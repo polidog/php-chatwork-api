@@ -3,7 +3,6 @@ namespace Polidog\Chatwork\Entity\Factory;
 
 
 use Cake\Utility\Inflector;
-use Polidog\Chatwork\Entity\EntityInterface;
 use Polidog\Chatwork\Entity\Message;
 
 class MessageFactory extends AbstractFactory 
