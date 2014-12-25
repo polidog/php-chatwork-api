@@ -10,7 +10,7 @@ use Polidog\Chatwork\Collection\CollectionInterface;
 class Members extends AbstractRoomApi 
 {
     /**
-     * @return \Polidog\Chatwork\Collection\CollectionInterface
+     * @return CollectionInterface
      */
     public function show()
     {
@@ -22,7 +22,7 @@ class Members extends AbstractRoomApi
     }
 
     /**
-     * @param CollectionInterface $users
+     * @param CollectionInterface $members
      */
     public function update(CollectionInterface $members)
     {
