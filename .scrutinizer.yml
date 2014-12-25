@@ -1,7 +1,10 @@
 filter:
-    excluded_paths: {  }
-    paths:
-        - 'src/*'
+    excluded_paths:
+        - 'vendor/*'
+        - 'app/*'
+        - 'web/*'
+        - 'tests/*'
+    paths: {  }
 tools:
     php_cpd:
         enabled: true
@@ -11,9 +14,12 @@ tools:
         min_lines: 5
         min_tokens: 70
         filter:
-            excluded_paths: {  }
-            paths:
-                - 'src/*'
+            excluded_paths:
+                - 'vendor/*'
+                - 'app/*'
+                - 'web/*'
+                - 'tests/*'
+            paths: {  }
     php_pdepend:
         excluded_dirs:
             - vendor
@@ -22,9 +28,12 @@ tools:
         suffixes:
             - php
         filter:
-            excluded_paths: {  }
-            paths:
-                - 'src/*'
+            excluded_paths:
+                - 'vendor/*'
+                - 'app/*'
+                - 'web/*'
+                - 'tests/*'
+            paths: {  }
     php_changetracking:
         enabled: true
         bug_patterns:
@@ -33,9 +42,12 @@ tools:
             - '\badd(?:s|ed)?\b'
             - '\bimplement(?:s|ed)?\b'
         filter:
-            excluded_paths: {  }
-            paths:
-                - 'src/*'
+            excluded_paths:
+                - 'vendor/*'
+                - 'app/*'
+                - 'web/*'
+                - 'tests/*'
+            paths: {  }
 build_failure_conditions: {  }
 _force_disabled: {  }
 application:
