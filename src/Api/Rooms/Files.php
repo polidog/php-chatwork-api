@@ -12,14 +12,18 @@ class Files extends AbstractRoomApi
      */
     public function show($accountId = null)
     {
+        $options = [
+            'query' => []
+        ];
+        
+        if (!is_null($accountId)) {
+            $options['query']['account_id'] = $accountId;
+        }
+        
         return $this->factory->collection(
             $this->client->get(
                 ['rooms/{roomId}/files',['roomId' => $this->roomId]],
-                [
-                    'query' => [
-                        'account_id' => $accountId
-                    ]
-                ]
+                $options
             )->json()
         );
     }
