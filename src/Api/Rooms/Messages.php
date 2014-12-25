@@ -54,21 +54,20 @@ class Messages extends AbstractRoomApi
     }
 
     /**
-     * @param string $body
-     * @return Message
+     * @param Message $message
      */
-    public function create($body)
+    public function create(Message $message)
     {
-        return $this->factory->entity(
-            $this->client->post(
-                ['rooms/{roomId}/messages',['roomId' => $this->roomId]],
-                [
-                    'body' => [
-                        'body' => $body
-                    ]
+        $result = $this->client->post(
+            ['rooms/{roomId}/messages',['roomId' => $this->roomId]],
+            [
+                'body' => [
+                    'body' => $message->body
                 ]
-            )->json()
-        );
+            ]
+        )->json();
+        
+        $message->messageId = $result['message_id'];
     }
     
 }

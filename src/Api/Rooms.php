@@ -3,6 +3,7 @@ namespace Polidog\Chatwork\Api;
 
 
 use Polidog\Chatwork\Entity\Factory\MemberFactory;
+use Polidog\Chatwork\Entity\Factory\MessageFactory;
 use Polidog\Chatwork\Entity\Room;
 
 class Rooms extends AbstractApi
@@ -79,12 +80,21 @@ class Rooms extends AbstractApi
     }
 
     /**
-     * @param $id
+     * @param $roomId
      * @return Rooms\Members
      */
-    public function members($id)
+    public function members($roomId)
     {
-        return new Rooms\Members($id, $this->client, new MemberFactory());
+        return new Rooms\Members($roomId, $this->client, new MemberFactory());
+    }
+
+    /**
+     * @param $roomId
+     * @return Rooms\Messages
+     */
+    public function messages($roomId)
+    {
+        return new Rooms\Messages($roomId, $this->client, new MessageFactory());
     }
   
 }

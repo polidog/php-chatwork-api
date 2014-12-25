@@ -7,6 +7,7 @@ use GuzzleHttp\Message\ResponseInterface;
 
 use Phake;
 use Polidog\Chatwork\Entity\Factory\FactoryInterface;
+use Polidog\Chatwork\Entity\Message;
 
 class MessagesTest extends \PHPUnit_Framework_TestCase 
 {
@@ -92,7 +93,9 @@ class MessagesTest extends \PHPUnit_Framework_TestCase
     {
         $httpClient = Phake::mock(ClientInterface::class);
         $response = Phake::mock(ResponseInterface::class);
-        $factory = Phake::mock(FactoryInterface::class);
+        
+        $message = new Message();
+        $message->body = "hogehoge";
 
         Phake::when($httpClient)
             ->post($this->isType('array'), $this->isType('array'))
@@ -100,10 +103,12 @@ class MessagesTest extends \PHPUnit_Framework_TestCase
 
         Phake::when($response)
             ->json()
-            ->thenReturn([]);
-
-        $messages = new Messages(1, $httpClient, $factory);
-        $messages->create("hogehoge");
+            ->thenReturn([
+                'message_id' => 123456
+            ]);
+        
+        $messages = new Messages(1, $httpClient);
+        $messages->create($message);
 
         Phake::verify($httpClient,Phake::times(1))
             ->post(
@@ -118,9 +123,7 @@ class MessagesTest extends \PHPUnit_Framework_TestCase
         Phake::verify($response,Phake::times(1))
             ->json();
 
-        Phake::verify($factory,Phake::times(1))
-            ->entity($this->isType('array'));
-        
+        $this->assertEquals(123456, $message->messageId);        
         
     }
 }    
