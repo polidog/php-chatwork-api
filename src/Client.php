@@ -44,8 +44,9 @@ final class Client implements ClientInterface
     ];
     
     /**
+     * @param $apiKey
+     * @param array $httpOptions
      * @param HttpClientInterface $httpClient
-     * @param string $apiKey
      */
     public function __construct(
         $apiKey, 
