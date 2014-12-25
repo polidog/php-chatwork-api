@@ -22,15 +22,9 @@ class Members extends AbstractRoomApi
     }
 
     /**
-     * @param CollectionInterface $adminUsers
-     * @param CollectionInterface $memberUsers
-     * @param CollectionInterface $readonlyUsers
+     * @param CollectionInterface $users
      */
-    public function update(
-        CollectionInterface $adminUsers, 
-        CollectionInterface $memberUsers = null,
-        CollectionInterface $readonlyUsers = null
-    )
+    public function update(CollectionInterface $members)
     {
         $options = [
             'body' => [
@@ -39,25 +33,27 @@ class Members extends AbstractRoomApi
                 'members_readonly_ids' => []
             ]
         ];
-        foreach($adminUsers as $user) {
-            if (!empty($user->accountId)) {
-                $options['body']['members_admin_ids'][] = $user->accountId;    
+        
+        foreach ($members as $member) {
+            if ($member->role == 'admin') {
+                $options['body']['members_admin_ids'][] = $member->user->accountId;
+            }
+            if ($member->role == 'member') {
+                $options['body']['members_member_ids'][] = $member->user->accountId;
+            }
+            if ($member->role == 'readonly') {
+                $options['body']['members_readonly_ids'][] = $member->user->accountId;
+            }
+        }
+        
+        foreach (['members_admin_ids','members_member_ids','members_readonly_ids'] as $key) {
+            if (!empty($options['body'][$key])) {
+                $options['body'][$key] = implode(',', $options['body'][$key]);
+            } else {
+                unset($options['body'][$key]);
             }
         }
 
-        foreach($memberUsers as $user) {
-            if (!empty($user->accountId)) {
-                $options['body']['members_member_ids'][] = $user->accountId;
-            }
-        }
-        
-        foreach($readonlyUsers as $user) {
-            if (!empty($user->accountId)) {
-                $options['body']['members_readonly_ids'][] = $user->accountId;
-            }
-        }
-        
         $this->client->put(['rooms/{roomId}/members',['roomId' => $this->roomId]], $options);
-        
     }
 }
