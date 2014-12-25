@@ -2,7 +2,7 @@
 namespace Polidog\Chatwork\Entity\Factory;
 
 
-use Polidog\Chatwork\Collection\CollectionInterface;
+use Polidog\Chatwork\Entity\Collection\CollectionInterface;
 use Polidog\Chatwork\Entity\EntityInterface;
 
 class AbstractFactoryTest extends \PHPUnit_Framework_TestCase 

@@ -2,7 +2,7 @@
 namespace Polidog\Chatwork\Api\My;
 
 use Polidog\Chatwork\Api\AbstractApi;
-use Polidog\Chatwork\Collection\CollectionInterface;
+use Polidog\Chatwork\Entity\Collection\CollectionInterface;
 
 class Tasks extends AbstractApi
 {

@@ -9,8 +9,7 @@
 namespace Polidog\Chatwork\Api;
 
 use GuzzleHttp\Message\ResponseInterface;
-use Polidog\Chatwork\Api\Contacts;
-use Polidog\Chatwork\Collection\EntityCollection;
+use Polidog\Chatwork\Entity\Collection\EntityCollection;
 use Polidog\Chatwork\Entity\Factory\UserFactory;
 
 use GuzzleHttp\ClientInterface;

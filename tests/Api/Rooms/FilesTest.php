@@ -1,11 +1,12 @@
 <?php
 namespace Polidog\Chatwork\Api\Rooms;
 
+use Polidog\Chatwork\Entity\Collection\EntityCollection;
+use Polidog\Chatwork\Entity\Factory\FactoryInterface;
+
 use GuzzleHttp\ClientInterface;
 use GuzzleHttp\Message\ResponseInterface;
 use Phake;
-use Polidog\Chatwork\Collection\EntityCollection;
-use Polidog\Chatwork\Entity\Factory\FactoryInterface;
 
 class FilesTest extends \PHPUnit_Framework_TestCase 
 {

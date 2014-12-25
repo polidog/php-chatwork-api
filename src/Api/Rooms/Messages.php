@@ -2,7 +2,7 @@
 namespace Polidog\Chatwork\Api\Rooms;
 
 
-use Polidog\Chatwork\Collection\CollectionInterface;
+use Polidog\Chatwork\Entity\Collection\CollectionInterface;
 use Polidog\Chatwork\Entity\Message;
 
 /**

@@ -12,5 +12,5 @@ class Member implements EntityInterface
     /**
      * @var User
      */
-    public $user;
+    public $account;
 }

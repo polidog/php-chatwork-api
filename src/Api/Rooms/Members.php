@@ -1,7 +1,7 @@
 <?php
 namespace Polidog\Chatwork\Api\Rooms;
 
-use Polidog\Chatwork\Collection\CollectionInterface;
+use Polidog\Chatwork\Entity\Collection\MembersCollection;
 
 /**
  * Class Members
@@ -10,7 +10,7 @@ use Polidog\Chatwork\Collection\CollectionInterface;
 class Members extends AbstractRoomApi 
 {
     /**
-     * @return CollectionInterface
+     * @return MembersCollection
      */
     public function show()
     {
@@ -22,38 +22,17 @@ class Members extends AbstractRoomApi
     }
 
     /**
-     * @param CollectionInterface $members
+     * @param MembersCollection $members
      */
-    public function update(CollectionInterface $members)
+    public function update(MembersCollection $members)
     {
         $options = [
             'body' => [
-                'members_admin_ids' => [],
-                'members_member_ids' => [],
-                'members_readonly_ids' => []
+                'members_admin_ids' => implode(',',$members->getAdminIds()),
+                'members_member_ids' => implode(',',$members->getMemberIds()),
+                'members_readonly_ids' => implode(',',$members->getReadonlyIds())
             ]
         ];
-        
-        foreach ($members as $member) {
-            if ($member->role == 'admin') {
-                $options['body']['members_admin_ids'][] = $member->user->accountId;
-            }
-            if ($member->role == 'member') {
-                $options['body']['members_member_ids'][] = $member->user->accountId;
-            }
-            if ($member->role == 'readonly') {
-                $options['body']['members_readonly_ids'][] = $member->user->accountId;
-            }
-        }
-        
-        foreach (['members_admin_ids','members_member_ids','members_readonly_ids'] as $key) {
-            if (!empty($options['body'][$key])) {
-                $options['body'][$key] = implode(',', $options['body'][$key]);
-            } else {
-                unset($options['body'][$key]);
-            }
-        }
-
         $this->client->put(['rooms/{roomId}/members',['roomId' => $this->roomId]], $options);
     }
 }

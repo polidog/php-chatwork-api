@@ -8,7 +8,7 @@ namespace Polidog\Chatwork\Api;
 class Contacts extends AbstractApi 
 {
     /**
-     * @return \Polidog\Chatwork\Collection\CollectionInterface
+     * @return \Polidog\Chatwork\Entity\Collection\CollectionInterface
      */
     public function show()
     {

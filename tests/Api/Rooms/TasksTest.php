@@ -1,15 +1,15 @@
 <?php
 namespace Polidog\Chatwork\Api\Rooms;
 
-use Polidog\Chatwork\Collection\EntityCollection;
+use Polidog\Chatwork\Entity\Collection\EntityCollection;
 use Polidog\Chatwork\Entity\Factory\FactoryInterface;
+use Polidog\Chatwork\Entity\Task;
+use Polidog\Chatwork\Entity\User;
 
 use GuzzleHttp\Message\ResponseInterface;
 use GuzzleHttp\ClientInterface;
 
 use Phake;
-use Polidog\Chatwork\Entity\Task;
-use Polidog\Chatwork\Entity\User;
 
 
 class TasksTest extends \PHPUnit_Framework_TestCase 

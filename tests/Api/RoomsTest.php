@@ -8,8 +8,11 @@ use Polidog\Chatwork\Api\Rooms\Files;
 use Polidog\Chatwork\Api\Rooms\Members;
 use Polidog\Chatwork\Api\Rooms\Messages;
 use Polidog\Chatwork\Api\Rooms\Tasks;
+use Polidog\Chatwork\Entity\Collection\MembersCollection;
 use Polidog\Chatwork\Entity\Factory\RoomFactory;
+use Polidog\Chatwork\Entity\Member;
 use Polidog\Chatwork\Entity\Room;
+use Polidog\Chatwork\Entity\User;
 
 /**
  * Class RoomsTest
@@ -57,7 +60,7 @@ class RoomsTest extends \PHPUnit_Framework_TestCase
         Phake::when($this->factory)->entity($this->isType('array'));
         
         $rooms = new Rooms($this->httpClient, $this->factory);
-        $rooms->show(1);
+        $rooms->detail(1);
         
         Phake::verify($this->httpClient,Phake::times(1))->get(['rooms/{id}',['id' => 1]]);
         Phake::verify($this->factory,Phake::times(1))->entity($this->isType('array'));
@@ -71,7 +74,7 @@ class RoomsTest extends \PHPUnit_Framework_TestCase
     public function 新しくチャットルームを作成することができる()
     {
         $room = Phake::mock(Room::class);
-        $roomFactory = Phake::mock(RoomFactory::class);
+        $members = Phake::mock(MembersCollection::class);
         
         Phake::when($this->httpClient)->post('rooms', $this->isType('array'))->thenReturn($this->response);
         Phake::when($this->response)->json()->thenReturn([
@@ -83,13 +86,24 @@ class RoomsTest extends \PHPUnit_Framework_TestCase
             'name' => 'test_room'
         ]);
         
-     
+        Phake::when($members)->getAdminIds()->thenReturn([
+            1,2,3
+        ]);
+        Phake::when($members)->getMemberIds()->thenReturn([
+            4,5,6
+        ]);
+        Phake::when($members)->getReadonlyIds()->thenReturn([
+            7,8,9
+        ]);
+
         $rooms = new Rooms($this->httpClient, new RoomFactory());
-        $result = $rooms->create($room);
+        $result = $rooms->create($room, $members);
         
         Phake::verify($this->httpClient, Phake::times(1))->post('rooms', $this->isType('array'));
         Phake::verify($this->response, Phake::times(1))->json();
-        Phake::verify($room, Phake::times(1))->toArray();
+        Phake::verify($members, Phake::times(1))->getAdminIds();
+        Phake::verify($members, Phake::times(1))->getMemberIds();
+        Phake::verify($members, Phake::times(1))->getReadonlyIds();
             
         $this->assertInstanceOf(Room::class, $result);
     }

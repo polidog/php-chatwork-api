@@ -2,6 +2,9 @@
 namespace Polidog\Chatwork\Api;
 
 
+use Polidog\Chatwork\Entity\Collection\CollectionInterface;
+use Polidog\Chatwork\Collection\EntityCollection;
+use Polidog\Chatwork\Entity\Collection\MembersCollection;
 use Polidog\Chatwork\Entity\Factory\FileFactory;
 use Polidog\Chatwork\Entity\Factory\MemberFactory;
 use Polidog\Chatwork\Entity\Factory\MessageFactory;
@@ -16,32 +19,42 @@ class Rooms extends AbstractApi
     
     /**
      * 自分のチャット一覧の取得
-     * @param int $id
-     *
-     * @return array
+     * @return EntityCollection
      */
-    public function show($id = null)
+    public function show()
     {
-        if (is_null($id)) {
-            return $this->factory->collection(
-                $this->client->get('rooms')->json()
-            );
-        }
+        return $this->factory->collection(
+            $this->client->get('rooms')->json()
+        );
+    }
+
+    /**
+     * @param $id
+     * @return Room
+     */
+    public function detail($id)
+    {
         return $this->factory->entity(
             $this->client->get(['rooms/{id}',['id' => $id]])->json()
-        );
+        );        
     }
     
     /**
      * グループチャットを新規作成
-     * 
      * @param Room $room
+     * @param MembersCollection $members
      * @return Room
      */
-    public function create(Room $room)
+    public function create(Room $room, MembersCollection $members)
     {
         $result = $this->client->post('rooms',[
-            'body' => $room->toArray()
+            'body' => [
+                'name' => $room->name,
+                'description' => $room->description,
+                'members_admin_ids' => implode(',',$members->getAdminIds()),
+                'members_member_ids' => implode(',',$members->getMemberIds()),
+                'members_readonly_ids' => implode(',',$members->getReadonlyIds()),
+            ]
         ])->json();
         $room->roomId = $result['room_id'];
         return $room;
