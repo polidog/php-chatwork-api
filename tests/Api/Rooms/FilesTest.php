@@ -46,9 +46,7 @@ class FilesTest extends \PHPUnit_Framework_TestCase
             ->get(
                 ['rooms/{roomId}/files',['roomId' => 1]],
                 [
-                    'query' => [
-                        'account_id' => null
-                    ]
+                    'query' => []
                 ]
             );
         
