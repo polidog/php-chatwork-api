@@ -1,8 +1,8 @@
 language: php
 
 php:
-  - 5.4
   - 5.5
+  - 5.6
 before_script:
   - composer install --prefer-source
 
@@ -12,10 +12,9 @@ before_script:
 
 script:
   - mkdir -p build/logs
+  - mkdir -p build/cov
   - php vendor/bin/phpunit -c phpunit.xml.dist
 
 after_script:
-  - php vendor/bin/coveralls
-  # or enable logging
   - php vendor/bin/coveralls -v
 
