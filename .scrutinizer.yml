@@ -32,3 +32,6 @@ tools:
         filter:
             paths:
                 - 'src/*'
+    external_code_coverage:
+        timeout: 300
+        runs: 1
