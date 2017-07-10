@@ -32,7 +32,7 @@ final class Client implements ClientInterface
      * @var array
      */
     private $httpOptions = [
-        'base_url' => ['https://api.chatwork.com/{version}/', ['version' => 'v1']],
+        'base_url' => ['https://api.chatwork.com/{version}/', ['version' => 'v2']],
         'defaults' => [
             'timeout' => 60,
             'debug' => false,

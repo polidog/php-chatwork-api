@@ -15,7 +15,7 @@ class File implements EntityInterface
     public $account;
 
     /**
-     * @var int
+     * @var string
      */
     public $messageId;
 

@@ -27,7 +27,7 @@ class Task implements EntityInterface
     public $assignedByAccount;
 
     /**
-     * @var int
+     * @var string
      */
     public $messageId;
 
