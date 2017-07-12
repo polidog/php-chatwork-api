@@ -44,7 +44,9 @@ abstract class AbstractCollection implements \IteratorAggregate, \Countable, Col
      */
     public function getIterator()
     {
-        return new \ArrayIterator($this->entities);
+        foreach ($this->entities as $key => $entity) {
+            yield $key => $entity;
+        }
     }
 
     public function count()
