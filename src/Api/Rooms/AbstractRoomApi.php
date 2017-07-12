@@ -1,17 +1,17 @@
 <?php
-namespace Polidog\Chatwork\Api\Rooms;
 
+namespace Polidog\Chatwork\Api\Rooms;
 
 use Polidog\Chatwork\ClientInterface;
 use Polidog\Chatwork\Entity\Factory\FactoryInterface;
 
-abstract class AbstractRoomApi 
+abstract class AbstractRoomApi
 {
     /**
      * @var int
      */
     protected $roomId;
-    
+
     /**
      * @var ClientInterface
      */
@@ -23,8 +23,8 @@ abstract class AbstractRoomApi
     protected $factory;
 
     /**
-     * @param int $roomId
-     * @param ClientInterface $client
+     * @param int              $roomId
+     * @param ClientInterface  $client
      * @param FactoryInterface $factory
      */
     public function __construct($roomId, ClientInterface $client, FactoryInterface $factory = null)

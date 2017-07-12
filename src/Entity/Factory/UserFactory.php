@@ -9,6 +9,7 @@ class UserFactory extends AbstractFactory
 {
     /**
      * @param array $data
+     *
      * @return User
      */
     public function entity(array $data = [])
@@ -18,6 +19,7 @@ class UserFactory extends AbstractFactory
             $property = Inflector::variable($key);
             $user->$property = $value;
         }
+
         return $user;
     }
 }

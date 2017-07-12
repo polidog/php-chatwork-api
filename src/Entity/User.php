@@ -1,14 +1,15 @@
 <?php
+
 namespace Polidog\Chatwork\Entity;
 
 /**
- * Class User
- * @package Polidog\Chatwork\Entity
+ * Class User.
  */
 class User implements EntityInterface
 {
     /**
-     * account id
+     * account id.
+     *
      * @var int
      */
     public $accountId;

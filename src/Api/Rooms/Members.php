@@ -1,13 +1,13 @@
 <?php
+
 namespace Polidog\Chatwork\Api\Rooms;
 
 use Polidog\Chatwork\Entity\Collection\MembersCollection;
 
 /**
- * Class Members
- * @package Polidog\Chatwork\Api\Rooms
+ * Class Members.
  */
-class Members extends AbstractRoomApi 
+class Members extends AbstractRoomApi
 {
     /**
      * @return MembersCollection
@@ -16,7 +16,7 @@ class Members extends AbstractRoomApi
     {
         return $this->factory->collection(
             $this->client->request(
-                "GET",
+                'GET',
                 "rooms/{$this->roomId}/members"
             )
         );
@@ -29,11 +29,11 @@ class Members extends AbstractRoomApi
     {
         $options = [
             'form_params' => [
-                'members_admin_ids' => implode(',',$members->getAdminIds()),
-                'members_member_ids' => implode(',',$members->getMemberIds()),
-                'members_readonly_ids' => implode(',',$members->getReadonlyIds())
-            ]
+                'members_admin_ids' => implode(',', $members->getAdminIds()),
+                'members_member_ids' => implode(',', $members->getMemberIds()),
+                'members_readonly_ids' => implode(',', $members->getReadonlyIds()),
+            ],
         ];
-        $this->client->request("PUT","rooms/{$this->roomId}/members", $options);
+        $this->client->request('PUT', "rooms/{$this->roomId}/members", $options);
     }
 }

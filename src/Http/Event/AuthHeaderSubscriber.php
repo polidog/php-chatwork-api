@@ -6,8 +6,7 @@ use GuzzleHttp\Event\BeforeEvent;
 use GuzzleHttp\Event\SubscriberInterface;
 
 /**
- * Auth用のヘッダーを送る
- * @package Polidog\Chatwork\Http
+ * Auth用のヘッダーを送る.
  */
 class AuthHeaderSubscriber implements SubscriberInterface
 {
@@ -24,7 +23,7 @@ class AuthHeaderSubscriber implements SubscriberInterface
     public function getEvents()
     {
         return [
-            'before' => ['onBefore']
+            'before' => ['onBefore'],
         ];
     }
 

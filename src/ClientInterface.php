@@ -1,21 +1,20 @@
 <?php
+
 namespace Polidog\Chatwork;
 
-use Chatwork\Entity\EntityInterface;
 use GuzzleHttp\Exception\GuzzleException;
 use Polidog\Chatwork\Exception\NoSupportApiException;
-use Psr\Http\Message\ResponseInterface;
 
 /**
- * Interface ClientInterface
- * @package Chatwork
+ * Interface ClientInterface.
  */
-interface ClientInterface 
+interface ClientInterface
 {
     /**
      * @param $method
-     * 
+     *
      * @return Api\Me
+     *
      * @throws NoSupportApiException
      */
     public function api($method);
@@ -24,11 +23,11 @@ interface ClientInterface
      * @param       $method
      * @param       $uri
      * @param array $options
-     * @return mixed
      *
+     * @return mixed
      * @return array
+     *
      * @throws GuzzleException
      */
     public function request($method, $uri, array $options = []);
-
 }

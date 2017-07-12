@@ -1,4 +1,5 @@
 <?php
+
 namespace Polidog\Chatwork\Api\My;
 
 use Polidog\Chatwork\Api\AbstractApi;
@@ -8,12 +9,13 @@ class Tasks extends AbstractApi
 {
     /**
      * @param array $options
+     *
      * @return CollectionInterface
      */
     public function show(array $options = [])
     {
         return $this->factory->collection(
-            $this->client->request("GET",'my/tasks',['query' => $options])
+            $this->client->request('GET', 'my/tasks', ['query' => $options])
         );
     }
 }

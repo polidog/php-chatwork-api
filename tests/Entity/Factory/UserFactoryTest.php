@@ -1,7 +1,8 @@
 <?php
+
 namespace Polidog\Chatwork\Entity\Factory;
 
-class UserFactoryTest extends \PHPUnit_Framework_TestCase 
+class UserFactoryTest extends \PHPUnit_Framework_TestCase
 {
     /**
      * @test
@@ -28,8 +29,8 @@ class UserFactoryTest extends \PHPUnit_Framework_TestCase
             "facebook": "myfacebook_id",
             "twitter": "mytwitter_id",
             "avatar_image_url": "https://example.com/abc.png"
-        }',true));
-        
+        }', true));
+
         $this->assertEquals(123, $entity->accountId);
         $this->assertEquals(322, $entity->roomId);
         $this->assertEquals('John Smith', $entity->name);
@@ -48,6 +49,5 @@ class UserFactoryTest extends \PHPUnit_Framework_TestCase
         $this->assertEquals('myfacebook_id', $entity->facebook);
         $this->assertEquals('mytwitter_id', $entity->twitter);
         $this->assertEquals('https://example.com/abc.png', $entity->avatarImageUrl);
-        
     }
 }

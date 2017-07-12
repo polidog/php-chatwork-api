@@ -1,4 +1,5 @@
 <?php
+
 namespace Polidog\Chatwork\Api;
 
 use GuzzleHttp\ClientInterface;
@@ -10,21 +11,17 @@ use Polidog\Chatwork\Api\Rooms\Messages;
 use Polidog\Chatwork\Api\Rooms\Tasks;
 use Polidog\Chatwork\Entity\Collection\MembersCollection;
 use Polidog\Chatwork\Entity\Factory\RoomFactory;
-use Polidog\Chatwork\Entity\Member;
 use Polidog\Chatwork\Entity\Room;
-use Polidog\Chatwork\Entity\User;
 
 /**
- * Class RoomsTest
- * @package Polidog\Chatwork\Api
+ * Class RoomsTest.
  */
 class RoomsTest extends \PHPUnit_Framework_TestCase
 {
-    
     private $httpClient;
     private $response;
     private $factory;
-    
+
     public function setUp()
     {
         $this->httpClient = Phake::mock(ClientInterface::class);
@@ -43,9 +40,9 @@ class RoomsTest extends \PHPUnit_Framework_TestCase
         Phake::when($this->factory)->collection($this->isType('array'))->thenReturn([]);
         $rooms = new Rooms($this->httpClient, $this->factory);
         $rooms->show();
-        
-        Phake::verify($this->httpClient,Phake::times(1))->get('rooms');
-        Phake::verify($this->response,Phake::times(1))->json();
+
+        Phake::verify($this->httpClient, Phake::times(1))->get('rooms');
+        Phake::verify($this->response, Phake::times(1))->json();
         Phake::verify($this->factory, Phake::times(1))->collection($this->isType('array'));
     }
 
@@ -54,20 +51,18 @@ class RoomsTest extends \PHPUnit_Framework_TestCase
      */
     public function 指定したIDのチャットルームを取得することができる()
     {
-        Phake::when($this->httpClient)->get(['rooms/{id}',['id' => 1]])
+        Phake::when($this->httpClient)->get(['rooms/{id}', ['id' => 1]])
             ->thenReturn($this->response);
-       
+
         Phake::when($this->factory)->entity($this->isType('array'));
-        
+
         $rooms = new Rooms($this->httpClient, $this->factory);
         $rooms->detail(1);
-        
-        Phake::verify($this->httpClient,Phake::times(1))->get(['rooms/{id}',['id' => 1]]);
-        Phake::verify($this->factory,Phake::times(1))->entity($this->isType('array'));
-        
+
+        Phake::verify($this->httpClient, Phake::times(1))->get(['rooms/{id}', ['id' => 1]]);
+        Phake::verify($this->factory, Phake::times(1))->entity($this->isType('array'));
     }
-    
-    
+
     /**
      * @test
      */
@@ -75,36 +70,36 @@ class RoomsTest extends \PHPUnit_Framework_TestCase
     {
         $room = Phake::mock(Room::class);
         $members = Phake::mock(MembersCollection::class);
-        
+
         Phake::when($this->httpClient)->post('rooms', $this->isType('array'))->thenReturn($this->response);
         Phake::when($this->response)->json()->thenReturn([
-            "room_id" => 1
+            'room_id' => 1,
         ]);
-        
+
         Phake::when($room)->toArray()->thenReturn([
             'members_admin_ids' => '1,2',
-            'name' => 'test_room'
+            'name' => 'test_room',
         ]);
-        
+
         Phake::when($members)->getAdminIds()->thenReturn([
-            1,2,3
+            1, 2, 3,
         ]);
         Phake::when($members)->getMemberIds()->thenReturn([
-            4,5,6
+            4, 5, 6,
         ]);
         Phake::when($members)->getReadonlyIds()->thenReturn([
-            7,8,9
+            7, 8, 9,
         ]);
 
         $rooms = new Rooms($this->httpClient, new RoomFactory());
         $result = $rooms->create($room, $members);
-        
+
         Phake::verify($this->httpClient, Phake::times(1))->post('rooms', $this->isType('array'));
         Phake::verify($this->response, Phake::times(1))->json();
         Phake::verify($members, Phake::times(1))->getAdminIds();
         Phake::verify($members, Phake::times(1))->getMemberIds();
         Phake::verify($members, Phake::times(1))->getReadonlyIds();
-            
+
         $this->assertInstanceOf(Room::class, $result);
     }
 
@@ -115,21 +110,21 @@ class RoomsTest extends \PHPUnit_Framework_TestCase
     {
         $room = Phake::mock(Room::class);
         $room->roomId = 1;
-        $room->name = "hoge";
-        
+        $room->name = 'hoge';
+
         Phake::when($this->httpClient)
-            ->put(['rooms/{id}',['id' => 1]],$this->isType('array'))
+            ->put(['rooms/{id}', ['id' => 1]], $this->isType('array'))
             ->thenReturn([]);
-        
+
         Phake::when($room)
             ->toArray()
             ->thenReturn([]);
-        
+
         $rooms = new Rooms($this->httpClient);
         $rooms->update($room);
-        
-        Phake::verify($this->httpClient,Phake::times(1))->put(['rooms/{id}',['id' => 1]],$this->isType('array'));
-        Phake::verify($room,Phake::times(1))->toArray();
+
+        Phake::verify($this->httpClient, Phake::times(1))->put(['rooms/{id}', ['id' => 1]], $this->isType('array'));
+        Phake::verify($room, Phake::times(1))->toArray();
     }
 
     /**
@@ -139,16 +134,15 @@ class RoomsTest extends \PHPUnit_Framework_TestCase
     {
         $room = new Room();
         $room->roomId = 1;
-        
+
         $rooms = new Rooms($this->httpClient);
         $rooms->remove($room, Rooms::ACTION_TYPE_LEAVE);
-        
-        Phake::verify($this->httpClient,Phake::times(1))
+
+        Phake::verify($this->httpClient, Phake::times(1))
             ->delete(
-                ['rooms/{id}',['id' => 1]],
-                ['query' =>['action_type' => Rooms::ACTION_TYPE_LEAVE]]
+                ['rooms/{id}', ['id' => 1]],
+                ['query' => ['action_type' => Rooms::ACTION_TYPE_LEAVE]]
             );
-        
     }
 
     /**
@@ -179,7 +173,7 @@ class RoomsTest extends \PHPUnit_Framework_TestCase
         $rooms = new Rooms($this->httpClient);
         $tasks = $rooms->tasks(1);
         $this->assertInstanceOf(Tasks::class, $tasks);
-    }    
+    }
 
     /**
      * @test
@@ -190,5 +184,4 @@ class RoomsTest extends \PHPUnit_Framework_TestCase
         $files = $rooms->files(1);
         $this->assertInstanceOf(Files::class, $files);
     }
-    
 }

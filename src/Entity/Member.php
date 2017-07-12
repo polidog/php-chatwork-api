@@ -1,6 +1,6 @@
 <?php
-namespace Polidog\Chatwork\Entity;
 
+namespace Polidog\Chatwork\Entity;
 
 class Member implements EntityInterface
 {

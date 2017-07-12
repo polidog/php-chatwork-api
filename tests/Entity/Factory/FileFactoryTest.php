@@ -1,10 +1,11 @@
 <?php
+
 namespace Polidog\Chatwork\Entity\Factory;
 
 use Polidog\Chatwork\Entity\File;
 use Polidog\Chatwork\Entity\User;
 
-class FileFactoryTest extends \PHPUnit_Framework_TestCase 
+class FileFactoryTest extends \PHPUnit_Framework_TestCase
 {
     /**
      * @test
@@ -23,14 +24,13 @@ class FileFactoryTest extends \PHPUnit_Framework_TestCase
             "filename": "README.md",
             "filesize": 2232,
             "upload_time": 1384414750
-        }',true));
-        
+        }', true));
+
         $this->assertInstanceOf(File::class, $entity);
         $this->assertInstanceOf(User::class, $entity->account);
         $this->assertEquals(3, $entity->fileId);
-        $this->assertEquals("22", $entity->messageId);
+        $this->assertEquals('22', $entity->messageId);
         $this->assertEquals(2232, $entity->filesize);
         $this->assertEquals(1384414750, $entity->uploadTime);
-        
     }
 }

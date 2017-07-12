@@ -4,7 +4,7 @@ namespace Polidog\Chatwork\Entity;
 
 use Polidog\Chatwork\Entity\Factory\RoomFactory;
 
-class RoomTest extends \PHPUnit_Framework_TestCase 
+class RoomTest extends \PHPUnit_Framework_TestCase
 {
     /**
      * @test
@@ -26,10 +26,10 @@ class RoomTest extends \PHPUnit_Framework_TestCase
             "icon_path": "https://example.com/ico_group.png",
             "last_update_time": 1298905200,
             "description": "room description text"
-        }',true);
+        }', true);
         $factory = new RoomFactory();
         $entity = $factory->entity($data);
 
         $this->assertEquals($data, $entity->toArray());
-    }    
+    }
 }

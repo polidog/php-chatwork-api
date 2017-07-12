@@ -1,7 +1,8 @@
 <?php
+
 namespace Polidog\Chatwork\Entity\Collection;
 
-class MembersCollection extends EntityCollection  
+class MembersCollection extends EntityCollection
 {
     /**
      * @return array
@@ -24,21 +25,23 @@ class MembersCollection extends EntityCollection
      */
     public function getReadonlyIds()
     {
-        return $this->_getIds('readonly');        
+        return $this->_getIds('readonly');
     }
 
     /**
      * @param string $type
+     *
      * @return array
      */
     private function _getIds($type)
     {
         $ids = [];
         foreach ($this->entities as $entity) {
-            if($entity->role == $type) {
+            if ($entity->role == $type) {
                 $ids[] = $entity->account->accountId;
             }
         }
+
         return $ids;
     }
 }

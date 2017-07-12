@@ -1,11 +1,11 @@
 <?php
+
 namespace Polidog\Chatwork\Api;
 
 /**
- * Api Contacts
- * @package Polidog\Chatwork\Api
+ * Api Contacts.
  */
-class Contacts extends AbstractApi 
+class Contacts extends AbstractApi
 {
     /**
      * @return \Polidog\Chatwork\Entity\Collection\CollectionInterface
@@ -13,7 +13,7 @@ class Contacts extends AbstractApi
     public function show()
     {
         return $this->factory->collection(
-            $this->client->request('GET','contacts')
+            $this->client->request('GET', 'contacts')
         );
     }
 }

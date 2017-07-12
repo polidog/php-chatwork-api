@@ -1,7 +1,7 @@
 <?php
+
 namespace Polidog\Chatwork\Exception;
 
-class OutOfBoundsException extends \OutOfBoundsException 
+class OutOfBoundsException extends \OutOfBoundsException
 {
-
 }

@@ -1,13 +1,14 @@
 <?php
+
 namespace Polidog\Chatwork\Entity;
 
 /**
- * Class Task
+ * Class Task.
  */
-class Task implements EntityInterface 
+class Task implements EntityInterface
 {
     /**
-     * @var int 
+     * @var int
      */
     public $taskId;
 
@@ -20,7 +21,7 @@ class Task implements EntityInterface
      * @var User
      */
     public $account;
-    
+
     /**
      * @var User
      */
@@ -45,5 +46,4 @@ class Task implements EntityInterface
      * @var string
      */
     public $status;
-    
 }

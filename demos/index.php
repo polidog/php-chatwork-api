@@ -1,4 +1,5 @@
 <?php
+
 require '../vendor/autoload.php';
 
 define('TOKEN', 'e5454489d74933637e7cf492b9a3c59a');
@@ -62,7 +63,7 @@ $client = new \Polidog\Chatwork\Client(TOKEN);
 //$tasks = $client->api('rooms')->tasks(27161215)->show();
 //var_dump($tasks);
 
-// get task detail 
+// get task detail
 //$task = $client->api('rooms')->tasks(27161215)->detail(19255236);
 //var_dump($task);
 
@@ -73,5 +74,3 @@ $client = new \Polidog\Chatwork\Client(TOKEN);
 // file detail
 //$file = $client->api('rooms')->files(27161215)->detail(26652612);
 //var_dump($file);
-
-

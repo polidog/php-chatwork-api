@@ -1,4 +1,5 @@
 <?php
+
 namespace Polidog\Chatwork;
 
 use GuzzleHttp\ClientInterface as HttpClientInterface;
@@ -22,16 +23,16 @@ class ClientTest extends \PHPUnit_Framework_TestCase
         $emitter = Phake::mock(Emitter::class);
         $httpClient = Phake::mock(HttpClientInterface::class);
         Phake::when($httpClient)->getEmitter()->thenReturn($emitter);
-        
+
         $client = new Client('apikeytoken', [], $httpClient);
-        
-        Phake::verify($emitter,Phake::times(1))->attach(new AuthHeaderSubscriber('apikeytoken'));
+
+        Phake::verify($emitter, Phake::times(1))->attach(new AuthHeaderSubscriber('apikeytoken'));
     }
 
     /**
      * @test
      * @dataProvider dp_apiNames
-     * 
+     *
      * @param string $apiName
      * @param string $apiObjectName
      * @param string $factoryObjectName
@@ -45,22 +46,21 @@ class ClientTest extends \PHPUnit_Framework_TestCase
 
     /**
      * @test
-     * @expectedException Polidog\Chatwork\Exception\NoSupportApiException
+     * @expectedException \Polidog\Chatwork\Exception\NoSupportApiException
      */
     public function noApiObject()
     {
         $client = new Client('apikeytoken', []);
         $client->api('hoge');
     }
-    
-    
+
     public function dp_apiNames()
     {
         return [
             ['me', Me::class, UserFactory::class],
             ['my', My::class, null],
             ['contacts', Contacts::class, UserFactory::class],
-            ['rooms', Rooms::class, RoomFactory::class]
+            ['rooms', Rooms::class, RoomFactory::class],
         ];
     }
 }

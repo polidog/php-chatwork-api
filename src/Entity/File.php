@@ -1,8 +1,8 @@
 <?php
+
 namespace Polidog\Chatwork\Entity;
 
-
-class File implements EntityInterface 
+class File implements EntityInterface
 {
     /**
      * @var int

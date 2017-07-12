@@ -1,4 +1,5 @@
 <?php
+
 namespace Polidog\Chatwork\Entity\Factory;
 
 use Polidog\Chatwork\Entity\Room;
@@ -26,13 +27,13 @@ class RoomFactoryTest extends \PHPUnit_Framework_TestCase
             "icon_path": "https://example.com/ico_group.png",
             "last_update_time": 1298905200,
             "description": "room description text"
-        }',true));
-        
+        }', true));
+
         $this->assertInstanceOf(Room::class, $entity);
         $this->assertEquals(123, $entity->roomId);
-        $this->assertEquals("Group Chat Name", $entity->name);
-        $this->assertEquals("group", $entity->type);
-        $this->assertEquals("admin", $entity->role);
+        $this->assertEquals('Group Chat Name', $entity->name);
+        $this->assertEquals('group', $entity->type);
+        $this->assertEquals('admin', $entity->role);
         $this->assertEquals(false, $entity->sticky);
         $this->assertEquals(10, $entity->unreadNum);
         $this->assertEquals(1, $entity->mentionNum);
@@ -40,10 +41,8 @@ class RoomFactoryTest extends \PHPUnit_Framework_TestCase
         $this->assertEquals(122, $entity->messageNum);
         $this->assertEquals(10, $entity->fileNum);
         $this->assertEquals(17, $entity->taskNum);
-        $this->assertEquals("https://example.com/ico_group.png", $entity->iconPath);
+        $this->assertEquals('https://example.com/ico_group.png', $entity->iconPath);
         $this->assertEquals(1298905200, $entity->lastUpdateTime);
-        $this->assertEquals("room description text", $entity->description);
+        $this->assertEquals('room description text', $entity->description);
     }
-
-
 }

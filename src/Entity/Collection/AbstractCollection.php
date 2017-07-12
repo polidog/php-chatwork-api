@@ -1,12 +1,13 @@
 <?php
+
 namespace Polidog\Chatwork\Entity\Collection;
 
 use Polidog\Chatwork\Entity\EntityInterface;
 use Polidog\Chatwork\Exception\OutOfBoundsException;
 
-abstract class AbstractCollection implements \IteratorAggregate, \Countable, CollectionInterface 
+abstract class AbstractCollection implements \IteratorAggregate, \Countable, CollectionInterface
 {
-    protected $entities = array();
+    protected $entities = [];
 
     /**
      * @param array $entities
@@ -22,6 +23,7 @@ abstract class AbstractCollection implements \IteratorAggregate, \Countable, Col
     public function add(EntityInterface $entity)
     {
         $this->entities[] = $entity;
+
         return $this;
     }
 
@@ -33,6 +35,7 @@ abstract class AbstractCollection implements \IteratorAggregate, \Countable, Col
         if (!array_key_exists($idx, $this->entities)) {
             throw new OutOfBoundsException('index not found, index:'.$idx);
         }
+
         return $this->entities[$idx];
     }
 
@@ -47,5 +50,5 @@ abstract class AbstractCollection implements \IteratorAggregate, \Countable, Col
     public function count()
     {
         return count($this->entities);
-    }   
+    }
 }

@@ -1,4 +1,5 @@
 <?php
+
 namespace Polidog\Chatwork\Entity\Factory;
 
 use Polidog\Chatwork\Entity\Status;
@@ -18,8 +19,8 @@ class StatusFactoryTest extends \PHPUnit_Framework_TestCase
             "unread_num": 12,
             "mention_num": 1,
             "mytask_num": 8
-        }',true));
-        
+        }', true));
+
         $this->assertInstanceOf(Status::class, $entity);
         $this->assertEquals(2, $entity->unreadRoomNum);
         $this->assertEquals(1, $entity->mentionRoomNum);
@@ -27,6 +28,5 @@ class StatusFactoryTest extends \PHPUnit_Framework_TestCase
         $this->assertEquals(12, $entity->unreadNum);
         $this->assertEquals(1, $entity->mentionNum);
         $this->assertEquals(8, $entity->mytaskNum);
-            
     }
 }

@@ -1,11 +1,11 @@
 <?php
-namespace Polidog\Chatwork\Entity\Factory;
 
+namespace Polidog\Chatwork\Entity\Factory;
 
 use Polidog\Chatwork\Entity\Message;
 use Polidog\Chatwork\Entity\User;
 
-class MessageFactoryTest extends \PHPUnit_Framework_TestCase 
+class MessageFactoryTest extends \PHPUnit_Framework_TestCase
 {
     /**
      * @test
@@ -23,13 +23,13 @@ class MessageFactoryTest extends \PHPUnit_Framework_TestCase
             "body": "Hello Chatwork!",
             "send_time": 1384242850,
             "update_time": 0
-        }',true));
-        
+        }', true));
+
         $this->assertInstanceOf(Message::class, $entity);
         $this->assertInstanceOf(User::class, $entity->account);
-        
-        $this->assertEquals("5", $entity->messageId);
-        $this->assertEquals("Hello Chatwork!", $entity->body);
+
+        $this->assertEquals('5', $entity->messageId);
+        $this->assertEquals('Hello Chatwork!', $entity->body);
         $this->assertEquals(1384242850, $entity->sendTime);
         $this->assertEquals(0, $entity->updateTime);
     }

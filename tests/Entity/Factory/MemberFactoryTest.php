@@ -1,11 +1,11 @@
 <?php
-namespace Polidog\Chatwork\Entity\Factory;
 
+namespace Polidog\Chatwork\Entity\Factory;
 
 use Polidog\Chatwork\Entity\Member;
 use Polidog\Chatwork\Entity\User;
 
-class MemberFactoryTest extends \PHPUnit_Framework_TestCase 
+class MemberFactoryTest extends \PHPUnit_Framework_TestCase
 {
     /**
      * @test
@@ -22,12 +22,10 @@ class MemberFactoryTest extends \PHPUnit_Framework_TestCase
             "organization_name": "Hello Company",
             "department": "Marketing",
             "avatar_image_url": "https://example.com/abc.png"
-        }',true));
-        
+        }', true));
+
         $this->assertInstanceOf(Member::class, $entity);
         $this->assertInstanceOf(User::class, $entity->account);
         $this->assertEquals('member', $entity->role);
-             
     }
-    
 }

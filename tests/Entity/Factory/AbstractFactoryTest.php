@@ -1,11 +1,11 @@
 <?php
-namespace Polidog\Chatwork\Entity\Factory;
 
+namespace Polidog\Chatwork\Entity\Factory;
 
 use Polidog\Chatwork\Entity\Collection\CollectionInterface;
 use Polidog\Chatwork\Entity\EntityInterface;
 
-class AbstractFactoryTest extends \PHPUnit_Framework_TestCase 
+class AbstractFactoryTest extends \PHPUnit_Framework_TestCase
 {
     /**
      * @test
@@ -23,14 +23,13 @@ class AbstractFactoryTest extends \PHPUnit_Framework_TestCase
                 'b' => 4,
             ],
         ]);
-        
+
         $this->assertInstanceOf(CollectionInterface::class, $actual);
         $this->assertCount(2, $actual);
-        
+
         foreach ($actual as $entity) {
             $this->assertInstanceOf(EntityInterface::class, $entity);
         }
-        
     }
 }
 
@@ -38,6 +37,7 @@ class TestFactory extends AbstractFactory
 {
     /**
      * @param array $data
+     *
      * @return TestEntity
      */
     public function entity(array $data = [])
@@ -45,7 +45,7 @@ class TestFactory extends AbstractFactory
         $entity = new TestEntity();
         $entity->a = $data['a'];
         $entity->b = $data['b'];
-        
+
         return $entity;
     }
 }

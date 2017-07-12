@@ -1,12 +1,9 @@
 <?php
+
 namespace Polidog\Chatwork\Entity\Factory;
 
-
-use Cake\Utility\Inflector;
 use Polidog\Chatwork\Entity\Collection\MembersCollection;
-use Polidog\Chatwork\Entity\EntityInterface;
 use Polidog\Chatwork\Entity\Member;
-use Polidog\Chatwork\Entity\User;
 
 class MemberFactory extends AbstractFactory
 {
@@ -14,6 +11,7 @@ class MemberFactory extends AbstractFactory
 
     /**
      * @param array $data
+     *
      * @return Member
      */
     public function entity(array $data = [])
@@ -21,10 +19,11 @@ class MemberFactory extends AbstractFactory
         $member = new Member();
         $member->role = $data['role'];
         unset($data['role']);
-        
+
         // @todo ここでFactoryオブジェクトを生成するのをなんとかしたい...
         $userFactory = new UserFactory();
         $member->account = $userFactory->entity($data);
+
         return $member;
     }
 }

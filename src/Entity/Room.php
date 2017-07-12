@@ -1,10 +1,10 @@
 <?php
-namespace Polidog\Chatwork\Entity;
 
+namespace Polidog\Chatwork\Entity;
 
 use Cake\Utility\Inflector;
 
-class Room implements EntityInterface 
+class Room implements EntityInterface
 {
     /**
      * @var int
@@ -27,7 +27,7 @@ class Room implements EntityInterface
     public $role;
 
     /**
-     * @var boolean
+     * @var bool
      */
     public $sticky;
 
@@ -76,17 +76,17 @@ class Room implements EntityInterface
      */
     public $description;
 
-
     /**
      * @return array
      */
     public function toArray()
     {
         $array = [];
-        foreach(get_object_vars($this) as $property => $value) {
+        foreach (get_object_vars($this) as $property => $value) {
             $key = Inflector::underscore($property);
             $array[$key] = $value;
         }
+
         return $array;
     }
 }
