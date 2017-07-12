@@ -2,15 +2,25 @@
 
 namespace Polidog\Chatwork\Api\Rooms;
 
-use Polidog\Chatwork\Entity\Collection\MembersCollection;
+use Polidog\Chatwork\ClientInterface;
+use Polidog\Chatwork\Entity\Collection\MemberCollection;
+use Polidog\Chatwork\Entity\Factory\FactoryInterface;
+use Polidog\Chatwork\Entity\Factory\MemberFactory;
 
 /**
  * Class Members.
  */
 class Members extends AbstractRoomApi
 {
+    public function __construct($roomId, ClientInterface $client, FactoryInterface $factory = null)
+    {
+        assert($factory instanceof MemberFactory);
+        parent::__construct($roomId, $client, $factory);
+    }
+
+
     /**
-     * @return MembersCollection
+     * @return MemberCollection
      */
     public function show()
     {
@@ -23,9 +33,9 @@ class Members extends AbstractRoomApi
     }
 
     /**
-     * @param MembersCollection $members
+     * @param MemberCollection $members
      */
-    public function update(MembersCollection $members)
+    public function update(MemberCollection $members)
     {
         $options = [
             'form_params' => [

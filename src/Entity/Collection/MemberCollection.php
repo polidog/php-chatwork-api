@@ -2,8 +2,19 @@
 
 namespace Polidog\Chatwork\Entity\Collection;
 
-class MembersCollection extends EntityCollection
+use Polidog\Chatwork\Entity\EntityInterface;
+use Polidog\Chatwork\Entity\Member;
+use Polidog\Chatwork\Entity\User;
+
+class MemberCollection extends EntityCollection
 {
+    public function add(EntityInterface $entity)
+    {
+        assert($entity instanceof Member);
+        return parent::add($entity);
+    }
+
+
     /**
      * @return array
      */

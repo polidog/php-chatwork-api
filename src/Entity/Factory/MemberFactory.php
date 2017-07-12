@@ -2,12 +2,12 @@
 
 namespace Polidog\Chatwork\Entity\Factory;
 
-use Polidog\Chatwork\Entity\Collection\MembersCollection;
+use Polidog\Chatwork\Entity\Collection\MemberCollection;
 use Polidog\Chatwork\Entity\Member;
 
 class MemberFactory extends AbstractFactory
 {
-    protected $collectionName = MembersCollection::class;
+    protected $collectionName = MemberCollection::class;
 
     /**
      * @param array $data

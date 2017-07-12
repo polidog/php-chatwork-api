@@ -3,7 +3,8 @@
 namespace Polidog\Chatwork\Api;
 
 use Polidog\Chatwork\Collection\EntityCollection;
-use Polidog\Chatwork\Entity\Collection\MembersCollection;
+use Polidog\Chatwork\Entity\Collection\CollectionInterface;
+use Polidog\Chatwork\Entity\Collection\MemberCollection;
 use Polidog\Chatwork\Entity\Factory\FileFactory;
 use Polidog\Chatwork\Entity\Factory\MemberFactory;
 use Polidog\Chatwork\Entity\Factory\MessageFactory;
@@ -18,7 +19,7 @@ class Rooms extends AbstractApi
     /**
      * 自分のチャット一覧の取得.
      *
-     * @return EntityCollection
+     * @return CollectionInterface
      */
     public function show()
     {
@@ -42,12 +43,12 @@ class Rooms extends AbstractApi
     /**
      * グループチャットを新規作成.
      *
-     * @param Room              $room
-     * @param MembersCollection $members
+     * @param Room             $room
+     * @param MemberCollection $members
      *
      * @return Room
      */
-    public function create(Room $room, MembersCollection $members)
+    public function create(Room $room, MemberCollection $members)
     {
         $result = $this->client->request('POST', 'rooms', [
             'form_params' => [
@@ -71,7 +72,7 @@ class Rooms extends AbstractApi
     public function update(Room $room)
     {
         $this->client->request(
-            'put',
+            'PUT',
             "rooms/{$room->roomId}",
             ['form_params' => $room->toArray()]
         );
@@ -86,7 +87,7 @@ class Rooms extends AbstractApi
     public function remove(Room $room, $actionType)
     {
         $this->client->request(
-            'delete',
+            'DELETE',
             "rooms/{$room->roomId}",
             [
                 'query' => [

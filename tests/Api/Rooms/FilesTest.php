@@ -2,85 +2,88 @@
 
 namespace Polidog\Chatwork\Api\Rooms;
 
+use Polidog\Chatwork\ClientInterface;
 use Polidog\Chatwork\Entity\Collection\EntityCollection;
-use Polidog\Chatwork\Entity\Factory\FactoryInterface;
-use GuzzleHttp\ClientInterface;
-use GuzzleHttp\Message\ResponseInterface;
-use Phake;
+use Polidog\Chatwork\Entity\Factory\FileFactory;
+use Polidog\Chatwork\Entity\Factory\RoomFactory;
+use Polidog\Chatwork\Entity\File;
 
 class FilesTest extends \PHPUnit_Framework_TestCase
 {
-    private $httpClient;
-    private $response;
-    private $factory;
-
-    public function setUp()
+    /**
+     * @dataProvider providerFiles
+     */
+    public function testShow($apiResult)
     {
-        $this->httpClient = Phake::mock(ClientInterface::class);
-        $this->response = Phake::mock(ResponseInterface::class);
-        $this->factory = Phake::mock(FactoryInterface::class);
+        $roomId = 1;
+        $client = $this->prophesize(ClientInterface::class);
+        $client->request("GET","rooms/{$roomId}/files",[
+            'query' => []
+        ])->willReturn($apiResult);
 
-        Phake::when($this->response)
-            ->json()
-            ->thenReturn([]);
+        $factory = new FileFactory();
+        $api = new Files($roomId, $client->reveal(), $factory);
+        $files = $api->show();
+        $this->assertInstanceOf(EntityCollection::class, $files);
+        foreach ($files as $file) {
+            $this->assertInstanceOf(File::class, $file);
+        }
     }
 
     /**
-     * @test
+     * @dataProvider providerFile
      */
-    public function ファイル一覧を取得する()
+    public function testDetail($apiResult)
     {
-        Phake::when($this->httpClient)
-            ->get($this->isType('array'), $this->isType('array'))
-            ->thenReturn($this->response);
+        $fileId = 1;
+        $roomId = 1;
+        $client = $this->prophesize(ClientInterface::class);
+        $client->request("GET","rooms/{$roomId}/files/{$fileId}")->willReturn($apiResult);
 
-        Phake::when($this->factory)
-            ->collection($this->isType('array'))
-            ->thenReturn(new EntityCollection());
-
-        $files = new Files(1, $this->httpClient, $this->factory);
-        $files->show();
-
-        Phake::verify($this->httpClient, Phake::times(1))
-            ->get(
-                ['rooms/{roomId}/files', ['roomId' => 1]],
-                [
-                    'query' => [],
-                ]
-            );
-
-        Phake::verify($this->response, Phake::times(1))
-            ->json();
-
-        Phake::verify($this->factory, Phake::times(1))
-            ->collection($this->isType('array'));
+        $factory = new FileFactory();
+        $api = new Files($roomId, $client->reveal(), $factory);
+        $file = $api->detail($fileId);
+        $this->assertInstanceOf(File::class, $file);
     }
 
-    /**
-     * @test
-     */
-    public function 指定したIDのファイルの情報を取得する()
+    public function providerFiles()
     {
-        Phake::when($this->httpClient)
-            ->get($this->isType('array'))
-            ->thenReturn($this->response);
-
-        Phake::when($this->factory)
-            ->entity($this->isType('array'))
-            ->thenReturn(new EntityCollection());
-
-        $files = new Files(1, $this->httpClient, $this->factory);
-        $files->detail(123456);
-
-        Phake::verify($this->httpClient, Phake::times(1))
-            ->get(
-                ['rooms/{roomId}/files/{id}', ['roomId' => 1, 'id' => 123456]]
-            );
-
-        Phake::verify($this->response, Phake::times(1))
-            ->json();
-
-        Phake::verify($this->factory, Phake::times(1))
-            ->entity($this->isType('array'));
+        $data = json_decode('[
+  {
+    "file_id": 3,
+    "account": {
+      "account_id": 123,
+      "name": "Bob",
+      "avatar_image_url": "https://example.com/ico_avatar.png"
+    },
+    "message_id": "22",
+    "filename": "README.md",
+    "filesize": 2232,
+    "upload_time": 1384414750
+  }
+]', true);
+        return [
+            [$data]
+        ];
     }
+
+    public function providerFile()
+    {
+        $data = json_decode('{
+  "file_id":3,
+  "account": {
+    "account_id":123,
+    "name":"Bob",
+    "avatar_image_url": "https://example.com/ico_avatar.png"
+  },
+  "message_id": "22",
+  "filename": "README.md",
+  "filesize": 2232,
+  "upload_time": 1384414750
+}', true);
+        return [
+            [$data]
+        ];
+    }
+
 }

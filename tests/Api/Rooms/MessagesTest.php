@@ -2,125 +2,121 @@
 
 namespace Polidog\Chatwork\Api\Rooms;
 
-use GuzzleHttp\ClientInterface;
-use GuzzleHttp\Message\ResponseInterface;
-use Phake;
-use Polidog\Chatwork\Entity\Factory\FactoryInterface;
+use Polidog\Chatwork\ClientInterface;
+use Polidog\Chatwork\Entity\Collection\EntityCollection;
+use Polidog\Chatwork\Entity\Factory\MessageFactory;
 use Polidog\Chatwork\Entity\Message;
 
 class MessagesTest extends \PHPUnit_Framework_TestCase
 {
     /**
-     * @test
+     * @dataProvider providerMessages
+     * @param $apiResult
      */
-    public function 一覧を取得する()
+    public function testShow($apiResult)
     {
-        $httpClient = Phake::mock(ClientInterface::class);
-        $response = Phake::mock(ResponseInterface::class);
-        $factory = Phake::mock(FactoryInterface::class);
+        $roomId = 1;
 
-        Phake::when($httpClient)
-            ->get($this->isType('array'), $this->isType('array'))
-            ->thenReturn($response);
+        $client = $this->prophesize(ClientInterface::class);
+        $client->request("GET","rooms/{$roomId}/messages", [
+            'query' => [
+                'force' => 0,
+            ]
+        ])->willReturn($apiResult);
 
-        Phake::when($response)
-            ->json()
-            ->thenReturn([]);
+        $factory = new MessageFactory();
+        $api = new Messages($roomId, $client->reveal(), $factory);
+        $messages = $api->show();
 
-        $messages = new Messages(1, $httpClient, $factory);
-        $messages->show();
-
-        Phake::verify($httpClient, Phake::times(1))
-            ->get(
-                ['rooms/{roomId}/messages', ['roomId' => 1]],
-                [
-                    'query' => [
-                        'force' => 0,
-                    ],
-                ]
-            );
-
-        Phake::verify($response, Phake::times(1))
-            ->json();
-
-        Phake::verify($factory, Phake::times(1))
-            ->collection($this->isType('array'));
+        $this->assertInstanceOf(EntityCollection::class, $messages);
+        foreach ($messages as $message) {
+            $this->assertInstanceOf(Message::class, $message);
+        }
     }
 
     /**
-     * @test
+     * @dataProvider providerMessage
+     * @param $apiResult
      */
-    public function idを指定してメッセージを取得する()
+    public function testDetail($apiResult)
     {
-        $httpClient = Phake::mock(ClientInterface::class);
-        $response = Phake::mock(ResponseInterface::class);
-        $factory = Phake::mock(FactoryInterface::class);
+        $roomId = 1;
+        $messageId = 11;
 
-        Phake::when($httpClient)
-            ->get($this->isType('array'), $this->isType('array'))
-            ->thenReturn($response);
+        $client = $this->prophesize(ClientInterface::class);
+        $client->request("GET","rooms/{$roomId}/messages/{$messageId}", [
+            'query' => [
+                'force' => 0,
+            ]
+        ])->willReturn($apiResult);
 
-        Phake::when($response)
-            ->json()
-            ->thenReturn([]);
-
-        $messages = new Messages(1, $httpClient, $factory);
-        $messages->detail(1);
-
-        Phake::verify($httpClient, Phake::times(1))
-            ->get(
-                ['rooms/{roomId}/messages/{id}', ['roomId' => 1, 'id' => 1]],
-                [
-                    'query' => [
-                        'force' => 0,
-                    ],
-                ]
-            );
-
-        Phake::verify($response, Phake::times(1))
-            ->json();
-
-        Phake::verify($factory, Phake::times(1))
-            ->entity($this->isType('array'));
+        $factory = new MessageFactory();
+        $api = new Messages($roomId, $client->reveal(), $factory);
+        $message = $api->detail($messageId);
+        $this->assertInstanceOf(Message::class, $message);
     }
 
-    /**
-     * @test
-     */
-    public function 新しいメッセージを登録する()
+    public function testCreate()
     {
-        $httpClient = Phake::mock(ClientInterface::class);
-        $response = Phake::mock(ResponseInterface::class);
-
+        $roomId = 1;
+        $messageId = 11;
         $message = new Message();
-        $message->body = 'hogehoge';
+        $message->body = 'hoge';
 
-        Phake::when($httpClient)
-            ->post($this->isType('array'), $this->isType('array'))
-            ->thenReturn($response);
+        $client = $this->prophesize(ClientInterface::class);
+        $client->request("POST","rooms/{$roomId}/messages",[
+            'form_params' => [
+                'body' => $message->body
+            ]
+        ])->willReturn(['message_id' => 1234]);
 
-        Phake::when($response)
-            ->json()
-            ->thenReturn([
-                'message_id' => '123456',
-            ]);
+        $factory = new MessageFactory();
+        $api = new Messages($roomId, $client->reveal(), $factory);
 
-        $messages = new Messages(1, $httpClient);
-        $messages->create($message);
+        $api->create($message);
 
-        Phake::verify($httpClient, Phake::times(1))
-            ->post(
-                ['rooms/{roomId}/messages', ['roomId' => 1]],
-                [
-                    'body' => [
-                        'body' => 'hogehoge',
-                    ],
-                ]
-            );
+        $this->assertEquals(1234, $message->messageId);
 
-        Phake::verify($response, Phake::times(1))
-            ->json();
-
-        $this->assertEquals('123456', $message->messageId);
     }
+
+    public function providerMessages()
+    {
+        $data = json_decode('[
+  {
+    "message_id": "5",
+    "account": {
+      "account_id": 123,
+      "name": "Bob",
+      "avatar_image_url": "https://example.com/ico_avatar.png"
+    },
+    "body": "Hello Chatwork!",
+    "send_time": 1384242850,
+    "update_time": 0
+  }
+]', true);
+
+        return [
+            [$data]
+        ];
+    }
+
+    public function providerMessage()
+    {
+        $data = json_decode('{
+  "message_id": "5",
+  "account": {
+    "account_id": 123,
+    "name": "Bob",
+    "avatar_image_url": "https://example.com/ico_avatar.png"
+  },
+  "body": "Hello Chatwork!",
+  "send_time": 1384242850,
+  "update_time": 0
+}', true);
+
+        return [
+            [$data]
+        ];
+    }
+
 }

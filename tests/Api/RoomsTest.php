@@ -2,186 +2,213 @@
 
 namespace Polidog\Chatwork\Api;
 
-use GuzzleHttp\ClientInterface;
-use GuzzleHttp\Message\ResponseInterface;
-use Phake;
 use Polidog\Chatwork\Api\Rooms\Files;
 use Polidog\Chatwork\Api\Rooms\Members;
 use Polidog\Chatwork\Api\Rooms\Messages;
 use Polidog\Chatwork\Api\Rooms\Tasks;
-use Polidog\Chatwork\Entity\Collection\MembersCollection;
+use Polidog\Chatwork\ClientInterface;
+use Polidog\Chatwork\Entity\Collection\EntityCollection;
+use Polidog\Chatwork\Entity\Collection\MemberCollection;
 use Polidog\Chatwork\Entity\Factory\RoomFactory;
+use Polidog\Chatwork\Entity\Member;
 use Polidog\Chatwork\Entity\Room;
+use Polidog\Chatwork\Entity\User;
+use Prophecy\Argument;
 
 /**
  * Class RoomsTest.
  */
 class RoomsTest extends \PHPUnit_Framework_TestCase
 {
-    private $httpClient;
-    private $response;
-    private $factory;
-
-    public function setUp()
+    /**
+     * @dataProvider providerRooms
+     */
+    public function testShow($apiResult)
     {
-        $this->httpClient = Phake::mock(ClientInterface::class);
-        $this->response = Phake::mock(ResponseInterface::class);
-        $this->factory = Phake::mock(RoomFactory::class);
+        $client = $this->prophesize(ClientInterface::class);
+        $client->request("GET",'rooms')
+            ->willReturn($apiResult);
 
-        Phake::when($this->response)->json()->thenReturn([]);
+        $factory = new RoomFactory();
+
+        $rooms = new Rooms($client->reveal(), $factory);
+        $roomLists = $rooms->show();
+
+        $this->assertInstanceOf(EntityCollection::class, $roomLists);
+        foreach ($roomLists as $room) {
+             $this->assertInstanceOf(Room::class, $room);
+        }
+
     }
 
     /**
-     * @test
+     * @dataProvider providerRoom
      */
-    public function チャットルームの一覧を取得する()
+    public function testDetail($apiResult)
     {
-        Phake::when($this->httpClient)->get('rooms')->thenReturn($this->response);
-        Phake::when($this->factory)->collection($this->isType('array'))->thenReturn([]);
-        $rooms = new Rooms($this->httpClient, $this->factory);
-        $rooms->show();
+        $client = $this->prophesize(ClientInterface::class);
+        $client->request("GET",'rooms/1')
+            ->willReturn($apiResult);
 
-        Phake::verify($this->httpClient, Phake::times(1))->get('rooms');
-        Phake::verify($this->response, Phake::times(1))->json();
-        Phake::verify($this->factory, Phake::times(1))->collection($this->isType('array'));
+        $factory = new RoomFactory();
+        $rooms = new Rooms($client->reveal(), $factory);
+        $room = $rooms->detail(1);
+
+        $this->assertInstanceOf(Room::class, $room);
+
     }
 
-    /**
-     * @test
-     */
-    public function 指定したIDのチャットルームを取得することができる()
+    public function testCreate()
     {
-        Phake::when($this->httpClient)->get(['rooms/{id}', ['id' => 1]])
-            ->thenReturn($this->response);
+        $client = $this->prophesize(ClientInterface::class);
+        $client->request("POST",'rooms', Argument::any())
+            ->willReturn([
+                'room_id' => 1234,
+            ]);
 
-        Phake::when($this->factory)->entity($this->isType('array'));
+        $factory = new RoomFactory();
+        $rooms = new Rooms($client->reveal(), $factory);
 
-        $rooms = new Rooms($this->httpClient, $this->factory);
-        $rooms->detail(1);
+        $room = new Room();
+        $room->name = "hoge";
+        $room->description = "test";
 
-        Phake::verify($this->httpClient, Phake::times(1))->get(['rooms/{id}', ['id' => 1]]);
-        Phake::verify($this->factory, Phake::times(1))->entity($this->isType('array'));
+        $members = new MemberCollection();
+        $user = new User();
+        $user->accountId = 1;
+        $user->name = 'hoge';
+        $member = new Member();
+        $member->account = $user;
+        $members->add($member);
+
+        $rooms->create($room, $members);
+        $this->assertEquals(1234,$room->roomId);
     }
 
-    /**
-     * @test
-     */
-    public function 新しくチャットルームを作成することができる()
-    {
-        $room = Phake::mock(Room::class);
-        $members = Phake::mock(MembersCollection::class);
-
-        Phake::when($this->httpClient)->post('rooms', $this->isType('array'))->thenReturn($this->response);
-        Phake::when($this->response)->json()->thenReturn([
-            'room_id' => 1,
-        ]);
-
-        Phake::when($room)->toArray()->thenReturn([
-            'members_admin_ids' => '1,2',
-            'name' => 'test_room',
-        ]);
-
-        Phake::when($members)->getAdminIds()->thenReturn([
-            1, 2, 3,
-        ]);
-        Phake::when($members)->getMemberIds()->thenReturn([
-            4, 5, 6,
-        ]);
-        Phake::when($members)->getReadonlyIds()->thenReturn([
-            7, 8, 9,
-        ]);
-
-        $rooms = new Rooms($this->httpClient, new RoomFactory());
-        $result = $rooms->create($room, $members);
-
-        Phake::verify($this->httpClient, Phake::times(1))->post('rooms', $this->isType('array'));
-        Phake::verify($this->response, Phake::times(1))->json();
-        Phake::verify($members, Phake::times(1))->getAdminIds();
-        Phake::verify($members, Phake::times(1))->getMemberIds();
-        Phake::verify($members, Phake::times(1))->getReadonlyIds();
-
-        $this->assertInstanceOf(Room::class, $result);
-    }
-
-    /**
-     * @test
-     */
-    public function チャットルームを更新することができる()
-    {
-        $room = Phake::mock(Room::class);
-        $room->roomId = 1;
-        $room->name = 'hoge';
-
-        Phake::when($this->httpClient)
-            ->put(['rooms/{id}', ['id' => 1]], $this->isType('array'))
-            ->thenReturn([]);
-
-        Phake::when($room)
-            ->toArray()
-            ->thenReturn([]);
-
-        $rooms = new Rooms($this->httpClient);
-        $rooms->update($room);
-
-        Phake::verify($this->httpClient, Phake::times(1))->put(['rooms/{id}', ['id' => 1]], $this->isType('array'));
-        Phake::verify($room, Phake::times(1))->toArray();
-    }
-
-    /**
-     * @test
-     */
-    public function チャットルームを削除することができる()
+    public function testUpdate()
     {
         $room = new Room();
-        $room->roomId = 1;
+        $room->roomId = 1234;
+        $room->name = "test";
 
-        $rooms = new Rooms($this->httpClient);
-        $rooms->remove($room, Rooms::ACTION_TYPE_LEAVE);
+        $client = $this->prophesize(ClientInterface::class);
+        $factory = new RoomFactory();
 
-        Phake::verify($this->httpClient, Phake::times(1))
-            ->delete(
-                ['rooms/{id}', ['id' => 1]],
-                ['query' => ['action_type' => Rooms::ACTION_TYPE_LEAVE]]
-            );
+        $rooms = new Rooms($client->reveal(), $factory);
+        $rooms->update($room);
+
+        $client->request('PUT', "rooms/{$room->roomId}",[
+            'form_params' => $room->toArray()
+        ])->shouldHaveBeenCalled();
     }
 
-    /**
-     * @test
-     */
-    public function メンバーAPI用のオブジェクトを取得する()
+    public function testRemove()
     {
-        $rooms = new Rooms($this->httpClient);
+        $room = new Room();
+        $room->roomId = 1234;
+        $room->name = "test";
+
+        $client = $this->prophesize(ClientInterface::class);
+        $factory = new RoomFactory();
+
+        $rooms = new Rooms($client->reveal(), $factory);
+        $rooms->remove($room, Rooms::ACTION_TYPE_LEAVE);
+
+        $client->request('DELETE', "rooms/{$room->roomId}",[
+            'query' => [
+                'action_type' => Rooms::ACTION_TYPE_LEAVE
+            ]
+        ])->shouldHaveBeenCalled();
+    }
+
+    public function testMembers()
+    {
+        $client = $this->prophesize(ClientInterface::class);
+        $factory = new RoomFactory();
+
+        $rooms = new Rooms($client->reveal(), $factory);
         $members = $rooms->members(1);
         $this->assertInstanceOf(Members::class, $members);
     }
 
-    /**
-     * @test
-     */
-    public function メッセージAPI用のオブジェクトを取得する()
+    public function testMessages()
     {
-        $rooms = new Rooms($this->httpClient);
-        $messages = $rooms->messages(1);
-        $this->assertInstanceOf(Messages::class, $messages);
+        $client = $this->prophesize(ClientInterface::class);
+        $factory = new RoomFactory();
+
+        $rooms = new Rooms($client->reveal(), $factory);
+        $members = $rooms->messages(1);
+        $this->assertInstanceOf(Messages::class, $members);
     }
 
-    /**
-     * @test
-     */
-    public function タスクAPI用のオブジェクトを取得する()
+    public function testTasks()
     {
-        $rooms = new Rooms($this->httpClient);
+        $client = $this->prophesize(ClientInterface::class);
+        $factory = new RoomFactory();
+
+        $rooms = new Rooms($client->reveal(), $factory);
         $tasks = $rooms->tasks(1);
         $this->assertInstanceOf(Tasks::class, $tasks);
     }
 
-    /**
-     * @test
-     */
-    public function ファイルAPI用のオブジェクトを取得することができる()
+    public function testFiles()
     {
-        $rooms = new Rooms($this->httpClient);
+        $client = $this->prophesize(ClientInterface::class);
+        $factory = new RoomFactory();
+
+        $rooms = new Rooms($client->reveal(), $factory);
         $files = $rooms->files(1);
         $this->assertInstanceOf(Files::class, $files);
     }
+
+
+    public function providerRooms()
+    {
+        $data = json_decode('[
+  {
+    "room_id": 123,
+    "name": "Group Chat Name",
+    "type": "group",
+    "role": "admin",
+    "sticky": false,
+    "unread_num": 10,
+    "mention_num": 1,
+    "mytask_num": 0,
+    "message_num": 122,
+    "file_num": 10,
+    "task_num": 17,
+    "icon_path": "https://example.com/ico_group.png",
+    "last_update_time": 1298905200
+  }
+]', true);
+
+        return [
+            [$data]
+        ];
+    }
+
+    public function providerRoom()
+    {
+        $data = json_decode('{
+  "room_id": 123,
+  "name": "Group Chat Name",
+  "type": "group",
+  "role": "admin",
+  "sticky": false,
+  "unread_num": 10,
+  "mention_num": 1,
+  "mytask_num": 0,
+  "message_num": 122,
+  "file_num": 10,
+  "task_num": 17,
+  "icon_path": "https://example.com/ico_group.png",
+  "last_update_time": 1298905200,
+  "description": "room description text"
+}', true);
+
+        return [
+            [$data]
+        ];
+    }
+
 }

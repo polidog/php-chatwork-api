@@ -2,18 +2,29 @@
 
 namespace Polidog\Chatwork\Api;
 
+use Polidog\Chatwork\ClientInterface;
 use Polidog\Chatwork\Entity\Factory\UserFactory;
 use Polidog\Chatwork\Entity\User;
-use GuzzleHttp\Message\ResponseInterface;
-use GuzzleHttp\ClientInterface;
-use Phake;
 
 class MeTest extends \PHPUnit_Framework_TestCase
 {
     /**
-     * @test
+     * @dataProvider providerResponseData
      */
-    public function callApi()
+    public function testShow($apiResult)
+    {
+        $client = $this->prophesize(ClientInterface::class);
+        $client->request("GET",'me')
+            ->willReturn($apiResult);
+
+        $factory = new UserFactory();
+        $me = new Me($client->reveal(), $factory);
+        $user = $me->show();
+
+        $this->assertInstanceOf(User::class, $user);
+    }
+
+    public function providerResponseData()
     {
         $data = json_decode('{
                   "account_id": 123,
@@ -36,19 +47,8 @@ class MeTest extends \PHPUnit_Framework_TestCase
                   "avatar_image_url": "https://example.com/abc.png"
                 }', true);
 
-        $httpClient = Phake::mock(ClientInterface::class);
-        $response = Phake::mock(ResponseInterface::class);
-        $factory = Phake::mock(UserFactory::class);
-
-        Phake::when($httpClient)->get('me')->thenReturn($response);
-        Phake::when($response)->json()->thenReturn($data);
-        Phake::when($factory)->entity($data)->thenReturn(new User());
-
-        $me = new Me($httpClient, $factory);
-        $me->show();
-
-        Phake::verify($httpClient, Phake::times(1))->get('me');
-        Phake::verify($response, Phake::times(1))->json();
-        Phake::verify($factory, Phake::times(1))->entity($data);
+        return [
+            [$data]
+        ];
     }
 }

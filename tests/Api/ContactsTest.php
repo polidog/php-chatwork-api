@@ -8,32 +8,48 @@
 
 namespace Polidog\Chatwork\Api;
 
-use GuzzleHttp\Message\ResponseInterface;
+use Polidog\Chatwork\ClientInterface;
 use Polidog\Chatwork\Entity\Collection\EntityCollection;
 use Polidog\Chatwork\Entity\Factory\UserFactory;
-use GuzzleHttp\ClientInterface;
-use Phake;
+use Polidog\Chatwork\Entity\User;
 
 class ContactsTest extends \PHPUnit_Framework_TestCase
 {
     /**
-     * @test
+     * @dataProvider providerResponseData
      */
-    public function callApiContacts()
+    public function testShow($apiResult)
     {
-        $httpClient = Phake::mock(ClientInterface::class);
-        $userFactory = Phake::mock(UserFactory::class);
-        $response = Phake::mock(ResponseInterface::class);
+        $client = $this->prophesize(ClientInterface::class);
+        $client->request("GET",'contacts')
+            ->willReturn($apiResult);
 
-        Phake::when($httpClient)->get('contacts')->thenReturn($response);
-        Phake::when($userFactory)->collection([])->thenReturn(new EntityCollection());
-        Phake::when($response)->json()->thenReturn([]);
+        $factory = new UserFactory();
+        $contacts = new Contacts($client->reveal(), $factory);
+        $users = $contacts->show();
+        $this->assertInstanceOf(EntityCollection::class, $users);
+        foreach ($users as $user) {
+            $this->assertInstanceOf(User::class, $user);
+        }
+    }
 
-        $contacts = new Contacts($httpClient, $userFactory);
-        $contacts->show();
+    public function providerResponseData()
+    {
+        $data = json_decode('[
+  {
+    "account_id": 123,
+    "room_id": 322,
+    "name": "John Smith",
+    "chatwork_id": "tarochatworkid",
+    "organization_id": 101,
+    "organization_name": "Hello Company",
+    "department": "Marketing",
+    "avatar_image_url": "https://example.com/abc.png"
+  }
+]', true);
 
-        Phake::verify($httpClient, Phake::times(1))->get('contacts');
-        Phake::verify($userFactory, Phake::times(1))->collection($this->isType('array'));
-        Phake::verify($response, Phake::times(1))->json();
+        return [
+            [$data]
+        ];
     }
 }

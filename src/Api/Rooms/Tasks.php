@@ -2,11 +2,21 @@
 
 namespace Polidog\Chatwork\Api\Rooms;
 
+use Polidog\Chatwork\ClientInterface;
 use Polidog\Chatwork\Entity\Collection\CollectionInterface;
+use Polidog\Chatwork\Entity\Factory\FactoryInterface;
+use Polidog\Chatwork\Entity\Factory\TaskFactory;
 use Polidog\Chatwork\Entity\Task;
 
 class Tasks extends AbstractRoomApi
 {
+    public function __construct($roomId, ClientInterface $client, FactoryInterface $factory = null)
+    {
+        assert($factory instanceof TaskFactory);
+        parent::__construct($roomId, $client, $factory);
+    }
+
+
     /**
      * @param array $options
      *
@@ -41,6 +51,8 @@ class Tasks extends AbstractRoomApi
     }
 
     /**
+     * @TODO api見直し
+     *
      * @param CollectionInterface $collection
      */
     public function create(CollectionInterface $collection)
@@ -51,7 +63,7 @@ class Tasks extends AbstractRoomApi
         }
 
         $task = clone $collection->get(0);
-        $results = $this->client->post(
+        $results = $this->client->request(
             'post',
             "rooms/{$this->roomId}/tasks",
             [
