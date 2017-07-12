@@ -1,7 +1,7 @@
 <?php
 require '../vendor/autoload.php';
 
-define('TOKEN', 'your api token');
+define('TOKEN', 'e5454489d74933637e7cf492b9a3c59a');
 
 // create client
 $client = new \Polidog\Chatwork\Client(TOKEN);
@@ -9,34 +9,35 @@ $client = new \Polidog\Chatwork\Client(TOKEN);
 //// api/me
 //$meEntity = $client->api('me')->show();
 //var_dump($meEntity);
-//
-//
-//// api/contacts
+
+// api/contacts
 //$contacts = $client->api('contacts')->show();
 //var_dump($contacts);
-//
-//
-//// rooms
+
+// rooms
 //$rooms = $client->api('rooms')->show();
-//// room
-//$room = $client->api('rooms')->detail(1);
+//var_dump($rooms);
+
+// room
+//$room = $client->api('rooms')->detail(5510526);
+//var_dump($room);
 
 // create room
-// $user = $client->api('me')->show();
-// $room = new \Polidog\Chatwork\Entity\Room();
-// $room->name = "test room name";
-// $members = new \Polidog\Chatwork\Entity\Collection\MembersCollection();
-// $member = new \Polidog\Chatwork\Entity\Member();
-// $member->account = $user;
-// $member->role = 'admin';
-// $members->add($member);
-//
-// $client->api('rooms')->create($room, $members);
+//$user = $client->api('me')->show();
+//$room = new \Polidog\Chatwork\Entity\Room();
+//$room->name = "test room name2";
+//$members = new \Polidog\Chatwork\Entity\Collection\MembersCollection();
+//$member = new \Polidog\Chatwork\Entity\Member();
+//$member->account = $user;
+//$member->role = 'admin';
+//$members->add($member);
+//$client->api('rooms')->create($room, $members);
+//var_dump($room);
 
 // room update
 //$room = $client->api('rooms')->detail(27161215);
 //$room->name = "update test2";
-//$room->description = "ディスクリプションだお";
+//$room->description = "ディスクリプションだお2";
 //
 //$client->api('rooms')->update($room);
 
@@ -46,7 +47,7 @@ $client = new \Polidog\Chatwork\Client(TOKEN);
 
 // create message
 //$message = new \Polidog\Chatwork\Entity\Message();
-//$message->body = "test";
+//$message->body = "今日は".date("Y年m月d日")."ですね。";
 //$client->api('rooms')->messages(27161215)->create($message);
 
 // get members
