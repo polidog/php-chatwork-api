@@ -104,7 +104,7 @@ class MessagesTest extends \PHPUnit_Framework_TestCase
         Phake::when($response)
             ->json()
             ->thenReturn([
-                'message_id' => 123456
+                'message_id' => "123456"
             ]);
         
         $messages = new Messages(1, $httpClient);
@@ -123,7 +123,6 @@ class MessagesTest extends \PHPUnit_Framework_TestCase
         Phake::verify($response,Phake::times(1))
             ->json();
 
-        $this->assertEquals(123456, $message->messageId);        
-        
+        $this->assertEquals("123456", $message->messageId);
     }
-}    
+}

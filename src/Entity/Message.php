@@ -4,7 +4,7 @@ namespace Polidog\Chatwork\Entity;
 class Message implements EntityInterface 
 {
     /**
-     * @var int
+     * @var string
      */
     public $messageId;
 
