@@ -13,7 +13,7 @@ class Contacts extends AbstractApi
     public function show()
     {
         return $this->factory->collection(
-            $this->client->get('contacts')->json()
+            $this->client->request('GET','contacts')
         );
     }
 }

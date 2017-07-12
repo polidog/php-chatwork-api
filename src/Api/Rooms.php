@@ -24,7 +24,7 @@ class Rooms extends AbstractApi
     public function show()
     {
         return $this->factory->collection(
-            $this->client->get('rooms')->json()
+            $this->client->request("GET",'rooms')
         );
     }
 
@@ -35,8 +35,8 @@ class Rooms extends AbstractApi
     public function detail($id)
     {
         return $this->factory->entity(
-            $this->client->get(['rooms/{id}',['id' => $id]])->json()
-        );        
+            $this->client->request('GET',"rooms/{$id}")
+        );
     }
     
     /**
@@ -47,45 +47,45 @@ class Rooms extends AbstractApi
      */
     public function create(Room $room, MembersCollection $members)
     {
-        $result = $this->client->post('rooms',[
-            'body' => [
+        $result = $this->client->request("POST",'rooms',[
+            'form_params' => [
                 'name' => $room->name,
                 'description' => $room->description,
                 'members_admin_ids' => implode(',',$members->getAdminIds()),
                 'members_member_ids' => implode(',',$members->getMemberIds()),
                 'members_readonly_ids' => implode(',',$members->getReadonlyIds()),
             ]
-        ])->json();
+        ]);
         $room->roomId = $result['room_id'];
         return $room;
     }
 
     /**
      * チャットの名前、アイコンをアップデート
-     * @param $id room id
-     * @param array $options
-     *
-     * @return void
+     * @param Room $room
      */
     public function update(Room $room)
     {
-        $this->client->put(
-            ['rooms/{id}',['id' => $room->roomId]],
-            ['body' => $room->toArray()]
+        $this->client->request(
+            "put",
+            "rooms/{$room->roomId}",
+            ['form_params' => $room->toArray()]
         );
     }
 
     /**
      * グループチャットを退席/削除する
-     * @param int $id room id
-     * @param string $actionType
-     * 
+     *
+     * @param Room $room
+     * @param string     $actionType
+     *
      * @return void
      */
     public function remove(Room $room, $actionType)
     {
-        $this->client->delete(
-            ['rooms/{id}',['id' => $room->roomId]],
+        $this->client->request(
+            "delete",
+            "rooms/{$room->roomId}",
             [
                 'query' => [
                     'action_type' => $actionType

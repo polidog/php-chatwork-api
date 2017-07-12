@@ -8,7 +8,7 @@
 
 namespace Polidog\Chatwork\Api;
 
-use GuzzleHttp\ClientInterface;
+use Polidog\Chatwork\ClientInterface;
 use Polidog\Chatwork\Entity\Factory\FactoryInterface;
 
 /**

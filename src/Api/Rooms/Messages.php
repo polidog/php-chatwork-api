@@ -3,6 +3,7 @@ namespace Polidog\Chatwork\Api\Rooms;
 
 
 use Polidog\Chatwork\Entity\Collection\CollectionInterface;
+use Polidog\Chatwork\Entity\EntityInterface;
 use Polidog\Chatwork\Entity\Message;
 
 /**
@@ -18,38 +19,35 @@ class Messages extends AbstractRoomApi
     public function show($force = false)
     {
         return $this->factory->collection(
-            $this->client->get(
-                ['rooms/{roomId}/messages',['roomId' => $this->roomId]],
+            $this->client->request(
+                "GET",
+                "rooms/{$this->roomId}/messages",
                 [
                     'query' => [
                         'force' => (int)$force
                     ]
                 ]
-            )->json()
+            )
         );
     }
 
     /**
      * @param $id
      * @param bool $force
-     * @return Message
+     * @return Message|EntityInterface
      */
     public function detail($id, $force = false)
     {
         return $this->factory->entity(
-            $this->client->get(
-                ['rooms/{roomId}/messages/{id}',
-                    [
-                        'roomId' => $this->roomId,
-                        'id' => $id
-                    ]
-                ],
+            $this->client->request(
+                "GET",
+                "rooms/{$this->roomId}/messages/{$id}",
                 [
                     'query' => [
                         'force' => (int)$force
                     ]
                 ]
-            )->json()
+            )
         );        
     }
 
@@ -58,14 +56,15 @@ class Messages extends AbstractRoomApi
      */
     public function create(Message $message)
     {
-        $result = $this->client->post(
-            ['rooms/{roomId}/messages',['roomId' => $this->roomId]],
+        $result = $this->client->request(
+            "POST",
+            "rooms/{$this->roomId}/messages",
             [
-                'body' => [
+                'form_params' => [
                     'body' => $message->body
                 ]
             ]
-        )->json();
+        );
         
         $message->messageId = $result['message_id'];
     }

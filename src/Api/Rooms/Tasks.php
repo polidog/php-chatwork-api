@@ -14,12 +14,13 @@ class Tasks extends AbstractRoomApi
     public function show(array $options = [])
     {
         return $this->factory->collection(
-            $this->client->get(
-                ['rooms/{roomId}/tasks',['roomId' => $this->roomId]],
+            $this->client->request(
+                "GET",
+                "rooms/{$this->roomId}/tasks",
                 [
                     'query' => $options
                 ]
-            )->json()
+            )
         );
     }
 
@@ -30,14 +31,10 @@ class Tasks extends AbstractRoomApi
     public function detail($id)
     {
         return $this->factory->entity(
-            $this->client->get(
-                ['rooms/{roomId}/tasks/{id}',
-                    [
-                        'roomId' => $this->roomId,
-                        'id' => $id
-                    ],
-                ]
-            )->json()
+            $this->client->request(
+                "GET",
+                "rooms/{$this->roomId}/tasks/{$id}"
+            )
         );
     }
     
@@ -53,19 +50,20 @@ class Tasks extends AbstractRoomApi
         
         $task = clone $collection->get(0);
         $results = $this->client->post(
-            ['rooms/{roomId}/tasks', ['roomId' => $this->roomId]],
+            "post",
+            "rooms/{$this->roomId}/tasks",
             [
-                'body' => [
+                'form_params' => [
                     'body' => $task->body,
                     'to_ids' => implode(',',$toIds),
                     'limit' => $task->limitTime,
                 ]
             ]
-        )->json();
+        );
         
         foreach ($results['task_ids'] as $key => $id) {
             $collection->get($key)->taskId = $id;
         }
-        
+
     }
 }

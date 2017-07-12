@@ -15,9 +15,10 @@ class Members extends AbstractRoomApi
     public function show()
     {
         return $this->factory->collection(
-            $this->client->get(
-                ['rooms/{roomId}/members',['roomId' => $this->roomId]]
-            )->json()
+            $this->client->request(
+                "GET",
+                "rooms/{$this->roomId}/members"
+            )
         );
     }
 
@@ -27,12 +28,12 @@ class Members extends AbstractRoomApi
     public function update(MembersCollection $members)
     {
         $options = [
-            'body' => [
+            'form_params' => [
                 'members_admin_ids' => implode(',',$members->getAdminIds()),
                 'members_member_ids' => implode(',',$members->getMemberIds()),
                 'members_readonly_ids' => implode(',',$members->getReadonlyIds())
             ]
         ];
-        $this->client->put(['rooms/{roomId}/members',['roomId' => $this->roomId]], $options);
+        $this->client->request("PUT","rooms/{$this->roomId}/members", $options);
     }
 }

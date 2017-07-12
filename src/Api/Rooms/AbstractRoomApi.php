@@ -2,7 +2,7 @@
 namespace Polidog\Chatwork\Api\Rooms;
 
 
-use GuzzleHttp\ClientInterface;
+use Polidog\Chatwork\ClientInterface;
 use Polidog\Chatwork\Entity\Factory\FactoryInterface;
 
 abstract class AbstractRoomApi 

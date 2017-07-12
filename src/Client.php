@@ -9,22 +9,27 @@
 namespace Polidog\Chatwork;
 
 use GuzzleHttp\ClientInterface as HttpClientInterface;
+use GuzzleHttp\Exception\GuzzleException;
+use GuzzleHttp\Handler\CurlHandler;
+use GuzzleHttp\HandlerStack;
+use GuzzleHttp\Middleware;
 use Polidog\Chatwork\Entity\Factory\RoomFactory;
 use Polidog\Chatwork\Entity\Factory\UserFactory;
 use Polidog\Chatwork\Exception\NoSupportApiException;
 use Polidog\Chatwork\Http\Event\AuthHeaderSubscriber;
+use Polidog\Chatwork\Http\Middleware\AuthHeader;
+use Psr\Http\Message\RequestInterface;
+use Psr\Http\Message\ResponseInterface;
 
 final class Client implements ClientInterface 
 {
+    const API_VERSION = 'v2';
+
     /**
      * @var HttpClientInterface
      */
     private $httpClient;
 
-    /**
-     * @var string
-     */
-    private $apiKey;
 
     /**
      * HttpOptions
@@ -32,7 +37,7 @@ final class Client implements ClientInterface
      * @var array
      */
     private $httpOptions = [
-        'base_url' => ['https://api.chatwork.com/{version}/', ['version' => 'v2']],
+        'base_uri' => 'https://api.chatwork.com/',
         'defaults' => [
             'timeout' => 60,
             'debug' => false,
@@ -44,28 +49,32 @@ final class Client implements ClientInterface
     ];
     
     /**
-     * @param $apiKey
-     * @param array $httpOptions
-     * @param HttpClientInterface $httpClient
+     * @param string                   $chatworkToken
+     * @param array                    $httpOptions
+     * @param HttpClientInterface|null $httpClient
      */
     public function __construct(
-        $apiKey, 
+        $chatworkToken,
         array $httpOptions = [],
-        HttpClientInterface $httpClient = null)
+        HttpClientInterface $httpClient = null
+    )
     {
         
         $this->httpOptions = array_merge($this->httpOptions, $httpOptions);
-        
-        if (is_null($httpClient)) {
+        if ($httpClient === null) {
+            if (!isset($this->httpOptions['handler']) || false === $this->httpOptions['handler'] instanceof HandlerStack) {
+                $this->httpOptions['handler'] = HandlerStack::create();
+                $this->httpOptions['handler']->push(Middleware::mapRequest(function(RequestInterface $request) use ($chatworkToken) {
+                    return $request->withHeader('X-ChatWorkToken', $chatworkToken);
+                }));
+
+            }
             $httpClient = new \GuzzleHttp\Client($this->httpOptions);
         }
-        
-        $this->apiKey = $apiKey;
+
+
         $this->httpClient = $httpClient;
 
-        $emitter = $this->httpClient->getEmitter();
-        $emitter->attach(new AuthHeaderSubscriber($apiKey));
-        
     }
 
     /**
@@ -78,21 +87,31 @@ final class Client implements ClientInterface
     {
         switch (strtolower($name)) {
             case 'me':
-                $api = new Api\Me($this->httpClient, new UserFactory());
+                $api = new Api\Me($this, new UserFactory());
                 break;
             case 'my':
-                $api = new Api\My($this->httpClient);
+                $api = new Api\My($this);
                 break;
             case 'contacts':
-                $api = new Api\Contacts($this->httpClient, new UserFactory());
+                $api = new Api\Contacts($this, new UserFactory());
                 break;
             case 'rooms':
-                $api = new Api\Rooms($this->httpClient, new RoomFactory());
+                $api = new Api\Rooms($this, new RoomFactory());
                 break;
             default:
                 throw new NoSupportApiException(sprintf('Undefined api instance called: "%s"', $name));
         }
         return $api;
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function request($method, $uri, array $options = [])
+    {
+        // TODO Error Handling.
+        $uri = sprintf("/%s/%s",self::API_VERSION ,$uri);
+        return json_decode($this->httpClient->request($method, $uri, $options)->getBody()->getContents(), true);
     }
 
 

@@ -8,7 +8,7 @@ class Status extends AbstractApi
     public function show()
     {
         return $this->factory->entity(
-            $this->client->get('my/status')    
+            $this->client->request("GET",'my/status')
         );
     }
 }
