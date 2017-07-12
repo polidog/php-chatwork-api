@@ -21,7 +21,7 @@ interface ClientInterface
 
     /**
      * @param       $method
-     * @param       $uri
+     * @param       $path
      * @param array $options
      *
      * @return mixed
@@ -29,5 +29,5 @@ interface ClientInterface
      *
      * @throws GuzzleException
      */
-    public function request($method, $uri, array $options = []);
+    public function request($method, $path, array $options = []);
 }

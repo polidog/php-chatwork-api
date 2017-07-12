@@ -54,14 +54,12 @@ final class Client implements ClientInterface
     ) {
         $this->httpOptions = array_merge($this->httpOptions, $httpOptions);
         if ($httpClient === null) {
-            if (!isset($this->httpOptions['handler']) || false === $this->httpOptions['handler'] instanceof HandlerStack) {
-                $this->httpOptions['handler'] = HandlerStack::create();
-                $this->httpOptions['handler']->push(Middleware::mapRequest(function (RequestInterface $request) use ($chatworkToken) {
-                    return $request->withHeader('X-ChatWorkToken', $chatworkToken);
-                }));
-            }
             $httpClient = new \GuzzleHttp\Client($this->httpOptions);
         }
+
+        $httpClient->getConfig('handler')->push(Middleware::mapRequest(function (RequestInterface $request) use ($chatworkToken) {
+            return $request->withHeader('X-ChatWorkToken', $chatworkToken);
+        }));
 
         $this->httpClient = $httpClient;
     }
@@ -98,11 +96,10 @@ final class Client implements ClientInterface
     /**
      * {@inheritdoc}
      */
-    public function request($method, $uri, array $options = [])
+    public function request($method, $path, array $options = [])
     {
         // TODO Error Handling.
-        $uri = sprintf('/%s/%s', self::API_VERSION, $uri);
-
-        return json_decode($this->httpClient->request($method, $uri, $options)->getBody()->getContents(), true);
+        $path = sprintf('/%s/%s', self::API_VERSION, $path);
+        return json_decode($this->httpClient->request($method, $path, $options)->getBody()->getContents(), true);
     }
 }
