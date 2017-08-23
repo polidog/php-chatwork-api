@@ -23,7 +23,7 @@ composer.jsonに以下の記述を加えてください。
 ```
 {
   "require": {
-    "polidog/php-chatwork-api": "0.2.*@dev",
+    "polidog/php-chatwork-api": "2.x-dev",
     "cakephp/utility": "3.0.0-beta3"
   }
 }
@@ -32,7 +32,7 @@ composer.jsonに以下の記述を加えてください。
 
 ## Quick Example
 
-利用する前に必ずChatWorkのAPIキーを用意しておいてください。  
+利用する前に必ずChatWorkのAPIキーを用意しておいてください。
 [APIキーの確認方法](http://developer.chatwork.com/ja/authenticate.html)を確認してください。
 
 ### オブジェクトを取得する
