@@ -18,15 +18,8 @@ php-chatwork-api
 
 ## Install
 
-composer.jsonに以下の記述を加えてください。
-
 ```
-{
-  "require": {
-    "polidog/php-chatwork-api": "0.2.*@dev",
-    "cakephp/utility": "3.0.0-beta3"
-  }
-}
+$ composer require polidog/php-chatwork-api
 ```
 
 
