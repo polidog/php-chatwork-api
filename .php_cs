@@ -1,10 +1,15 @@
 <?php
 $finder = PhpCsFixer\Finder::create()
-    ->in(__DIR__)
-    ->exclude('vendor');
-return PhpCsFixer\Config::create()
+    ->in(__DIR__."/src")
+//    ->in(__DIR__."/tests")
+;
+return \PhpCsFixer\Config::create()
+    ->setRiskyAllowed(true)
     ->setRules([
         '@Symfony' => true,
-        'array_syntax' => array('syntax' => 'short'),
+        'array_syntax' => ['syntax' => 'short'],
+        "@PHP70Migration:risky" => true,
     ])
-    ->setFinder($finder);
+    ->setFinder($finder)
+    ->setLineEnding("\n")
+    ;

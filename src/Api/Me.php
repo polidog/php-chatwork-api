@@ -10,12 +10,12 @@ use Polidog\Chatwork\Entity\User;
 class Me extends AbstractApi
 {
     /**
-     * @return User
+     * @return \Polidog\Chatwork\Entity\EntityInterface
      */
     public function show()
     {
         return $this->factory->entity(
-            $this->client->request('GET', 'me')
+            $this->client->get( 'me')
         );
     }
 }

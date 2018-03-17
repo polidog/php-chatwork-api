@@ -2,7 +2,7 @@
 
 namespace Polidog\Chatwork\Api\Rooms;
 
-use Polidog\Chatwork\ClientInterface;
+use Polidog\Chatwork\Client\ClientInterface;
 use Polidog\Chatwork\Entity\Collection\CollectionInterface;
 use Polidog\Chatwork\Entity\Factory\FactoryInterface;
 use Polidog\Chatwork\Entity\Factory\FileFactory;
@@ -30,16 +30,14 @@ class Files extends AbstractRoomApi
     public function show($accountId = null)
     {
         $options = [
-            'query' => [],
         ];
 
         if (!is_null($accountId)) {
-            $options['query']['account_id'] = $accountId;
+            $options['account_id'] = $accountId;
         }
 
         return $this->factory->collection(
-            $this->client->request(
-                'GET',
+            $this->client->get(
                 "rooms/{$this->roomId}/files",
                 $options
             )
@@ -54,8 +52,7 @@ class Files extends AbstractRoomApi
     public function detail($id)
     {
         return $this->factory->entity(
-          $this->client->request(
-              'GET',
+          $this->client->get(
               "rooms/{$this->roomId}/files/{$id}"
           )
         );

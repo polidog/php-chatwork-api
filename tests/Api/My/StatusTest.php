@@ -2,7 +2,7 @@
 
 namespace Polidog\Chatwork\Api\My;
 
-use Polidog\Chatwork\ClientInterface;
+use Polidog\Chatwork\Client\ClientInterface;
 use Polidog\Chatwork\Entity\Factory\StatusFactory;
 
 class StatusTest extends \PHPUnit_Framework_TestCase

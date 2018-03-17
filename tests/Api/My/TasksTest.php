@@ -2,7 +2,7 @@
 
 namespace Polidog\Chatwork\Api\My;
 
-use Polidog\Chatwork\ClientInterface;
+use Polidog\Chatwork\Client\ClientInterface;
 use Polidog\Chatwork\Entity\Collection\EntityCollection;
 use Polidog\Chatwork\Entity\Factory\TaskFactory;
 use Polidog\Chatwork\Entity\Task;

@@ -2,7 +2,7 @@
 
 namespace Polidog\Chatwork\Api\Rooms;
 
-use Polidog\Chatwork\ClientInterface;
+use Polidog\Chatwork\Client\ClientInterface;
 use Polidog\Chatwork\Entity\Collection\CollectionInterface;
 use Polidog\Chatwork\Entity\Factory\FactoryInterface;
 use Polidog\Chatwork\Entity\Factory\TaskFactory;
@@ -25,12 +25,9 @@ class Tasks extends AbstractRoomApi
     public function show(array $options = [])
     {
         return $this->factory->collection(
-            $this->client->request(
-                'GET',
+            $this->client->get(
                 "rooms/{$this->roomId}/tasks",
-                [
-                    'query' => $options,
-                ]
+                $options
             )
         );
     }
@@ -43,8 +40,7 @@ class Tasks extends AbstractRoomApi
     public function detail($id)
     {
         return $this->factory->entity(
-            $this->client->request(
-                'GET',
+            $this->client->get(
                 "rooms/{$this->roomId}/tasks/{$id}"
             )
         );
@@ -63,15 +59,12 @@ class Tasks extends AbstractRoomApi
         }
 
         $task = clone $collection->get(0);
-        $results = $this->client->request(
-            'post',
+        $results = $this->client->post(
             "rooms/{$this->roomId}/tasks",
             [
-                'form_params' => [
-                    'body' => $task->body,
-                    'to_ids' => implode(',', $toIds),
-                    'limit' => $task->limitTime,
-                ],
+                'body' => $task->body,
+                'to_ids' => implode(',', $toIds),
+                'limit' => $task->limitTime,
             ]
         );
 

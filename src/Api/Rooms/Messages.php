@@ -2,7 +2,7 @@
 
 namespace Polidog\Chatwork\Api\Rooms;
 
-use Polidog\Chatwork\ClientInterface;
+use Polidog\Chatwork\Client\ClientInterface;
 use Polidog\Chatwork\Entity\Collection\CollectionInterface;
 use Polidog\Chatwork\Entity\EntityInterface;
 use Polidog\Chatwork\Entity\Factory\FactoryInterface;
@@ -29,13 +29,10 @@ class Messages extends AbstractRoomApi
     public function show($force = false)
     {
         return $this->factory->collection(
-            $this->client->request(
-                'GET',
+            $this->client->get(
                 "rooms/{$this->roomId}/messages",
                 [
-                    'query' => [
-                        'force' => (int) $force,
-                    ],
+                    'force' => (int) $force,
                 ]
             )
         );
@@ -50,13 +47,10 @@ class Messages extends AbstractRoomApi
     public function detail($id, $force = false)
     {
         return $this->factory->entity(
-            $this->client->request(
-                'GET',
+            $this->client->get(
                 "rooms/{$this->roomId}/messages/{$id}",
                 [
-                    'query' => [
-                        'force' => (int) $force,
-                    ],
+                    'force' => (int) $force,
                 ]
             )
         );
@@ -67,13 +61,10 @@ class Messages extends AbstractRoomApi
      */
     public function create(Message $message)
     {
-        $result = $this->client->request(
-            'POST',
+        $result = $this->client->post(
             "rooms/{$this->roomId}/messages",
             [
-                'form_params' => [
-                    'body' => $message->body,
-                ],
+                'body' => $message->body,
             ]
         );
 

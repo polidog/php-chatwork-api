@@ -8,7 +8,7 @@
 
 namespace Polidog\Chatwork\Api;
 
-use Polidog\Chatwork\ClientInterface;
+use Polidog\Chatwork\Client\ClientInterface;
 use Polidog\Chatwork\Entity\Collection\EntityCollection;
 use Polidog\Chatwork\Entity\Factory\UserFactory;
 use Polidog\Chatwork\Entity\User;

@@ -15,7 +15,7 @@ class Tasks extends AbstractApi
     public function show(array $options = [])
     {
         return $this->factory->collection(
-            $this->client->request('GET', 'my/tasks', ['query' => $options])
+            $this->client->get( 'my/tasks', $options)
         );
     }
 }

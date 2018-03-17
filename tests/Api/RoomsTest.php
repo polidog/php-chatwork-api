@@ -6,7 +6,7 @@ use Polidog\Chatwork\Api\Rooms\Files;
 use Polidog\Chatwork\Api\Rooms\Members;
 use Polidog\Chatwork\Api\Rooms\Messages;
 use Polidog\Chatwork\Api\Rooms\Tasks;
-use Polidog\Chatwork\ClientInterface;
+use Polidog\Chatwork\Client\ClientInterface;
 use Polidog\Chatwork\Entity\Collection\EntityCollection;
 use Polidog\Chatwork\Entity\Collection\MemberCollection;
 use Polidog\Chatwork\Entity\Factory\RoomFactory;

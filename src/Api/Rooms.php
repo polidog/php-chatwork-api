@@ -24,7 +24,7 @@ class Rooms extends AbstractApi
     public function show()
     {
         return $this->factory->collection(
-            $this->client->request('GET', 'rooms')
+            $this->client->get('rooms')
         );
     }
 
@@ -36,7 +36,7 @@ class Rooms extends AbstractApi
     public function detail($id)
     {
         return $this->factory->entity(
-            $this->client->request('GET', "rooms/{$id}")
+            $this->client->get( "rooms/{$id}")
         );
     }
 
@@ -50,14 +50,12 @@ class Rooms extends AbstractApi
      */
     public function create(Room $room, MemberCollection $members)
     {
-        $result = $this->client->request('POST', 'rooms', [
-            'form_params' => [
-                'name' => $room->name,
-                'description' => $room->description,
-                'members_admin_ids' => implode(',', $members->getAdminIds()),
-                'members_member_ids' => implode(',', $members->getMemberIds()),
-                'members_readonly_ids' => implode(',', $members->getReadonlyIds()),
-            ],
+        $result = $this->client->post( 'rooms', [
+            'name' => $room->name,
+            'description' => $room->description,
+            'members_admin_ids' => implode(',', $members->getAdminIds()),
+            'members_member_ids' => implode(',', $members->getMemberIds()),
+            'members_readonly_ids' => implode(',', $members->getReadonlyIds()),
         ]);
         $room->roomId = $result['room_id'];
 
@@ -71,10 +69,9 @@ class Rooms extends AbstractApi
      */
     public function update(Room $room)
     {
-        $this->client->request(
-            'PUT',
+        $this->client->put(
             "rooms/{$room->roomId}",
-            ['form_params' => $room->toArray()]
+            [$room->toArray()]
         );
     }
 
@@ -86,13 +83,10 @@ class Rooms extends AbstractApi
      */
     public function remove(Room $room, $actionType)
     {
-        $this->client->request(
-            'DELETE',
+        $this->client->delete(
             "rooms/{$room->roomId}",
             [
-                'query' => [
-                    'action_type' => $actionType,
-                ],
+                'action_type' => $actionType,
             ]
         );
     }

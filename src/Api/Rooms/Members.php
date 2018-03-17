@@ -2,7 +2,7 @@
 
 namespace Polidog\Chatwork\Api\Rooms;
 
-use Polidog\Chatwork\ClientInterface;
+use Polidog\Chatwork\Client\ClientInterface;
 use Polidog\Chatwork\Entity\Collection\MemberCollection;
 use Polidog\Chatwork\Entity\Factory\FactoryInterface;
 use Polidog\Chatwork\Entity\Factory\MemberFactory;
@@ -38,12 +38,10 @@ class Members extends AbstractRoomApi
     public function update(MemberCollection $members)
     {
         $options = [
-            'form_params' => [
-                'members_admin_ids' => implode(',', $members->getAdminIds()),
-                'members_member_ids' => implode(',', $members->getMemberIds()),
-                'members_readonly_ids' => implode(',', $members->getReadonlyIds()),
-            ],
+            'members_admin_ids' => implode(',', $members->getAdminIds()),
+            'members_member_ids' => implode(',', $members->getMemberIds()),
+            'members_readonly_ids' => implode(',', $members->getReadonlyIds()),
         ];
-        $this->client->request('PUT', "rooms/{$this->roomId}/members", $options);
+        $this->client->put( "rooms/{$this->roomId}/members", $options);
     }
 }

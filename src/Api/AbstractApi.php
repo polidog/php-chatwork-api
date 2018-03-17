@@ -1,14 +1,7 @@
 <?php
-/**
- * Created by PhpStorm.
- * User: polidog
- * Date: 14/12/24
- * Time: 1:42.
- */
-
 namespace Polidog\Chatwork\Api;
 
-use Polidog\Chatwork\ClientInterface;
+use Polidog\Chatwork\Client\ClientInterface;
 use Polidog\Chatwork\Entity\Factory\FactoryInterface;
 
 /**

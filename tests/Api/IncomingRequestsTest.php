@@ -4,7 +4,7 @@
 namespace Polidog\Chatwork\Api;
 
 
-use Polidog\Chatwork\ClientInterface;
+use Polidog\Chatwork\Client\ClientInterface;
 use Polidog\Chatwork\Entity\Collection\EntityCollection;
 use Polidog\Chatwork\Entity\Factory\IncomingRequestsFactory;
 use Polidog\Chatwork\Entity\IncomingRequest;

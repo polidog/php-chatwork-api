@@ -4,7 +4,7 @@ namespace Polidog\Chatwork\Api;
 
 use Polidog\Chatwork\Api\My\Status;
 use Polidog\Chatwork\Api\My\Tasks;
-use Polidog\Chatwork\ClientInterface;
+use Polidog\Chatwork\Client\ClientInterface;
 
 class MyTest extends \PHPUnit_Framework_TestCase
 {

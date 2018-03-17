@@ -4,7 +4,7 @@
 namespace Polidog\Chatwork\Api;
 
 
-use Polidog\Chatwork\ClientInterface;
+use Polidog\Chatwork\Client\ClientInterface;
 use Polidog\Chatwork\Entity\Factory\FactoryInterface;
 use Polidog\Chatwork\Entity\Factory\IncomingRequestsFactory;
 
@@ -20,19 +20,19 @@ class IncomingRequests extends AbstractApi
     public function show()
     {
         return $this->factory->collection(
-            $this->client->request('GET','incoming_requests')
+            $this->client->get('incoming_requests')
         );
     }
 
     public function accept($requestId)
     {
         return $this->factory->entity(
-            $this->client->request('PUT', "incoming_requests/{$requestId}")
+            $this->client->put("incoming_requests/{$requestId}")
         );
     }
 
     public function reject($requestId)
     {
-        $this->client->request('DELETE', "incoming_requests/{$requestId}");
+        $this->client->delete("incoming_requests/{$requestId}");
     }
 }
