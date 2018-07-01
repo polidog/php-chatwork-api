@@ -1,6 +1,6 @@
 {
   "name": "polidog/php-chatwork-api",
-  "description": "Chatwork api class",
+  "description": "Chatwork api library for php",
   "keywords": ["chatwork","api"],
   "homepage": "https://github.com/polidog/php-chatwork-api",
   "license"  : "MIT",
