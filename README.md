@@ -26,13 +26,13 @@ $ composer require polidog/php-chatwork-api
 
 ```
 // ChatWork API Clientオブジェクトの初期化
-$client = new \Polidog\Chatwork\Client("chatwork api token");
+$chatwork = new \Polidog\Chatwork\Chatwork("chatwork api token");
 ```
 
 ### 自分自身の情報(APIキーの所有者)
 
 ```
-$user = $client->api('me')->show();
+$user = $chatwork->me()->show();
 
 // APIのレスポンスはすべてオブジェクトの形で取得できます
 var_dump($user);
@@ -41,7 +41,7 @@ var_dump($user);
 ### チャットルーム一覧を取得する
 
 ```
-$rooms = $client->api('rooms')->show();
+$rooms = $chatwork->rooms()->show();
 var_dump($rooms);
 ```
 
@@ -58,11 +58,13 @@ $member = new \Polidog\Chatwork\Entity\Member();
 $member->role = 'admin';
 $member->account = $user;
 $members->add($member);
+
+$chatwork->rooms()->create($room, $members)
 ```
 
 ### チャットルームのメンバー一覧を取得する
 ```
-$members = $client->api('rooms')->members(123456/* roomidを指定します。*/);
+$members = $client->rooms()->members(123456/* roomidを指定します。*/);
 var_dump($members);
 
 ```
