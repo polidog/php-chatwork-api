@@ -1,4 +1,6 @@
 <?php
+
+declare(strict_types=1);
 /**
  * Created by PhpStorm.
  * User: polidog
@@ -27,9 +29,9 @@ class TaskFactory extends AbstractFactory
         $task = new Task();
         foreach ($data as $key => $value) {
             $property = Inflector::variable($key);
-            if ($property == 'room') {
+            if ('room' == $property) {
                 $task->$property = $roomFactory->entity($value);
-            } elseif ($property == 'assignedByAccount' || $property == 'account') {
+            } elseif ('assignedByAccount' == $property || 'account' == $property) {
                 $task->$property = $userFactory->entity($value);
             } else {
                 $task->$property = $value;

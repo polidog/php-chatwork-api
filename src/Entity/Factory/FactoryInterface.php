@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Polidog\Chatwork\Entity\Factory;
 
 use Polidog\Chatwork\Entity\Collection\CollectionInterface;

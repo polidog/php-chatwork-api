@@ -1,8 +1,8 @@
 <?php
 
-namespace Polidog\Chatwork\Api;
+declare(strict_types=1);
 
-use Polidog\Chatwork\Entity\User;
+namespace Polidog\Chatwork\Api;
 
 /**
  * Api /me.
@@ -15,7 +15,7 @@ class Me extends AbstractApi
     public function show()
     {
         return $this->factory->entity(
-            $this->client->get( 'me')
+            $this->client->get('me')
         );
     }
 }

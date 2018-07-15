@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Polidog\Chatwork\Api\Rooms;
 
 use Polidog\Chatwork\Client\ClientInterface;
@@ -19,7 +21,6 @@ class Messages extends AbstractRoomApi
         assert($factory instanceof MessageFactory);
         parent::__construct($roomId, $client, $factory);
     }
-
 
     /**
      * @param bool $force

@@ -1,8 +1,9 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Polidog\Chatwork\Api;
 
-use Polidog\Chatwork\Collection\EntityCollection;
 use Polidog\Chatwork\Entity\Collection\CollectionInterface;
 use Polidog\Chatwork\Entity\Collection\MemberCollection;
 use Polidog\Chatwork\Entity\Factory\FileFactory;
@@ -36,7 +37,7 @@ class Rooms extends AbstractApi
     public function detail($id)
     {
         return $this->factory->entity(
-            $this->client->get( "rooms/{$id}")
+            $this->client->get("rooms/{$id}")
         );
     }
 
@@ -50,7 +51,7 @@ class Rooms extends AbstractApi
      */
     public function create(Room $room, MemberCollection $members)
     {
-        $result = $this->client->post( 'rooms', [
+        $result = $this->client->post('rooms', [
             'name' => $room->name,
             'description' => $room->description,
             'members_admin_ids' => implode(',', $members->getAdminIds()),

@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Polidog\Chatwork\Entity;
 
 use Cake\Utility\Inflector;
@@ -79,7 +81,7 @@ class Room implements EntityInterface
     /**
      * @return array
      */
-    public function toArray()
+    public function toArray(): array
     {
         $array = [];
         foreach (get_object_vars($this) as $property => $value) {

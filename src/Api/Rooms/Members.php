@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Polidog\Chatwork\Api\Rooms;
 
 use Polidog\Chatwork\Client\ClientInterface;
@@ -18,17 +20,13 @@ class Members extends AbstractRoomApi
         parent::__construct($roomId, $client, $factory);
     }
 
-
     /**
      * @return MemberCollection
      */
     public function show()
     {
         return $this->factory->collection(
-            $this->client->request(
-                'GET',
-                "rooms/{$this->roomId}/members"
-            )
+            $this->client->get("rooms/{$this->roomId}/members")
         );
     }
 
@@ -42,6 +40,6 @@ class Members extends AbstractRoomApi
             'members_member_ids' => implode(',', $members->getMemberIds()),
             'members_readonly_ids' => implode(',', $members->getReadonlyIds()),
         ];
-        $this->client->put( "rooms/{$this->roomId}/members", $options);
+        $this->client->put("rooms/{$this->roomId}/members", $options);
     }
 }

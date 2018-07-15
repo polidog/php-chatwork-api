@@ -1,18 +1,18 @@
 <?php
 
+declare(strict_types=1);
 
 namespace Polidog\Chatwork\Entity;
-
 
 class IncomingRequest implements EntityInterface
 {
     /**
-     * @var integer
+     * @var int
      */
     public $requestId;
 
     /**
-     * @var integer
+     * @var int
      */
     public $accountId;
 
@@ -27,12 +27,12 @@ class IncomingRequest implements EntityInterface
     public $name;
 
     /**
-     * @var integer
+     * @var int
      */
     public $chatworkId;
 
     /**
-     * @var integer
+     * @var int
      */
     public $organizationId;
 

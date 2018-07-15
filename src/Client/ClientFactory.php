@@ -4,8 +4,6 @@ declare(strict_types=1);
 
 namespace Polidog\Chatwork\Client;
 
-use Polidog\Chatwork\Client\ClientInterface;
-
 final class ClientFactory
 {
     /**

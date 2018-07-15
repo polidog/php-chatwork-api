@@ -1,8 +1,8 @@
 <?php
 
+declare(strict_types=1);
 
 namespace Polidog\Chatwork\Api;
-
 
 use Polidog\Chatwork\Client\ClientInterface;
 use Polidog\Chatwork\Entity\Factory\FactoryInterface;
@@ -15,7 +15,6 @@ class IncomingRequests extends AbstractApi
         assert($factory instanceof IncomingRequestsFactory);
         parent::__construct($client, $factory);
     }
-
 
     public function show()
     {

@@ -9,7 +9,6 @@ use GuzzleHttp\Exception\GuzzleException;
 use GuzzleHttp\Middleware;
 use Polidog\Chatwork\Exception\ClientException;
 use Psr\Http\Message\RequestInterface;
-use Polidog\Chatwork\Client\ClientInterface;
 
 final class Client implements ClientInterface
 {
@@ -55,7 +54,7 @@ final class Client implements ClientInterface
     public function post(string $path, array $data = []): array
     {
         return $this->request('post', $path, [
-            'form_params' => $data
+            'form_params' => $data,
         ]);
     }
 
@@ -65,7 +64,7 @@ final class Client implements ClientInterface
     public function put(string $path, array $data = []): array
     {
         return $this->request('put', $path, [
-            'form_params' => $data
+            'form_params' => $data,
         ]);
     }
 
@@ -75,7 +74,7 @@ final class Client implements ClientInterface
     public function delete(string $path, array $query = []): array
     {
         return $this->request('delete', $path, [
-            'query' => $query
+            'query' => $query,
         ]);
     }
 

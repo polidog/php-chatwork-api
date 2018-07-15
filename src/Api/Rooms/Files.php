@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Polidog\Chatwork\Api\Rooms;
 
 use Polidog\Chatwork\Client\ClientInterface;
@@ -20,7 +22,6 @@ class Files extends AbstractRoomApi
         assert($factory instanceof FileFactory);
         parent::__construct($roomId, $client, $factory);
     }
-
 
     /**
      * @param null $accountId

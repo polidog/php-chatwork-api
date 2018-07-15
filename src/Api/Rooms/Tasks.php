@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Polidog\Chatwork\Api\Rooms;
 
 use Polidog\Chatwork\Client\ClientInterface;
@@ -15,7 +17,6 @@ class Tasks extends AbstractRoomApi
         assert($factory instanceof TaskFactory);
         parent::__construct($roomId, $client, $factory);
     }
-
 
     /**
      * @param array $options

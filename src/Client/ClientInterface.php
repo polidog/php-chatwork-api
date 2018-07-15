@@ -14,40 +14,44 @@ interface ClientInterface
     /**
      * @param string $path
      * @param array  $query
+     *
      * @return array
      *
      * @throws ClientException
      */
-    public function get(string $path, array $query = []) : array;
+    public function get(string $path, array $query = []): array;
 
     /**
      * @param string $path
      * @param array  $data
+     *
      * @return array
      *
      * @throws ClientException
      */
-    public function post(string $path, array $data = []) : array;
+    public function post(string $path, array $data = []): array;
 
     /**
      * @param string $path
      * @param array  $data
+     *
      * @return array
      *
      * @throws ClientException
      */
-    public function put(string $path, array $data = []) : array;
+    public function put(string $path, array $data = []): array;
 
     /**
      * @param string $path
      * @param array  $query
+     *
      * @return array
      *
      * @throws ClientException
      */
-    public function delete(string $path, array $query = []) : array;
+    public function delete(string $path, array $query = []): array;
 
-    /**
+    /*
      * @param string $method
      * @param string $path
      * @param array  $options
