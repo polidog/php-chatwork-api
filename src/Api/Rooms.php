@@ -13,6 +13,7 @@ use Polidog\Chatwork\Entity\Factory\MessageFactory;
 use Polidog\Chatwork\Entity\Factory\RoomFactory;
 use Polidog\Chatwork\Entity\Factory\TaskFactory;
 use Polidog\Chatwork\Entity\Room;
+use Polidog\Chatwork\Exception\InvalidArgumentException;
 
 class Rooms
 {
@@ -104,10 +105,15 @@ class Rooms
      * グループチャットを退席/削除する.
      *
      * @param Room   $room
-     * @param string $actionType
+     * @param string $actionType leave or delete
+     * @throws InvalidArgumentException
      */
     public function remove(Room $room, $actionType)
     {
+        if ($actionType !== 'leave' && $actionType !== 'delete') {
+            throw new InvalidArgumentException('ActionType is only leave or delete');
+        }
+
         $this->client->delete(
             "rooms/{$room->roomId}",
             [

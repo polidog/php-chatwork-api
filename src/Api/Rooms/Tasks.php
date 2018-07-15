@@ -70,29 +70,20 @@ class Tasks
     }
 
     /**
-     * @TODO api見直し
-     *
-     * @param CollectionInterface $collection
+     * @param string $body
+     * @param array $toIds
+     * @param \DateTime|null $limit
+     * @return int[] task ids
      */
-    public function create(CollectionInterface $collection)
+    public function create(string $body, array $toIds, \DateTime $limit = null) : array
     {
-        $toIds = [];
-        foreach ($collection as $entity) {
-            $toIds[] = $entity->account->accountId;
-        }
-
-        $task = clone $collection->get(0);
-        $results = $this->client->post(
+        return $this->client->post(
             "rooms/{$this->roomId}/tasks",
             [
-                'body' => $task->body,
+                'body' => $body,
                 'to_ids' => implode(',', $toIds),
-                'limit' => $task->limitTime,
+                'limit' => $limit instanceof \DateTime ? $limit->getTimestamp() : null,
             ]
         );
-
-        foreach ($results['task_ids'] as $key => $id) {
-            $collection->get($key)->taskId = $id;
-        }
     }
 }
