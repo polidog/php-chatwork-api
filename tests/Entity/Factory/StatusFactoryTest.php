@@ -2,14 +2,12 @@
 
 namespace Polidog\Chatwork\Entity\Factory;
 
+use PHPUnit\Framework\TestCase;
 use Polidog\Chatwork\Entity\Status;
 
-class StatusFactoryTest extends \PHPUnit_Framework_TestCase
+class StatusFactoryTest extends TestCase
 {
-    /**
-     * @test
-     */
-    public function Statusエンティティを生成することができる()
+    public function testCreateStatusEntity()
     {
         $factory = new StatusFactory();
         $entity = $factory->entity(json_decode('{

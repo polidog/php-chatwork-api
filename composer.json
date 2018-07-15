@@ -1,7 +1,6 @@
 {
   "name": "polidog/php-chatwork-api",
-  "version": "0.2.0",
-  "description": "Chatwork api class",
+  "description": "Chatwork api library for php",
   "keywords": ["chatwork","api"],
   "homepage": "https://github.com/polidog/php-chatwork-api",
   "license"  : "MIT",
@@ -19,7 +18,7 @@
     "friendsofphp/php-cs-fixer": "^2.10"
   },
   "require-dev": {
-    "satooshi/php-coveralls": "dev-master",
+    "satooshi/php-coveralls": "v2.0.0.",
     "phpunit/phpunit": "^7.0"
   },
   "autoload": {
@@ -27,5 +26,9 @@
   },
   "autoload-dev": {
     "psr-4": {"Polidog\\Chatwork\\": "tests/"}
+  },
+  "scripts": {
+    "test": "./vendor/bin/phpunit",
+    "cs-fixer": "./vendor/bin/php-cs-fixer fix"
   }
 }

@@ -2,12 +2,13 @@
 
 namespace Polidog\Chatwork\Api\My;
 
+use PHPUnit\Framework\TestCase;
 use Polidog\Chatwork\Client\ClientInterface;
 use Polidog\Chatwork\Entity\Collection\EntityCollection;
 use Polidog\Chatwork\Entity\Factory\TaskFactory;
 use Polidog\Chatwork\Entity\Task;
 
-class TasksTest extends \PHPUnit_Framework_TestCase
+class TasksTest extends TestCase
 {
     /**
      * @dataProvider providerResponseData
@@ -15,7 +16,7 @@ class TasksTest extends \PHPUnit_Framework_TestCase
     public function testShow($apiResult)
     {
         $client = $this->prophesize(ClientInterface::class);
-        $client->request("GET",'my/tasks',['query' => []])
+        $client->get('my/tasks',[])
             ->willReturn($apiResult);
 
         $factory = new TaskFactory();

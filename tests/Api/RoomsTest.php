@@ -2,6 +2,7 @@
 
 namespace Polidog\Chatwork\Api;
 
+use PHPUnit\Framework\TestCase;
 use Polidog\Chatwork\Api\Rooms\Files;
 use Polidog\Chatwork\Api\Rooms\Members;
 use Polidog\Chatwork\Api\Rooms\Messages;
@@ -18,7 +19,7 @@ use Prophecy\Argument;
 /**
  * Class RoomsTest.
  */
-class RoomsTest extends \PHPUnit_Framework_TestCase
+class RoomsTest extends TestCase
 {
     /**
      * @dataProvider providerRooms
@@ -26,7 +27,7 @@ class RoomsTest extends \PHPUnit_Framework_TestCase
     public function testShow($apiResult)
     {
         $client = $this->prophesize(ClientInterface::class);
-        $client->request("GET",'rooms')
+        $client->get('rooms')
             ->willReturn($apiResult);
 
         $factory = new RoomFactory();
@@ -47,7 +48,7 @@ class RoomsTest extends \PHPUnit_Framework_TestCase
     public function testDetail($apiResult)
     {
         $client = $this->prophesize(ClientInterface::class);
-        $client->request("GET",'rooms/1')
+        $client->get('rooms/1')
             ->willReturn($apiResult);
 
         $factory = new RoomFactory();
@@ -61,7 +62,7 @@ class RoomsTest extends \PHPUnit_Framework_TestCase
     public function testCreate()
     {
         $client = $this->prophesize(ClientInterface::class);
-        $client->request("POST",'rooms', Argument::any())
+        $client->post('rooms', Argument::any())
             ->willReturn([
                 'room_id' => 1234,
             ]);
@@ -92,14 +93,14 @@ class RoomsTest extends \PHPUnit_Framework_TestCase
         $room->name = "test";
 
         $client = $this->prophesize(ClientInterface::class);
+        $client->put("rooms/{$room->roomId}", [$room->toArray()])->willReturn([]);
+
         $factory = new RoomFactory();
 
         $rooms = new Rooms($client->reveal(), $factory);
         $rooms->update($room);
 
-        $client->request('PUT', "rooms/{$room->roomId}",[
-            'form_params' => $room->toArray()
-        ])->shouldHaveBeenCalled();
+        $client->put("rooms/{$room->roomId}", [$room->toArray()])->shouldHaveBeenCalled();
     }
 
     public function testRemove()
@@ -109,15 +110,17 @@ class RoomsTest extends \PHPUnit_Framework_TestCase
         $room->name = "test";
 
         $client = $this->prophesize(ClientInterface::class);
+        $client->delete("rooms/{$room->roomId}",[
+            'action_type' => Rooms::ACTION_TYPE_LEAVE
+        ])->willReturn([]);
+
         $factory = new RoomFactory();
 
         $rooms = new Rooms($client->reveal(), $factory);
         $rooms->remove($room, Rooms::ACTION_TYPE_LEAVE);
 
-        $client->request('DELETE', "rooms/{$room->roomId}",[
-            'query' => [
-                'action_type' => Rooms::ACTION_TYPE_LEAVE
-            ]
+        $client->delete("rooms/{$room->roomId}",[
+            'action_type' => Rooms::ACTION_TYPE_LEAVE
         ])->shouldHaveBeenCalled();
     }
 

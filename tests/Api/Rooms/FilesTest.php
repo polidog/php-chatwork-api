@@ -2,13 +2,14 @@
 
 namespace Polidog\Chatwork\Api\Rooms;
 
+use PHPUnit\Framework\TestCase;
 use Polidog\Chatwork\Client\ClientInterface;
 use Polidog\Chatwork\Entity\Collection\EntityCollection;
 use Polidog\Chatwork\Entity\Factory\FileFactory;
 use Polidog\Chatwork\Entity\Factory\RoomFactory;
 use Polidog\Chatwork\Entity\File;
 
-class FilesTest extends \PHPUnit_Framework_TestCase
+class FilesTest extends TestCase
 {
     /**
      * @dataProvider providerFiles
@@ -17,9 +18,8 @@ class FilesTest extends \PHPUnit_Framework_TestCase
     {
         $roomId = 1;
         $client = $this->prophesize(ClientInterface::class);
-        $client->request("GET","rooms/{$roomId}/files",[
-            'query' => []
-        ])->willReturn($apiResult);
+        $client->get("rooms/{$roomId}/files",[])
+            ->willReturn($apiResult);
 
         $factory = new FileFactory();
         $api = new Files($roomId, $client->reveal(), $factory);
@@ -38,7 +38,8 @@ class FilesTest extends \PHPUnit_Framework_TestCase
         $fileId = 1;
         $roomId = 1;
         $client = $this->prophesize(ClientInterface::class);
-        $client->request("GET","rooms/{$roomId}/files/{$fileId}")->willReturn($apiResult);
+        $client->get("rooms/{$roomId}/files/{$fileId}")
+            ->willReturn($apiResult);
 
         $factory = new FileFactory();
         $api = new Files($roomId, $client->reveal(), $factory);

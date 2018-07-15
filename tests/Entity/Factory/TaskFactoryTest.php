@@ -2,16 +2,14 @@
 
 namespace Polidog\Chatwork\Entity\Factory;
 
+use PHPUnit\Framework\TestCase;
 use Polidog\Chatwork\Entity\Room;
 use Polidog\Chatwork\Entity\Task;
 use Polidog\Chatwork\Entity\User;
 
-class TaskFactoryTest extends \PHPUnit_Framework_TestCase
+class TaskFactoryTest extends TestCase
 {
-    /**
-     * @test
-     */
-    public function Taskエンティティを生成することができる()
+    public function testCreateTaskEntity()
     {
         $taskFactory = new TaskFactory();
         $entity = $taskFactory->entity(json_decode('{

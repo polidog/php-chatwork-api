@@ -2,12 +2,13 @@
 
 namespace Polidog\Chatwork\Api\Rooms;
 
+use PHPUnit\Framework\TestCase;
 use Polidog\Chatwork\Client\ClientInterface;
 use Polidog\Chatwork\Entity\Collection\EntityCollection;
 use Polidog\Chatwork\Entity\Factory\MessageFactory;
 use Polidog\Chatwork\Entity\Message;
 
-class MessagesTest extends \PHPUnit_Framework_TestCase
+class MessagesTest extends TestCase
 {
     /**
      * @dataProvider providerMessages
@@ -18,10 +19,8 @@ class MessagesTest extends \PHPUnit_Framework_TestCase
         $roomId = 1;
 
         $client = $this->prophesize(ClientInterface::class);
-        $client->request("GET","rooms/{$roomId}/messages", [
-            'query' => [
-                'force' => 0,
-            ]
+        $client->get("rooms/{$roomId}/messages", [
+            'force' => 0,
         ])->willReturn($apiResult);
 
         $factory = new MessageFactory();
@@ -44,10 +43,8 @@ class MessagesTest extends \PHPUnit_Framework_TestCase
         $messageId = 11;
 
         $client = $this->prophesize(ClientInterface::class);
-        $client->request("GET","rooms/{$roomId}/messages/{$messageId}", [
-            'query' => [
-                'force' => 0,
-            ]
+        $client->get("rooms/{$roomId}/messages/{$messageId}", [
+            'force' => 0,
         ])->willReturn($apiResult);
 
         $factory = new MessageFactory();
@@ -64,10 +61,8 @@ class MessagesTest extends \PHPUnit_Framework_TestCase
         $message->body = 'hoge';
 
         $client = $this->prophesize(ClientInterface::class);
-        $client->request("POST","rooms/{$roomId}/messages",[
-            'form_params' => [
-                'body' => $message->body
-            ]
+        $client->post("rooms/{$roomId}/messages",[
+            'body' => $message->body
         ])->willReturn(['message_id' => 1234]);
 
         $factory = new MessageFactory();

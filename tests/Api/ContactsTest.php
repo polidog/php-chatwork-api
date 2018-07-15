@@ -8,12 +8,13 @@
 
 namespace Polidog\Chatwork\Api;
 
+use PHPUnit\Framework\TestCase;
 use Polidog\Chatwork\Client\ClientInterface;
 use Polidog\Chatwork\Entity\Collection\EntityCollection;
 use Polidog\Chatwork\Entity\Factory\UserFactory;
 use Polidog\Chatwork\Entity\User;
 
-class ContactsTest extends \PHPUnit_Framework_TestCase
+class ContactsTest extends TestCase
 {
     /**
      * @dataProvider providerResponseData
@@ -21,7 +22,7 @@ class ContactsTest extends \PHPUnit_Framework_TestCase
     public function testShow($apiResult)
     {
         $client = $this->prophesize(ClientInterface::class);
-        $client->request("GET",'contacts')
+        $client->get('contacts')
             ->willReturn($apiResult);
 
         $factory = new UserFactory();

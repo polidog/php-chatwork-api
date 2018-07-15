@@ -2,10 +2,11 @@
 
 namespace Polidog\Chatwork\Entity\Factory;
 
+use PHPUnit\Framework\TestCase;
 use Polidog\Chatwork\Entity\Collection\CollectionInterface;
 use Polidog\Chatwork\Entity\EntityInterface;
 
-class AbstractFactoryTest extends \PHPUnit_Framework_TestCase
+class AbstractFactoryTest extends TestCase
 {
     /**
      * @test

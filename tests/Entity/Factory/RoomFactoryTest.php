@@ -2,14 +2,12 @@
 
 namespace Polidog\Chatwork\Entity\Factory;
 
+use PHPUnit\Framework\TestCase;
 use Polidog\Chatwork\Entity\Room;
 
-class RoomFactoryTest extends \PHPUnit_Framework_TestCase
+class RoomFactoryTest extends TestCase
 {
-    /**
-     * @test
-     */
-    public function Roomエンティティを生成する()
+    public function testCreateRoomEntity()
     {
         $factory = new RoomFactory();
         $entity = $factory->entity(json_decode('{

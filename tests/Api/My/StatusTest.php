@@ -2,10 +2,11 @@
 
 namespace Polidog\Chatwork\Api\My;
 
+use PHPUnit\Framework\TestCase;
 use Polidog\Chatwork\Client\ClientInterface;
 use Polidog\Chatwork\Entity\Factory\StatusFactory;
 
-class StatusTest extends \PHPUnit_Framework_TestCase
+class StatusTest extends TestCase
 {
     /**
      * @dataProvider providerResponseData
@@ -13,7 +14,7 @@ class StatusTest extends \PHPUnit_Framework_TestCase
     public function testShow($apiResult)
     {
         $client = $this->prophesize(ClientInterface::class);
-        $client->request("GET",'my/status')
+        $client->get('my/status')
             ->willReturn($apiResult);
 
         $factory = new StatusFactory();

@@ -2,15 +2,13 @@
 
 namespace Polidog\Chatwork\Entity\Factory;
 
+use PHPUnit\Framework\TestCase;
 use Polidog\Chatwork\Entity\File;
 use Polidog\Chatwork\Entity\User;
 
-class FileFactoryTest extends \PHPUnit_Framework_TestCase
+class FileFactoryTest extends TestCase
 {
-    /**
-     * @test
-     */
-    public function エンティティを生成する()
+    public function testCreateEntity()
     {
         $factory = new FileFactory();
         $entity = $factory->entity(json_decode('{

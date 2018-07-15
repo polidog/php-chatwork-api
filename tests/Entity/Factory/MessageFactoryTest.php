@@ -2,15 +2,13 @@
 
 namespace Polidog\Chatwork\Entity\Factory;
 
+use PHPUnit\Framework\TestCase;
 use Polidog\Chatwork\Entity\Message;
 use Polidog\Chatwork\Entity\User;
 
-class MessageFactoryTest extends \PHPUnit_Framework_TestCase
+class MessageFactoryTest extends TestCase
 {
-    /**
-     * @test
-     */
-    public function Messageエンティティを生成する()
+    public function testCreateMessageEntity()
     {
         $factory = new MessageFactory();
         $entity = $factory->entity(json_decode('{

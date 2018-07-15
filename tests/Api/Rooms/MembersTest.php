@@ -2,6 +2,7 @@
 
 namespace Polidog\Chatwork\Api\Rooms;
 
+use PHPUnit\Framework\TestCase;
 use Polidog\Chatwork\Client\ClientInterface;
 use Polidog\Chatwork\Entity\Collection\MemberCollection;
 use Polidog\Chatwork\Entity\Factory\MemberFactory;
@@ -9,7 +10,7 @@ use Polidog\Chatwork\Entity\Member;
 use Polidog\Chatwork\Entity\User;
 use Phake;
 
-class MembersTest extends \PHPUnit_Framework_TestCase
+class MembersTest extends TestCase
 {
     /**
      * @dataProvider providerMembers
@@ -19,7 +20,7 @@ class MembersTest extends \PHPUnit_Framework_TestCase
         $roomId = 1;
 
         $client = $this->prophesize(ClientInterface::class);
-        $client->request('GET', "rooms/{$roomId}/members")
+        $client->get("rooms/{$roomId}/members")
             ->willReturn($apiResults);
 
         $memberFactory = new MemberFactory();
@@ -34,22 +35,24 @@ class MembersTest extends \PHPUnit_Framework_TestCase
     public function testUpdate($apiResult)
     {
         $roomId = 1;
+        $members = $this->getMembers();
+        $data = [
+            'members_admin_ids' => implode(',', $members->getAdminIds()),
+            'members_member_ids' => implode(',', $members->getMemberIds()),
+            'members_readonly_ids' => implode(',', $members->getReadonlyIds()),
+        ];
+
 
         $client = $this->prophesize(ClientInterface::class);
+        $client->put("rooms/{$roomId}/members", $data)->willReturn([]);
 
         $memberFactory = new MemberFactory();
         $api = new Members($roomId, $client->reveal(), $memberFactory);
 
-        $members = $this->getMembers();
+
         $api->update($members);
 
-        $client->request('PUT', "rooms/{$roomId}/members",[
-            'form_params' => [
-                'members_admin_ids' => implode(',', $members->getAdminIds()),
-                'members_member_ids' => implode(',', $members->getMemberIds()),
-                'members_readonly_ids' => implode(',', $members->getReadonlyIds()),
-            ]
-        ])->shouldHaveBeenCalled();
+        $client->put("rooms/{$roomId}/members", $data)->shouldHaveBeenCalled();
 
     }
 

@@ -25,13 +25,12 @@ class ClientTest extends TestCase
         $httpClient->request('get', '/v2/a/b', [
             'query' => [
                 's' => 'test'
-                ]
-            ]
-        )->willReturn($response);
+            ],
+        ])->willReturn($response);
 
         $httpClient->getConfig('handler')->willReturn(HandlerStack::create());
 
-        $client = new Client($httpClient->reveal(),'test token');
+        $client = new Client($httpClient->reveal(),'test token', 'v2');
         $client->get('a/b',['s' => 'test']);
 
         $httpClient->request('get', '/v2/a/b',[

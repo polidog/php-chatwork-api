@@ -2,12 +2,13 @@
 
 namespace Polidog\Chatwork\Api\Rooms;
 
+use PHPUnit\Framework\TestCase;
 use Polidog\Chatwork\Client\ClientInterface;
 use Polidog\Chatwork\Entity\Collection\EntityCollection;
 use Polidog\Chatwork\Entity\Factory\TaskFactory;
 use Polidog\Chatwork\Entity\Task;
 
-class TasksTest extends \PHPUnit_Framework_TestCase
+class TasksTest extends TestCase
 {
     /**
      * @dataProvider providerTasks
@@ -18,9 +19,8 @@ class TasksTest extends \PHPUnit_Framework_TestCase
         $roomId = 1;
 
         $client = $this->prophesize(ClientInterface::class);
-        $client->request("GET","rooms/{$roomId}/tasks", [
-            'query' => []
-        ])->willReturn($apiResult);
+        $client->get("rooms/{$roomId}/tasks", [])
+            ->willReturn($apiResult);
 
         $factory = new TaskFactory();
         $api = new Tasks($roomId, $client->reveal(), $factory);
@@ -42,7 +42,8 @@ class TasksTest extends \PHPUnit_Framework_TestCase
         $taskId = 11;
 
         $client = $this->prophesize(ClientInterface::class);
-        $client->request("GET","rooms/{$roomId}/tasks/{$taskId}")->willReturn($apiResult);
+        $client->get("rooms/{$roomId}/tasks/{$taskId}")
+            ->willReturn($apiResult);
 
         $factory = new TaskFactory();
         $api = new Tasks($roomId, $client->reveal(), $factory);

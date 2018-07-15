@@ -2,14 +2,15 @@
 
 namespace Polidog\Chatwork\Entity;
 
+use PHPUnit\Framework\TestCase;
 use Polidog\Chatwork\Entity\Factory\RoomFactory;
 
-class RoomTest extends \PHPUnit_Framework_TestCase
+class RoomTest extends TestCase
 {
     /**
      * @test
      */
-    public function Roomエンティティから配列に変換する()
+    public function testRoomEntityToArray()
     {
         $data = json_decode('{
             "room_id": 123,

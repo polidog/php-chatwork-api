@@ -4,12 +4,13 @@
 namespace Polidog\Chatwork\Api;
 
 
+use PHPUnit\Framework\TestCase;
 use Polidog\Chatwork\Client\ClientInterface;
 use Polidog\Chatwork\Entity\Collection\EntityCollection;
 use Polidog\Chatwork\Entity\Factory\IncomingRequestsFactory;
 use Polidog\Chatwork\Entity\IncomingRequest;
 
-class IncomingRequestsTest extends \PHPUnit_Framework_TestCase
+class IncomingRequestsTest extends TestCase
 {
     /**
      * @dataProvider providerIncomingRequests
@@ -19,7 +20,7 @@ class IncomingRequestsTest extends \PHPUnit_Framework_TestCase
         $client = $this->prophesize(ClientInterface::class);
         $factory = new IncomingRequestsFactory();
 
-        $client->request("GET",'incoming_requests')
+        $client->get('incoming_requests')
             ->willReturn($apiResults);
 
         $api = new IncomingRequests($client->reveal(), $factory);
@@ -41,7 +42,7 @@ class IncomingRequestsTest extends \PHPUnit_Framework_TestCase
         $client = $this->prophesize(ClientInterface::class);
         $factory = new IncomingRequestsFactory();
 
-        $client->request("PUT","incoming_requests/{$requestId}")
+        $client->put("incoming_requests/{$requestId}")
             ->willReturn($apiResults);
 
         $api = new IncomingRequests($client->reveal(), $factory);
