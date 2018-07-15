@@ -19,7 +19,7 @@
   },
   "require-dev": {
     "satooshi/php-coveralls": "v2.0.0.",
-    "phpunit/phpunit": "^7.0"
+    "phpunit/phpunit": "^6.5"
   },
   "autoload": {
     "psr-4": {"Polidog\\Chatwork\\": "src/"}
