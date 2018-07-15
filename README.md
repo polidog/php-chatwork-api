@@ -2,7 +2,6 @@ php-chatwork-api
 ================
 
 [![Build Status](https://travis-ci.org/polidog/php-chatwork-api.png?branch=develop)](https://travis-ci.org/polidog/php-chatwork-api)
-[![Coverage Status](https://img.shields.io/coveralls/polidog/php-chatwork-api.svg)](https://coveralls.io/r/polidog/php-chatwork-api?branch=master)
 [![Scrutinizer Quality Score](https://scrutinizer-ci.com/g/polidog/php-chatwork-api/badges/quality-score.png?s=56ea782f70ecfbe3de485e4be2a2c585455e44e3)](https://scrutinizer-ci.com/g/polidog/php-chatwork-api/)
 [![Latest Stable Version](https://poser.pugx.org/polidog/php-chatwork-api/v/stable.svg)](https://packagist.org/packages/polidog/php-chatwork-api)
 [![Total Downloads](https://poser.pugx.org/polidog/php-chatwork-api/downloads.svg)](https://packagist.org/packages/polidog/php-chatwork-api)

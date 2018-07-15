@@ -70,12 +70,13 @@ class Tasks
     }
 
     /**
-     * @param string $body
-     * @param array $toIds
+     * @param string         $body
+     * @param array          $toIds
      * @param \DateTime|null $limit
+     *
      * @return int[] task ids
      */
-    public function create(string $body, array $toIds, \DateTime $limit = null) : array
+    public function create(string $body, array $toIds, \DateTime $limit = null): array
     {
         return $this->client->post(
             "rooms/{$this->roomId}/tasks",

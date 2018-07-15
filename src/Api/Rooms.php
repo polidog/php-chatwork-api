@@ -106,11 +106,12 @@ class Rooms
      *
      * @param Room   $room
      * @param string $actionType leave or delete
+     *
      * @throws InvalidArgumentException
      */
     public function remove(Room $room, $actionType)
     {
-        if ($actionType !== 'leave' && $actionType !== 'delete') {
+        if ('leave' !== $actionType && 'delete' !== $actionType) {
             throw new InvalidArgumentException('ActionType is only leave or delete');
         }
 

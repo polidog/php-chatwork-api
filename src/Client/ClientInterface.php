@@ -50,5 +50,4 @@ interface ClientInterface
      * @throws ClientException
      */
     public function delete(string $path, array $query = []): array;
-
 }
