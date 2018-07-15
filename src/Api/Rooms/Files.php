@@ -6,21 +6,41 @@ namespace Polidog\Chatwork\Api\Rooms;
 
 use Polidog\Chatwork\Client\ClientInterface;
 use Polidog\Chatwork\Entity\Collection\CollectionInterface;
-use Polidog\Chatwork\Entity\Factory\FactoryInterface;
 use Polidog\Chatwork\Entity\Factory\FileFactory;
 use Polidog\Chatwork\Entity\File;
 
 /**
  * Class Files.
- *
- * @property FileFactory $factory
  */
-class Files extends AbstractRoomApi
+class Files
 {
-    public function __construct($roomId, ClientInterface $client, FactoryInterface $factory = null)
+    /**
+     * @var ClientInterface
+     */
+    private $client;
+
+    /**
+     * @var FileFactory
+     */
+    private $factory;
+
+    /**
+     * @var int
+     */
+    private $roomId;
+
+    /**
+     * Files constructor.
+     *
+     * @param ClientInterface $client
+     * @param FileFactory     $factory
+     * @param int             $roomId
+     */
+    public function __construct(ClientInterface $client, FileFactory $factory, int $roomId)
     {
-        assert($factory instanceof FileFactory);
-        parent::__construct($roomId, $client, $factory);
+        $this->client = $client;
+        $this->factory = $factory;
+        $this->roomId = $roomId;
     }
 
     /**

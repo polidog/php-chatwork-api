@@ -24,7 +24,7 @@ class MessagesTest extends TestCase
         ])->willReturn($apiResult);
 
         $factory = new MessageFactory();
-        $api = new Messages($roomId, $client->reveal(), $factory);
+        $api = new Messages($client->reveal(), $factory, $roomId);
         $messages = $api->show();
 
         $this->assertInstanceOf(EntityCollection::class, $messages);
@@ -48,7 +48,7 @@ class MessagesTest extends TestCase
         ])->willReturn($apiResult);
 
         $factory = new MessageFactory();
-        $api = new Messages($roomId, $client->reveal(), $factory);
+        $api = new Messages($client->reveal(), $factory, $roomId);
         $message = $api->detail($messageId);
         $this->assertInstanceOf(Message::class, $message);
     }
@@ -66,7 +66,7 @@ class MessagesTest extends TestCase
         ])->willReturn(['message_id' => 1234]);
 
         $factory = new MessageFactory();
-        $api = new Messages($roomId, $client->reveal(), $factory);
+        $api = new Messages($client->reveal(), $factory, $roomId);
 
         $api->create($message);
 

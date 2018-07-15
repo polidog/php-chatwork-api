@@ -4,11 +4,34 @@ declare(strict_types=1);
 
 namespace Polidog\Chatwork\Api\My;
 
-use Polidog\Chatwork\Api\AbstractApi;
+use Polidog\Chatwork\Client\ClientInterface;
 use Polidog\Chatwork\Entity\Collection\CollectionInterface;
+use Polidog\Chatwork\Entity\Factory\TaskFactory;
 
-class Tasks extends AbstractApi
+class Tasks
 {
+    /**
+     * @var ClientInterface
+     */
+    private $client;
+
+    /**
+     * @var TaskFactory
+     */
+    private $factory;
+
+    /**
+     * Tasks constructor.
+     *
+     * @param ClientInterface $client
+     * @param TaskFactory     $factory
+     */
+    public function __construct(ClientInterface $client, TaskFactory $factory)
+    {
+        $this->client = $client;
+        $this->factory = $factory;
+    }
+
     /**
      * @param array $options
      *

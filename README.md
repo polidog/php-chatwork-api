@@ -10,12 +10,6 @@ php-chatwork-api
 
 [Chatwork](http://www.chatwork.com/ja/) APIをPHPから利用するためのライブラリです。
 
-## 動くPHPのバージョン
-- PHP5.5以上
-
-5.5以下の場合はv0.1.1だったら動きます(たぶん)。
-
-
 ## Install
 
 ```
@@ -52,7 +46,6 @@ var_dump($rooms);
 ```
 
 ### チャットルームを作成する
-ここちょっと面倒くさい感じになってしまってます。。
 
 ```
 // まずはRoomクラスを用意する

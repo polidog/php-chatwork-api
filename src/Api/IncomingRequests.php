@@ -5,15 +5,30 @@ declare(strict_types=1);
 namespace Polidog\Chatwork\Api;
 
 use Polidog\Chatwork\Client\ClientInterface;
-use Polidog\Chatwork\Entity\Factory\FactoryInterface;
 use Polidog\Chatwork\Entity\Factory\IncomingRequestsFactory;
 
-class IncomingRequests extends AbstractApi
+class IncomingRequests
 {
-    public function __construct(ClientInterface $client, FactoryInterface $factory = null)
+    /**
+     * @var ClientInterface
+     */
+    private $client;
+
+    /**
+     * @var IncomingRequestsFactory
+     */
+    private $factory;
+
+    /**
+     * IncomingRequests constructor.
+     *
+     * @param ClientInterface         $client
+     * @param IncomingRequestsFactory $factory
+     */
+    public function __construct(ClientInterface $client, IncomingRequestsFactory $factory)
     {
-        assert($factory instanceof IncomingRequestsFactory);
-        parent::__construct($client, $factory);
+        $this->client = $client;
+        $this->factory = $factory;
     }
 
     public function show()

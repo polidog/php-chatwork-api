@@ -23,10 +23,10 @@ final class ClientFactory
         ],
     ];
 
-    public static function create(string $chatworkToken, string $version, array $httpOptions = []): ClientInterface
+    public static function create(string $token, string $version, array $httpOptions = []): ClientInterface
     {
         $httpOptions = array_merge(self::$httpOptions, $httpOptions);
 
-        return new Client(new \GuzzleHttp\Client($httpOptions), $chatworkToken, $version);
+        return new Client(new \GuzzleHttp\Client($httpOptions), $token, $version);
     }
 }

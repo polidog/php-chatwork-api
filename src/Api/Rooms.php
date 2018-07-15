@@ -4,18 +4,42 @@ declare(strict_types=1);
 
 namespace Polidog\Chatwork\Api;
 
+use Polidog\Chatwork\Client\ClientInterface;
 use Polidog\Chatwork\Entity\Collection\CollectionInterface;
 use Polidog\Chatwork\Entity\Collection\MemberCollection;
 use Polidog\Chatwork\Entity\Factory\FileFactory;
 use Polidog\Chatwork\Entity\Factory\MemberFactory;
 use Polidog\Chatwork\Entity\Factory\MessageFactory;
+use Polidog\Chatwork\Entity\Factory\RoomFactory;
 use Polidog\Chatwork\Entity\Factory\TaskFactory;
 use Polidog\Chatwork\Entity\Room;
 
-class Rooms extends AbstractApi
+class Rooms
 {
     const ACTION_TYPE_LEAVE = 'leave';
     const ACTION_TYPE_DELETE = 'delete';
+
+    /**
+     * @var ClientInterface
+     */
+    private $client;
+
+    /**
+     * @var RoomFactory
+     */
+    private $factory;
+
+    /**
+     * Rooms constructor.
+     *
+     * @param ClientInterface $client
+     * @param RoomFactory     $factory
+     */
+    public function __construct(ClientInterface $client, RoomFactory $factory)
+    {
+        $this->client = $client;
+        $this->factory = $factory;
+    }
 
     /**
      * 自分のチャット一覧の取得.
@@ -97,9 +121,9 @@ class Rooms extends AbstractApi
      *
      * @return Rooms\Members
      */
-    public function members($roomId)
+    public function members(int $roomId)
     {
-        return new Rooms\Members($roomId, $this->client, new MemberFactory());
+        return new Rooms\Members($this->client, new MemberFactory(), $roomId);
     }
 
     /**
@@ -107,9 +131,9 @@ class Rooms extends AbstractApi
      *
      * @return Rooms\Messages
      */
-    public function messages($roomId)
+    public function messages(int $roomId)
     {
-        return new Rooms\Messages($roomId, $this->client, new MessageFactory());
+        return new Rooms\Messages($this->client, new MessageFactory(), $roomId);
     }
 
     /**
@@ -117,18 +141,18 @@ class Rooms extends AbstractApi
      *
      * @return Rooms\Tasks
      */
-    public function tasks($roomId)
+    public function tasks(int $roomId)
     {
-        return new Rooms\Tasks($roomId, $this->client, new TaskFactory());
+        return new Rooms\Tasks($this->client, new TaskFactory(), $roomId);
     }
 
     /**
-     * @param $roomId
+     * @param int $roomId
      *
      * @return Rooms\Files
      */
-    public function files($roomId)
+    public function files(int $roomId)
     {
-        return new Rooms\Files($roomId, $this->client, new FileFactory());
+        return new Rooms\Files($this->client, new FileFactory(), $roomId);
     }
 }

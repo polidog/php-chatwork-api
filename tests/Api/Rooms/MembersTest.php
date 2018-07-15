@@ -24,7 +24,7 @@ class MembersTest extends TestCase
             ->willReturn($apiResults);
 
         $memberFactory = new MemberFactory();
-        $api = new Members($roomId, $client->reveal(), $memberFactory);
+        $api = new Members($client->reveal(), $memberFactory, $roomId);
         $members = $api->show();
         $this->assertInstanceOf(MemberCollection::class, $members);
     }
@@ -47,7 +47,7 @@ class MembersTest extends TestCase
         $client->put("rooms/{$roomId}/members", $data)->willReturn([]);
 
         $memberFactory = new MemberFactory();
-        $api = new Members($roomId, $client->reveal(), $memberFactory);
+        $api = new Members($client->reveal(), $memberFactory, $roomId);
 
 
         $api->update($members);

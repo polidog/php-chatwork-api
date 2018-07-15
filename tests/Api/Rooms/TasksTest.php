@@ -23,7 +23,7 @@ class TasksTest extends TestCase
             ->willReturn($apiResult);
 
         $factory = new TaskFactory();
-        $api = new Tasks($roomId, $client->reveal(), $factory);
+        $api = new Tasks($client->reveal(), $factory, $roomId);
         $tasks = $api->show();
         $this->assertInstanceOf(EntityCollection::class, $tasks);
         foreach ($tasks as $task) {
@@ -46,7 +46,7 @@ class TasksTest extends TestCase
             ->willReturn($apiResult);
 
         $factory = new TaskFactory();
-        $api = new Tasks($roomId, $client->reveal(), $factory);
+        $api = new Tasks($client->reveal(), $factory, $roomId);
         $task = $api->detail($taskId);
         $this->assertInstanceOf(Task::class, $task);
 

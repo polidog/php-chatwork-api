@@ -22,7 +22,7 @@ class FilesTest extends TestCase
             ->willReturn($apiResult);
 
         $factory = new FileFactory();
-        $api = new Files($roomId, $client->reveal(), $factory);
+        $api = new Files($client->reveal(), $factory, $roomId);
         $files = $api->show();
         $this->assertInstanceOf(EntityCollection::class, $files);
         foreach ($files as $file) {
@@ -42,7 +42,7 @@ class FilesTest extends TestCase
             ->willReturn($apiResult);
 
         $factory = new FileFactory();
-        $api = new Files($roomId, $client->reveal(), $factory);
+        $api = new Files($client->reveal(), $factory, $roomId);
         $file = $api->detail($fileId);
         $this->assertInstanceOf(File::class, $file);
     }

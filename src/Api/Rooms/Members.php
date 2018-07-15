@@ -6,18 +6,40 @@ namespace Polidog\Chatwork\Api\Rooms;
 
 use Polidog\Chatwork\Client\ClientInterface;
 use Polidog\Chatwork\Entity\Collection\MemberCollection;
-use Polidog\Chatwork\Entity\Factory\FactoryInterface;
 use Polidog\Chatwork\Entity\Factory\MemberFactory;
 
 /**
  * Class Members.
  */
-class Members extends AbstractRoomApi
+class Members
 {
-    public function __construct($roomId, ClientInterface $client, FactoryInterface $factory = null)
+    /**
+     * @var ClientInterface
+     */
+    private $client;
+
+    /**
+     * @var MemberFactory
+     */
+    private $factory;
+
+    /**
+     * @var int
+     */
+    private $roomId;
+
+    /**
+     * Members constructor.
+     *
+     * @param ClientInterface $client
+     * @param MemberFactory   $factory
+     * @param int             $roomId
+     */
+    public function __construct(ClientInterface $client, MemberFactory $factory, int $roomId)
     {
-        assert($factory instanceof MemberFactory);
-        parent::__construct($roomId, $client, $factory);
+        $this->client = $client;
+        $this->factory = $factory;
+        $this->roomId = $roomId;
     }
 
     /**
