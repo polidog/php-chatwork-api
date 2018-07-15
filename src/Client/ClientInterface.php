@@ -51,14 +51,4 @@ interface ClientInterface
      */
     public function delete(string $path, array $query = []): array;
 
-    /*
-     * @param string $method
-     * @param string $path
-     * @param array  $options
-     *
-     * @return array
-     *
-     * @throws ClientException
-     */
-//    public function request(string $method, string $path, array $options = []): array;
 }
