@@ -39,11 +39,9 @@ class My
     }
 
     /**
-     * @param array $options
-     *
      * @return Tasks
      */
-    public function tasks(array $options = []): Tasks
+    public function tasks(): Tasks
     {
         return new My\Tasks($this->client, new TaskFactory());
     }
