@@ -25,7 +25,7 @@ $ composer require polidog/php-chatwork-api
 
 ```
 // ChatWork API Clientオブジェクトの初期化
-$chatwork = new \Polidog\Chatwork\Chatwork("chatwork api token");
+$chatwork = \Polidog\Chatwork\Chatwork::create("chatwork api token");
 ```
 
 ### 自分自身の情報(APIキーの所有者)
