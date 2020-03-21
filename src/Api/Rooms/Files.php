@@ -66,15 +66,22 @@ class Files
     }
 
     /**
-     * @param $id
+     * @param int $id
+     * @param bool $createDownloadUrl
      *
      * @return File
      */
-    public function detail($id)
+    public function detail($id, $createDownloadUrl = null)
     {
+        $options = [];
+        if ($createDownloadUrl !== null) {
+            $options['create_download_url'] = (bool)$createDownloadUrl;
+        }
+
         return $this->factory->entity(
           $this->client->get(
-              "rooms/{$this->roomId}/files/{$id}"
+              "rooms/{$this->roomId}/files/{$id}",
+              $options
           )
         );
     }
