@@ -16,7 +16,7 @@ class FileFactoryTest extends TestCase
             "account": {
                 "account_id":123,
                 "name":"Bob",
-                "avatar_image_url": "https://example.com/ico_avatar.png"
+                "avatar_image_url": "https://dummyimage.com/600x400/000/fff.png"
             },
             "message_id": "22",
             "filename": "README.md",

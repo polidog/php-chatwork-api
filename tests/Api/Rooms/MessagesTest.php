@@ -82,7 +82,7 @@ class MessagesTest extends TestCase
     "account": {
       "account_id": 123,
       "name": "Bob",
-      "avatar_image_url": "https://example.com/ico_avatar.png"
+      "avatar_image_url": "https://dummyimage.com/600x400/000/fff.png"
     },
     "body": "Hello Chatwork!",
     "send_time": 1384242850,
@@ -102,7 +102,7 @@ class MessagesTest extends TestCase
   "account": {
     "account_id": 123,
     "name": "Bob",
-    "avatar_image_url": "https://example.com/ico_avatar.png"
+    "avatar_image_url": "https://dummyimage.com/600x400/000/fff.png"
   },
   "body": "Hello Chatwork!",
   "send_time": 1384242850,
