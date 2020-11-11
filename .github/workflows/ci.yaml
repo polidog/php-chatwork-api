@@ -1,0 +1,15 @@
+name: ci
+
+on: ['push']
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v1
+      - name: Run composer install
+        run: |
+          composer install
+      - name: phpunit
+        run: |
+          composer test

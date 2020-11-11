@@ -15,10 +15,9 @@
     "php": ">=7.0",
     "guzzlehttp/guzzle": "^6.0",
     "cakephp/utility": "^3.0",
-    "friendsofphp/php-cs-fixer": "^2.10"
+    "friendsofphp/php-cs-fixer": "^2.16"
   },
   "require-dev": {
-    "satooshi/php-coveralls": "v2.0.0.",
     "phpunit/phpunit": "^6.5"
   },
   "autoload": {
