@@ -68,6 +68,42 @@ var_dump($members);
 
 ```
 
+### チャットルームのメッセージ一覧を取得する
+```
+// $force(0: 新しいメッセージのみ, 1: ラスト100メッセージ)
+$messages = $client->rooms()->messages($room_id)->show($force);
+```
+
+### メッセージ送信
+```
+$message = new \Polidog\Chatwork\Entity\Message();
+$message->body = 'メッセージ内容';
+$client->rooms()->messages($room_id)->create($message);
+```
+
+### メッセージ更新
+```
+$message = new \Polidog\Chatwork\Entity\Message();
+$message->body = 'メッセージ内容';
+// $message_id(メッセージのID)
+$client->rooms()->messages($room_id)->update($message, $message_id);
+```
+
+### メッセージ削除
+```
+// $message_id(メッセージのID)
+$client->rooms()->messages($room_id)->delete($message_id);
+```
+
+### チャットルームのファイル一覧を取得する
+```
+$files = $client->rooms()->files($room_id)->show();
+```
+
+### ファイル情報を取得する
+```
+$files = $client->rooms()->files($room_id)->detail($file_id);
+```
 
 ## 関連リンク
 - [ChatWork API](http://developer.chatwork.com/ja/)
