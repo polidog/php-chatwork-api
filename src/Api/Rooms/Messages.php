@@ -93,4 +93,30 @@ class Messages
 
         $message->messageId = $result['message_id'];
     }
+
+    /**
+     * @param Message $message
+     * @param $id
+     */
+    public function update(Message $message, $id)
+    {
+        $result = $this->client->put(
+            "rooms/{$this->roomId}/messages/{$id}",
+            [
+                'body' => $message->body,
+            ]
+        );
+
+        $message->messageId = $result['message_id'];
+    }
+
+    /**
+     * @param $id
+     */
+    public function delete($id)
+    {
+        $result = $this->client->delete(
+            "rooms/{$this->roomId}/messages/{$id}"
+        );
+    }
 }

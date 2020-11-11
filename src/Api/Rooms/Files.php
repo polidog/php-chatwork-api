@@ -67,14 +67,18 @@ class Files
 
     /**
      * @param $id
+     * @param $downloadLink
      *
      * @return File
      */
-    public function detail($id)
+    public function detail($id, $downloadLink = false)
     {
         return $this->factory->entity(
           $this->client->get(
-              "rooms/{$this->roomId}/files/{$id}"
+              "rooms/{$this->roomId}/files/{$id}",
+              [
+                  'create_download_url' => (int) $downloadLink,
+              ]
           )
         );
     }
