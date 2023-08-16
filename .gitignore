@@ -4,3 +4,5 @@ vendor/
 composer.lock
 .php_cs.cache
 /demo.php
+.phpunit.result.cache
+.php-cs-fixer.php
