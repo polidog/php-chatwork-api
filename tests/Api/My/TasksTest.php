@@ -9,9 +9,12 @@ use Polidog\Chatwork\Client\ClientInterface;
 use Polidog\Chatwork\Entity\Collection\EntityCollection;
 use Polidog\Chatwork\Entity\Factory\TaskFactory;
 use Polidog\Chatwork\Entity\Task;
+use Prophecy\PhpUnit\ProphecyTrait;
 
 class TasksTest extends TestCase
 {
+    use ProphecyTrait;
+
     /**
      * @dataProvider providerResponseData
      */

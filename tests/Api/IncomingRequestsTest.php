@@ -9,9 +9,12 @@ use Polidog\Chatwork\Client\ClientInterface;
 use Polidog\Chatwork\Entity\Collection\EntityCollection;
 use Polidog\Chatwork\Entity\Factory\IncomingRequestsFactory;
 use Polidog\Chatwork\Entity\IncomingRequest;
+use Prophecy\PhpUnit\ProphecyTrait;
 
 class IncomingRequestsTest extends TestCase
 {
+    use ProphecyTrait;
+
     /**
      * @dataProvider providerIncomingRequests
      */

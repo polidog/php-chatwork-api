@@ -6,11 +6,14 @@ namespace Polidog\Chatwork\Client;
 
 use GuzzleHttp\HandlerStack;
 use PHPUnit\Framework\TestCase;
+use Prophecy\PhpUnit\ProphecyTrait;
 use Psr\Http\Message\RequestInterface;
 use Psr\Http\Message\StreamInterface;
 
 class ClientTest extends TestCase
 {
+    use ProphecyTrait;
+
     public function testGet(): void
     {
         $stream = $this->prophesize(StreamInterface::class);

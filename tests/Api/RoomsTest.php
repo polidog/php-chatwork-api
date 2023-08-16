@@ -17,12 +17,15 @@ use Polidog\Chatwork\Entity\Member;
 use Polidog\Chatwork\Entity\Room;
 use Polidog\Chatwork\Entity\User;
 use Prophecy\Argument;
+use Prophecy\PhpUnit\ProphecyTrait;
 
 /**
  * Class RoomsTest.
  */
 class RoomsTest extends TestCase
 {
+    use ProphecyTrait;
+
     /**
      * @dataProvider providerRooms
      */

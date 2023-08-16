@@ -15,9 +15,12 @@ use Polidog\Chatwork\Client\ClientInterface;
 use Polidog\Chatwork\Entity\Collection\EntityCollection;
 use Polidog\Chatwork\Entity\Factory\UserFactory;
 use Polidog\Chatwork\Entity\User;
+use Prophecy\PhpUnit\ProphecyTrait;
 
 class ContactsTest extends TestCase
 {
+    use ProphecyTrait;
+
     /**
      * @dataProvider providerResponseData
      */

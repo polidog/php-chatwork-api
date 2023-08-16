@@ -8,9 +8,12 @@ use PHPUnit\Framework\TestCase;
 use Polidog\Chatwork\Api\My\Status;
 use Polidog\Chatwork\Api\My\Tasks;
 use Polidog\Chatwork\Client\ClientInterface;
+use Prophecy\PhpUnit\ProphecyTrait;
 
 class MyTest extends TestCase
 {
+    use ProphecyTrait;
+
     public function testNewMyInstance(): void
     {
         $client = $this->prophesize(ClientInterface::class);

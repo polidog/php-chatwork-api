@@ -9,9 +9,12 @@ use Polidog\Chatwork\Client\ClientInterface;
 use Polidog\Chatwork\Entity\Collection\EntityCollection;
 use Polidog\Chatwork\Entity\Factory\MessageFactory;
 use Polidog\Chatwork\Entity\Message;
+use Prophecy\PhpUnit\ProphecyTrait;
 
 class MessagesTest extends TestCase
 {
+    use ProphecyTrait;
+
     /**
      * @dataProvider providerMessages
      * @param $apiResult

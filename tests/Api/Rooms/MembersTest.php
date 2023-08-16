@@ -11,9 +11,12 @@ use Polidog\Chatwork\Entity\Factory\MemberFactory;
 use Polidog\Chatwork\Entity\Member;
 use Polidog\Chatwork\Entity\User;
 use Phake;
+use Prophecy\PhpUnit\ProphecyTrait;
 
 class MembersTest extends TestCase
 {
+    use ProphecyTrait;
+
     /**
      * @dataProvider providerMembers
      */

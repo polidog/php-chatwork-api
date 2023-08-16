@@ -10,9 +10,12 @@ use Polidog\Chatwork\Entity\Collection\EntityCollection;
 use Polidog\Chatwork\Entity\Factory\FileFactory;
 use Polidog\Chatwork\Entity\Factory\RoomFactory;
 use Polidog\Chatwork\Entity\File;
+use Prophecy\PhpUnit\ProphecyTrait;
 
 class FilesTest extends TestCase
 {
+    use ProphecyTrait;
+
     /**
      * @dataProvider providerFiles
      */
