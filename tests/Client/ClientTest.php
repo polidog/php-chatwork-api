@@ -4,10 +4,9 @@ declare(strict_types=1);
 
 namespace Polidog\Chatwork\Client;
 
-use GuzzleHttp\HandlerStack;
 use PHPUnit\Framework\TestCase;
 use Prophecy\PhpUnit\ProphecyTrait;
-use Psr\Http\Message\RequestInterface;
+use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\StreamInterface;
 
 class ClientTest extends TestCase
@@ -20,7 +19,7 @@ class ClientTest extends TestCase
         $stream->getContents()
             ->willReturn('[]');
 
-        $response = $this->prophesize(RequestInterface::class);
+        $response = $this->prophesize(ResponseInterface::class);
         $response->getBody()
             ->willReturn($stream);
 
@@ -31,9 +30,7 @@ class ClientTest extends TestCase
             ],
         ])->willReturn($response);
 
-        $httpClient->getConfig('handler')->willReturn(HandlerStack::create());
-
-        $client = new Client($httpClient->reveal(), 'test token', 'v2');
+        $client = new Client('test token', 'v2', $httpClient->reveal());
         $client->get('a/b', ['s' => 'test']);
 
         $httpClient->request('get', '/v2/a/b', [
