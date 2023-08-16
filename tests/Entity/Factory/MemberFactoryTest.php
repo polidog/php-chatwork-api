@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Polidog\Chatwork\Entity\Factory;
 
 use PHPUnit\Framework\TestCase;
@@ -11,7 +13,7 @@ class MemberFactoryTest extends TestCase
     /**
      * @test
      */
-    public function testCreateEntity()
+    public function testCreateEntity(): void
     {
         $factory = new MemberFactory();
         $entity = $factory->entity(json_decode('{

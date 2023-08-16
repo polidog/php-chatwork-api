@@ -1,4 +1,6 @@
 <?php
+
+declare(strict_types=1);
 /**
  * Created by PhpStorm.
  * User: polidog
@@ -19,7 +21,7 @@ class ContactsTest extends TestCase
     /**
      * @dataProvider providerResponseData
      */
-    public function testShow($apiResult)
+    public function testShow($apiResult): void
     {
         $client = $this->prophesize(ClientInterface::class);
         $client->get('contacts')

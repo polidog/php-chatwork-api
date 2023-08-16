@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Polidog\Chatwork\Api\Rooms;
 
 use PHPUnit\Framework\TestCase;
@@ -15,7 +17,7 @@ class MembersTest extends TestCase
     /**
      * @dataProvider providerMembers
      */
-    public function testShow($apiResults)
+    public function testShow($apiResults): void
     {
         $roomId = 1;
 
@@ -32,7 +34,7 @@ class MembersTest extends TestCase
     /**
      * @dataProvider providerPutMembers
      */
-    public function testUpdate($apiResult)
+    public function testUpdate($apiResult): void
     {
         $roomId = 1;
         $members = $this->getMembers();

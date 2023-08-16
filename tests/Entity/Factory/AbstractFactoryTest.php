@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Polidog\Chatwork\Entity\Factory;
 
 use PHPUnit\Framework\TestCase;
@@ -11,7 +13,7 @@ class AbstractFactoryTest extends TestCase
     /**
      * @test
      */
-    public function コレクションオブジェクトを生成することができる()
+    public function コレクションオブジェクトを生成することができる(): void
     {
         $factory = new TestFactory();
         $actual = $factory->collection([

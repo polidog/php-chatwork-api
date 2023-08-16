@@ -1,8 +1,8 @@
 <?php
 
+declare(strict_types=1);
 
 namespace Polidog\Chatwork\Client;
-
 
 use GuzzleHttp\HandlerStack;
 use PHPUnit\Framework\TestCase;
@@ -11,7 +11,7 @@ use Psr\Http\Message\StreamInterface;
 
 class ClientTest extends TestCase
 {
-    public function testGet()
+    public function testGet(): void
     {
         $stream = $this->prophesize(StreamInterface::class);
         $stream->getContents()
@@ -30,10 +30,10 @@ class ClientTest extends TestCase
 
         $httpClient->getConfig('handler')->willReturn(HandlerStack::create());
 
-        $client = new Client($httpClient->reveal(),'test token', 'v2');
-        $client->get('a/b',['s' => 'test']);
+        $client = new Client($httpClient->reveal(), 'test token', 'v2');
+        $client->get('a/b', ['s' => 'test']);
 
-        $httpClient->request('get', '/v2/a/b',[
+        $httpClient->request('get', '/v2/a/b', [
             'query' => [
                 's' => 'test'
             ],

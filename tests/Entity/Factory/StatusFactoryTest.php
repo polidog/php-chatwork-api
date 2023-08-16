@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Polidog\Chatwork\Entity\Factory;
 
 use PHPUnit\Framework\TestCase;
@@ -7,7 +9,7 @@ use Polidog\Chatwork\Entity\Status;
 
 class StatusFactoryTest extends TestCase
 {
-    public function testCreateStatusEntity()
+    public function testCreateStatusEntity(): void
     {
         $factory = new StatusFactory();
         $entity = $factory->entity(json_decode('{

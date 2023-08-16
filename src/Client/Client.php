@@ -31,9 +31,7 @@ final class Client implements ClientInterface
         string $chatworkToken,
         string $apiVersion
     ) {
-        $httpClient->getConfig('handler')->push(Middleware::mapRequest(function (RequestInterface $request) use ($chatworkToken) {
-            return $request->withHeader('X-ChatWorkToken', $chatworkToken);
-        }));
+        $httpClient->getConfig('handler')->push(Middleware::mapRequest(fn (RequestInterface $request) => $request->withHeader('X-ChatWorkToken', $chatworkToken)));
         $this->apiVersion = $apiVersion;
         $this->httpClient = $httpClient;
     }

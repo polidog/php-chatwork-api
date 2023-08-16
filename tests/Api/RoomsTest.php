@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Polidog\Chatwork\Api;
 
 use PHPUnit\Framework\TestCase;
@@ -24,7 +26,7 @@ class RoomsTest extends TestCase
     /**
      * @dataProvider providerRooms
      */
-    public function testShow($apiResult)
+    public function testShow($apiResult): void
     {
         $client = $this->prophesize(ClientInterface::class);
         $client->get('rooms')
@@ -37,7 +39,7 @@ class RoomsTest extends TestCase
 
         $this->assertInstanceOf(EntityCollection::class, $roomLists);
         foreach ($roomLists as $room) {
-             $this->assertInstanceOf(Room::class, $room);
+            $this->assertInstanceOf(Room::class, $room);
         }
 
     }
@@ -45,7 +47,7 @@ class RoomsTest extends TestCase
     /**
      * @dataProvider providerRoom
      */
-    public function testDetail($apiResult)
+    public function testDetail($apiResult): void
     {
         $client = $this->prophesize(ClientInterface::class);
         $client->get('rooms/1')
@@ -59,7 +61,7 @@ class RoomsTest extends TestCase
 
     }
 
-    public function testCreate()
+    public function testCreate(): void
     {
         $client = $this->prophesize(ClientInterface::class);
         $client->post('rooms', Argument::any())
@@ -83,10 +85,10 @@ class RoomsTest extends TestCase
         $members->add($member);
 
         $rooms->create($room, $members);
-        $this->assertEquals(1234,$room->roomId);
+        $this->assertEquals(1234, $room->roomId);
     }
 
-    public function testUpdate()
+    public function testUpdate(): void
     {
         $room = new Room();
         $room->roomId = 1234;
@@ -103,14 +105,14 @@ class RoomsTest extends TestCase
         $client->put("rooms/{$room->roomId}", [$room->toArray()])->shouldHaveBeenCalled();
     }
 
-    public function testRemove()
+    public function testRemove(): void
     {
         $room = new Room();
         $room->roomId = 1234;
         $room->name = "test";
 
         $client = $this->prophesize(ClientInterface::class);
-        $client->delete("rooms/{$room->roomId}",[
+        $client->delete("rooms/{$room->roomId}", [
             'action_type' => Rooms::ACTION_TYPE_LEAVE
         ])->willReturn([]);
 
@@ -119,12 +121,12 @@ class RoomsTest extends TestCase
         $rooms = new Rooms($client->reveal(), $factory);
         $rooms->remove($room, Rooms::ACTION_TYPE_LEAVE);
 
-        $client->delete("rooms/{$room->roomId}",[
+        $client->delete("rooms/{$room->roomId}", [
             'action_type' => Rooms::ACTION_TYPE_LEAVE
         ])->shouldHaveBeenCalled();
     }
 
-    public function testMembers()
+    public function testMembers(): void
     {
         $client = $this->prophesize(ClientInterface::class);
         $factory = new RoomFactory();
@@ -134,7 +136,7 @@ class RoomsTest extends TestCase
         $this->assertInstanceOf(Members::class, $members);
     }
 
-    public function testMessages()
+    public function testMessages(): void
     {
         $client = $this->prophesize(ClientInterface::class);
         $factory = new RoomFactory();
@@ -144,7 +146,7 @@ class RoomsTest extends TestCase
         $this->assertInstanceOf(Messages::class, $members);
     }
 
-    public function testTasks()
+    public function testTasks(): void
     {
         $client = $this->prophesize(ClientInterface::class);
         $factory = new RoomFactory();
@@ -154,7 +156,7 @@ class RoomsTest extends TestCase
         $this->assertInstanceOf(Tasks::class, $tasks);
     }
 
-    public function testFiles()
+    public function testFiles(): void
     {
         $client = $this->prophesize(ClientInterface::class);
         $factory = new RoomFactory();

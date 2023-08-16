@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Polidog\Chatwork\Api\Rooms;
 
 use PHPUnit\Framework\TestCase;
@@ -14,11 +16,11 @@ class FilesTest extends TestCase
     /**
      * @dataProvider providerFiles
      */
-    public function testShow($apiResult)
+    public function testShow($apiResult): void
     {
         $roomId = 1;
         $client = $this->prophesize(ClientInterface::class);
-        $client->get("rooms/{$roomId}/files",[])
+        $client->get("rooms/{$roomId}/files", [])
             ->willReturn($apiResult);
 
         $factory = new FileFactory();
@@ -34,7 +36,7 @@ class FilesTest extends TestCase
      * @dataProvider providerFile
      * @param array $apiResult
      */
-    public function testDetail($apiResult)
+    public function testDetail($apiResult): void
     {
         $fileId = 1;
         $roomId = 1;

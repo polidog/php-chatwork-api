@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Polidog\Chatwork\Api\My;
 
 use PHPUnit\Framework\TestCase;
@@ -13,10 +15,10 @@ class TasksTest extends TestCase
     /**
      * @dataProvider providerResponseData
      */
-    public function testShow($apiResult)
+    public function testShow($apiResult): void
     {
         $client = $this->prophesize(ClientInterface::class);
-        $client->get('my/tasks',[])
+        $client->get('my/tasks', [])
             ->willReturn($apiResult);
 
         $factory = new TaskFactory();

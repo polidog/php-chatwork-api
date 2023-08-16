@@ -1,12 +1,14 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Polidog\Chatwork\Entity\Factory;
 
 use PHPUnit\Framework\TestCase;
 
 class UserFactoryTest extends TestCase
 {
-    public function testCreateUserEntity()
+    public function testCreateUserEntity(): void
     {
         $factory = new UserFactory();
         $entity = $factory->entity(json_decode('{

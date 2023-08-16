@@ -1,8 +1,8 @@
 <?php
 
+declare(strict_types=1);
 
 namespace Polidog\Chatwork\Api;
-
 
 use PHPUnit\Framework\TestCase;
 use Polidog\Chatwork\Client\ClientInterface;
@@ -15,7 +15,7 @@ class IncomingRequestsTest extends TestCase
     /**
      * @dataProvider providerIncomingRequests
      */
-    public function testShow($apiResults)
+    public function testShow($apiResults): void
     {
         $client = $this->prophesize(ClientInterface::class);
         $factory = new IncomingRequestsFactory();
@@ -24,7 +24,7 @@ class IncomingRequestsTest extends TestCase
             ->willReturn($apiResults);
 
         $api = new IncomingRequests($client->reveal(), $factory);
-        $incomingRequests =$api->show();
+        $incomingRequests = $api->show();
         $this->assertInstanceOf(EntityCollection::class, $incomingRequests);
         foreach ($incomingRequests as $incomingRequest) {
             $this->assertInstanceOf(IncomingRequest::class, $incomingRequest);
@@ -35,7 +35,7 @@ class IncomingRequestsTest extends TestCase
     /**
      * @dataProvider providerIncomingRequestPut
      */
-    public function testAccept($apiResults)
+    public function testAccept($apiResults): void
     {
         $requestId = 1;
 
@@ -46,7 +46,7 @@ class IncomingRequestsTest extends TestCase
             ->willReturn($apiResults);
 
         $api = new IncomingRequests($client->reveal(), $factory);
-        $incomingRequest =$api->accept($requestId);
+        $incomingRequest = $api->accept($requestId);
         $this->assertInstanceOf(IncomingRequest::class, $incomingRequest);
 
     }
