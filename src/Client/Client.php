@@ -8,7 +8,6 @@ use GuzzleHttp\ClientInterface as HttpClientInterface;
 use GuzzleHttp\Exception\GuzzleException;
 use GuzzleHttp\Middleware;
 use Polidog\Chatwork\Exception\ClientException;
-use Psr\Http\Message\RequestInterface;
 
 final class Client implements ClientInterface
 {
@@ -29,10 +28,11 @@ final class Client implements ClientInterface
     public function __construct(
         string $chatworkToken,
         string $apiVersion,
-        ?HttpClientInterface $httpClient = null
+        ?HttpClientInterface $httpClient = null,
+        array $httpOptions = []
     ) {
         if ($httpClient === null) {
-            $httpClient = ClientFactory::createHttpClient($chatworkToken);
+            $httpClient = ClientFactory::createHttpClient($chatworkToken, [], $httpOptions);
         }
         $this->apiVersion = $apiVersion;
         $this->httpClient = $httpClient;
