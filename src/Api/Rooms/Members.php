@@ -55,7 +55,7 @@ class Members
     /**
      * @param MemberCollection $members
      */
-    public function update(MemberCollection $members)
+    public function update(MemberCollection $members): void
     {
         $options = [
             'members_admin_ids' => implode(',', $members->getAdminIds()),

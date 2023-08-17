@@ -4,6 +4,11 @@ declare(strict_types=1);
 
 namespace Polidog\Chatwork\Client;
 
+use GuzzleHttp\Handler\CurlHandler;
+use GuzzleHttp\HandlerStack;
+use GuzzleHttp\Middleware;
+use Psr\Http\Message\RequestInterface;
+
 final class ClientFactory
 {
     /**
@@ -23,10 +28,16 @@ final class ClientFactory
         ],
     ];
 
-    public static function create(string $token, string $version, array $httpOptions = []): ClientInterface
+    public static function createHttpClient(string $chatworkToken, array $middlewares = []): \GuzzleHttp\Client
     {
-        $httpOptions = array_merge(self::$httpOptions, $httpOptions);
+        $stack = new HandlerStack();
+        $stack->setHandler(new CurlHandler());
+        $stack->push(Middleware::mapRequest(static fn (RequestInterface $request) => $request->withHeader('X-ChatWorkToken', $chatworkToken)));
+        foreach ($middlewares as $middleware) {
+            $stack->push($middleware);
+        }
 
-        return new Client(new \GuzzleHttp\Client($httpOptions), $token, $version);
+        $options = array_merge(self::$httpOptions, ['handler' => $stack]);
+        return new \GuzzleHttp\Client($options);
     }
 }

@@ -17,8 +17,8 @@ use Polidog\Chatwork\Exception\InvalidArgumentException;
 
 class Rooms
 {
-    const ACTION_TYPE_LEAVE = 'leave';
-    const ACTION_TYPE_DELETE = 'delete';
+    public const ACTION_TYPE_LEAVE = 'leave';
+    public const ACTION_TYPE_DELETE = 'delete';
 
     /**
      * @var ClientInterface
@@ -93,7 +93,7 @@ class Rooms
      *
      * @param Room $room
      */
-    public function update(Room $room)
+    public function update(Room $room): void
     {
         $this->client->put(
             "rooms/{$room->roomId}",
@@ -109,7 +109,7 @@ class Rooms
      *
      * @throws InvalidArgumentException
      */
-    public function remove(Room $room, $actionType)
+    public function remove(Room $room, $actionType): void
     {
         if ('leave' !== $actionType && 'delete' !== $actionType) {
             throw new InvalidArgumentException('ActionType is only leave or delete');

@@ -45,7 +45,7 @@ class IncomingRequests
         );
     }
 
-    public function reject($requestId)
+    public function reject($requestId): void
     {
         $this->client->delete("incoming_requests/{$requestId}");
     }

@@ -1,17 +1,22 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Polidog\Chatwork\Api\My;
 
 use PHPUnit\Framework\TestCase;
 use Polidog\Chatwork\Client\ClientInterface;
 use Polidog\Chatwork\Entity\Factory\StatusFactory;
+use Prophecy\PhpUnit\ProphecyTrait;
 
 class StatusTest extends TestCase
 {
+    use ProphecyTrait;
+
     /**
      * @dataProvider providerResponseData
      */
-    public function testShow($apiResult)
+    public function testShow($apiResult): void
     {
         $client = $this->prophesize(ClientInterface::class);
         $client->get('my/status')

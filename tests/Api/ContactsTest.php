@@ -1,4 +1,6 @@
 <?php
+
+declare(strict_types=1);
 /**
  * Created by PhpStorm.
  * User: polidog
@@ -13,13 +15,16 @@ use Polidog\Chatwork\Client\ClientInterface;
 use Polidog\Chatwork\Entity\Collection\EntityCollection;
 use Polidog\Chatwork\Entity\Factory\UserFactory;
 use Polidog\Chatwork\Entity\User;
+use Prophecy\PhpUnit\ProphecyTrait;
 
 class ContactsTest extends TestCase
 {
+    use ProphecyTrait;
+
     /**
      * @dataProvider providerResponseData
      */
-    public function testShow($apiResult)
+    public function testShow($apiResult): void
     {
         $client = $this->prophesize(ClientInterface::class);
         $client->get('contacts')

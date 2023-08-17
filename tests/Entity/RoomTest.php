@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Polidog\Chatwork\Entity;
 
 use PHPUnit\Framework\TestCase;
@@ -10,7 +12,7 @@ class RoomTest extends TestCase
     /**
      * @test
      */
-    public function testRoomEntityToArray()
+    public function testRoomEntityToArray(): void
     {
         $data = json_decode('{
             "room_id": 123,
@@ -27,7 +29,7 @@ class RoomTest extends TestCase
             "icon_path": "https://example.com/ico_group.png",
             "last_update_time": 1298905200,
             "description": "room description text"
-        }', true);
+        }', true, 512, JSON_THROW_ON_ERROR);
         $factory = new RoomFactory();
         $entity = $factory->entity($data);
 

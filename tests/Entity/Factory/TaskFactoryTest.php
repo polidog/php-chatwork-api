@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Polidog\Chatwork\Entity\Factory;
 
 use PHPUnit\Framework\TestCase;
@@ -9,7 +11,7 @@ use Polidog\Chatwork\Entity\User;
 
 class TaskFactoryTest extends TestCase
 {
-    public function testCreateTaskEntity()
+    public function testCreateTaskEntity(): void
     {
         $taskFactory = new TaskFactory();
         $entity = $taskFactory->entity(json_decode('{

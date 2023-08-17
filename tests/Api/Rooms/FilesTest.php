@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Polidog\Chatwork\Api\Rooms;
 
 use PHPUnit\Framework\TestCase;
@@ -8,17 +10,20 @@ use Polidog\Chatwork\Entity\Collection\EntityCollection;
 use Polidog\Chatwork\Entity\Factory\FileFactory;
 use Polidog\Chatwork\Entity\Factory\RoomFactory;
 use Polidog\Chatwork\Entity\File;
+use Prophecy\PhpUnit\ProphecyTrait;
 
 class FilesTest extends TestCase
 {
+    use ProphecyTrait;
+
     /**
      * @dataProvider providerFiles
      */
-    public function testShow($apiResult)
+    public function testShow($apiResult): void
     {
         $roomId = 1;
         $client = $this->prophesize(ClientInterface::class);
-        $client->get("rooms/{$roomId}/files",[])
+        $client->get("rooms/{$roomId}/files", [])
             ->willReturn($apiResult);
 
         $factory = new FileFactory();
@@ -34,7 +39,7 @@ class FilesTest extends TestCase
      * @dataProvider providerFile
      * @param array $apiResult
      */
-    public function testDetail($apiResult)
+    public function testDetail($apiResult): void
     {
         $fileId = 1;
         $roomId = 1;

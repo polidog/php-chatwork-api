@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Polidog\Chatwork\Entity\Factory;
 
 use PHPUnit\Framework\TestCase;
@@ -7,7 +9,7 @@ use Polidog\Chatwork\Entity\Room;
 
 class RoomFactoryTest extends TestCase
 {
-    public function testCreateRoomEntity()
+    public function testCreateRoomEntity(): void
     {
         $factory = new RoomFactory();
         $entity = $factory->entity(json_decode('{

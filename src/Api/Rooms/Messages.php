@@ -82,7 +82,7 @@ class Messages
     /**
      * @param Message $message
      */
-    public function create(Message $message)
+    public function create(Message $message): void
     {
         $result = $this->client->post(
             "rooms/{$this->roomId}/messages",
@@ -98,7 +98,7 @@ class Messages
      * @param Message $message
      * @param $id
      */
-    public function update(Message $message, $id)
+    public function update(Message $message, $id): void
     {
         $result = $this->client->put(
             "rooms/{$this->roomId}/messages/{$id}",
@@ -113,7 +113,7 @@ class Messages
     /**
      * @param $id
      */
-    public function delete($id)
+    public function delete($id): void
     {
         $result = $this->client->delete(
             "rooms/{$this->roomId}/messages/{$id}"

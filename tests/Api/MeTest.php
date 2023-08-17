@@ -1,18 +1,23 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Polidog\Chatwork\Api;
 
 use PHPUnit\Framework\TestCase;
 use Polidog\Chatwork\Client\ClientInterface;
 use Polidog\Chatwork\Entity\Factory\UserFactory;
 use Polidog\Chatwork\Entity\User;
+use Prophecy\PhpUnit\ProphecyTrait;
 
 class MeTest extends TestCase
 {
+    use ProphecyTrait;
+
     /**
      * @dataProvider providerResponseData
      */
-    public function testShow($apiResult)
+    public function testShow($apiResult): void
     {
         $client = $this->prophesize(ClientInterface::class);
         $client->get('me')

@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Polidog\Chatwork\Api\Rooms;
 
 use PHPUnit\Framework\TestCase;
@@ -7,14 +9,17 @@ use Polidog\Chatwork\Client\ClientInterface;
 use Polidog\Chatwork\Entity\Collection\EntityCollection;
 use Polidog\Chatwork\Entity\Factory\MessageFactory;
 use Polidog\Chatwork\Entity\Message;
+use Prophecy\PhpUnit\ProphecyTrait;
 
 class MessagesTest extends TestCase
 {
+    use ProphecyTrait;
+
     /**
      * @dataProvider providerMessages
      * @param $apiResult
      */
-    public function testShow($apiResult)
+    public function testShow($apiResult): void
     {
         $roomId = 1;
 
@@ -37,7 +42,7 @@ class MessagesTest extends TestCase
      * @dataProvider providerMessage
      * @param $apiResult
      */
-    public function testDetail($apiResult)
+    public function testDetail($apiResult): void
     {
         $roomId = 1;
         $messageId = 11;
@@ -53,7 +58,7 @@ class MessagesTest extends TestCase
         $this->assertInstanceOf(Message::class, $message);
     }
 
-    public function testCreate()
+    public function testCreate(): void
     {
         $roomId = 1;
         $messageId = 11;
@@ -61,7 +66,7 @@ class MessagesTest extends TestCase
         $message->body = 'hoge';
 
         $client = $this->prophesize(ClientInterface::class);
-        $client->post("rooms/{$roomId}/messages",[
+        $client->post("rooms/{$roomId}/messages", [
             'body' => $message->body
         ])->willReturn(['message_id' => 1234]);
 

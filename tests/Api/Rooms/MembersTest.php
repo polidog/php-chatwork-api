@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Polidog\Chatwork\Api\Rooms;
 
 use PHPUnit\Framework\TestCase;
@@ -9,13 +11,16 @@ use Polidog\Chatwork\Entity\Factory\MemberFactory;
 use Polidog\Chatwork\Entity\Member;
 use Polidog\Chatwork\Entity\User;
 use Phake;
+use Prophecy\PhpUnit\ProphecyTrait;
 
 class MembersTest extends TestCase
 {
+    use ProphecyTrait;
+
     /**
      * @dataProvider providerMembers
      */
-    public function testShow($apiResults)
+    public function testShow($apiResults): void
     {
         $roomId = 1;
 
@@ -32,7 +37,7 @@ class MembersTest extends TestCase
     /**
      * @dataProvider providerPutMembers
      */
-    public function testUpdate($apiResult)
+    public function testUpdate($apiResult): void
     {
         $roomId = 1;
         $members = $this->getMembers();

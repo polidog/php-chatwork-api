@@ -8,7 +8,6 @@ use GuzzleHttp\ClientInterface as HttpClientInterface;
 use GuzzleHttp\Exception\GuzzleException;
 use GuzzleHttp\Middleware;
 use Polidog\Chatwork\Exception\ClientException;
-use Psr\Http\Message\RequestInterface;
 
 final class Client implements ClientInterface
 {
@@ -27,13 +26,14 @@ final class Client implements ClientInterface
      * @param HttpClientInterface $httpClient
      */
     public function __construct(
-        HttpClientInterface $httpClient,
         string $chatworkToken,
-        string $apiVersion
+        string $apiVersion,
+        ?HttpClientInterface $httpClient = null,
+        array $httpOptions = []
     ) {
-        $httpClient->getConfig('handler')->push(Middleware::mapRequest(function (RequestInterface $request) use ($chatworkToken) {
-            return $request->withHeader('X-ChatWorkToken', $chatworkToken);
-        }));
+        if ($httpClient === null) {
+            $httpClient = ClientFactory::createHttpClient($chatworkToken, [], $httpOptions);
+        }
         $this->apiVersion = $apiVersion;
         $this->httpClient = $httpClient;
     }
@@ -82,9 +82,11 @@ final class Client implements ClientInterface
     {
         $path = sprintf('/%s/%s', $this->apiVersion, $path);
         try {
-            return json_decode($this->httpClient->request($method, $path, $options)->getBody()->getContents(), true);
+            return json_decode($this->httpClient->request($method, $path, $options)->getBody()->getContents(), true, 512, JSON_THROW_ON_ERROR);
         } catch (GuzzleException $e) {
             throw new ClientException(sprintf('request error. method = %s, path = %s', $method, $path), $e->getCode(), $e);
+        } catch (\JsonException $e) {
+            throw new ClientException(sprintf('json parse error. method = %s, path = %s', $method, $path), $e->getCode(), $e);
         }
     }
 }
