@@ -9,7 +9,7 @@ return (new PhpCsFixer\Config())
         '@PSR12' => true,
         'strict_param' => true,
         'array_syntax' => ['syntax' => 'short'],
-        '@PHP74Migration:risky' => true,
+        '@PHP81Migration' => true,
     ])
     ->setRiskyAllowed(true)
     ->setFinder($finder)

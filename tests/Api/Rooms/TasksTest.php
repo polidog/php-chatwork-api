@@ -82,7 +82,7 @@ class TasksTest extends TestCase
 ]', true);
 
         return [
-            [$data]
+            [$data],
         ];
     }
 
@@ -107,7 +107,7 @@ class TasksTest extends TestCase
 }', true);
 
         return [
-            [$data]
+            [$data],
         ];
     }
 

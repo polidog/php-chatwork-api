@@ -70,7 +70,7 @@ class IncomingRequestsTest extends TestCase
   }
 ]', true);
         return [
-            [$data]
+            [$data],
         ];
     }
 
@@ -88,7 +88,7 @@ class IncomingRequestsTest extends TestCase
 }', true);
 
         return [
-            [$data]
+            [$data],
         ];
     }
 }

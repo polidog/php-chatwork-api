@@ -55,7 +55,7 @@ class ContactsTest extends TestCase
 ]', true);
 
         return [
-            [$data]
+            [$data],
         ];
     }
 }

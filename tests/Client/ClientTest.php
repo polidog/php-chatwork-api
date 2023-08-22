@@ -26,7 +26,7 @@ class ClientTest extends TestCase
         $httpClient = $this->prophesize(\GuzzleHttp\Client::class);
         $httpClient->request('get', '/v2/a/b', [
             'query' => [
-                's' => 'test'
+                's' => 'test',
             ],
         ])->willReturn($response);
 
@@ -35,7 +35,7 @@ class ClientTest extends TestCase
 
         $httpClient->request('get', '/v2/a/b', [
             'query' => [
-                's' => 'test'
+                's' => 'test',
             ],
         ])->shouldHaveBeenCalled();
     }

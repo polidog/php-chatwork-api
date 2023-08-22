@@ -116,7 +116,7 @@ class RoomsTest extends TestCase
 
         $client = $this->prophesize(ClientInterface::class);
         $client->delete("rooms/{$room->roomId}", [
-            'action_type' => Rooms::ACTION_TYPE_LEAVE
+            'action_type' => Rooms::ACTION_TYPE_LEAVE,
         ])->willReturn([]);
 
         $factory = new RoomFactory();
@@ -125,7 +125,7 @@ class RoomsTest extends TestCase
         $rooms->remove($room, Rooms::ACTION_TYPE_LEAVE);
 
         $client->delete("rooms/{$room->roomId}", [
-            'action_type' => Rooms::ACTION_TYPE_LEAVE
+            'action_type' => Rooms::ACTION_TYPE_LEAVE,
         ])->shouldHaveBeenCalled();
     }
 
@@ -191,7 +191,7 @@ class RoomsTest extends TestCase
 ]', true);
 
         return [
-            [$data]
+            [$data],
         ];
     }
 
@@ -215,7 +215,7 @@ class RoomsTest extends TestCase
 }', true);
 
         return [
-            [$data]
+            [$data],
         ];
     }
 

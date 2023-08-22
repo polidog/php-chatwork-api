@@ -45,7 +45,7 @@ class FilesTest extends TestCase
         $roomId = 1;
         $client = $this->prophesize(ClientInterface::class);
         $client->get("rooms/{$roomId}/files/{$fileId}", [
-            'create_download_url' => 0
+            'create_download_url' => 0,
         ])
             ->willReturn($apiResult);
 
@@ -72,7 +72,7 @@ class FilesTest extends TestCase
   }
 ]', true);
         return [
-            [$data]
+            [$data],
         ];
     }
 
@@ -91,7 +91,7 @@ class FilesTest extends TestCase
   "upload_time": 1384414750
 }', true);
         return [
-            [$data]
+            [$data],
         ];
     }
 

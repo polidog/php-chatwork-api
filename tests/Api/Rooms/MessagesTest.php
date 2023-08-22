@@ -67,7 +67,7 @@ class MessagesTest extends TestCase
 
         $client = $this->prophesize(ClientInterface::class);
         $client->post("rooms/{$roomId}/messages", [
-            'body' => $message->body
+            'body' => $message->body,
         ])->willReturn(['message_id' => 1234]);
 
         $factory = new MessageFactory();
@@ -96,7 +96,7 @@ class MessagesTest extends TestCase
 ]', true);
 
         return [
-            [$data]
+            [$data],
         ];
     }
 
@@ -115,7 +115,7 @@ class MessagesTest extends TestCase
 }', true);
 
         return [
-            [$data]
+            [$data],
         ];
     }
 

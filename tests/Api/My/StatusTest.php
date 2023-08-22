@@ -42,7 +42,7 @@ class StatusTest extends TestCase
         }', true);
 
         return [
-            [$data]
+            [$data],
         ];
     }
 }

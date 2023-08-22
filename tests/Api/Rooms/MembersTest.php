@@ -77,7 +77,7 @@ class MembersTest extends TestCase
 ]', true);
 
         return [
-            [$data]
+            [$data],
         ];
     }
 
@@ -90,7 +90,7 @@ class MembersTest extends TestCase
 }', true);
 
         return [
-            [$data]
+            [$data],
         ];
     }
 

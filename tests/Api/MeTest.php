@@ -54,7 +54,7 @@ class MeTest extends TestCase
                 }', true);
 
         return [
-            [$data]
+            [$data],
         ];
     }
 }
